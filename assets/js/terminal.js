@@ -12,9 +12,10 @@ let progress = JSON.parse(localStorage.getItem("suraksha_progress")) || [];
 // Welcome Screen Template
 const WELCOME_TEMPLATE = `
     <div class="intro-guidance">
-        <p><b>Protecting Your Digital Life in Nepal.</b></p>
-        <p>Suraksha OS is your personal guide to staying safe in our digital world.
-            From detecting scams to securing your identity, we'll build your "Digital Shield" together.</p>
+        <p><b>This helps Nepali citizens stay safe online.</b></p>
+        <p>Suraksha OS is your personal guide to navigating the digital world in Nepal.
+            Addressing real cyber threats affecting our citizens, we'll build your "Digital Shield" together.</p>
+        <p class="success" style="opacity: 0.8; font-size: 0.9rem;">Complete modules below to strengthen your Digital Shield.</p>
         <p><i>Type commands below OR click the buttons to begin your journey.</i></p>
     </div>
     <div id="boot-sequence">
@@ -24,7 +25,7 @@ const WELCOME_TEMPLATE = `
     </div>
     <br>
     <p>Welcome back, Citizen.</p>
-    <p>Your Current Safety Shield: <span class="danger" id="safetyLevel">UNVERIFIED</span></p>
+    <p>Your Current Safety Shield: <span class="danger" id="safetyLevel">UNVERIFIED (No safety modules completed yet)</span></p>
     <br>
     <p>Explore the modules below to strengthen your shield. If you ever feel unsafe, use the **Emergency Help** button.</p>
 `;
@@ -35,16 +36,16 @@ function updateSafetyMeter() {
 
     const count = progress.length;
     if (count === 0) {
-        meter.innerHTML = "UNVERIFIED (DANGER)";
+        meter.innerHTML = "UNVERIFIED (No safety modules completed yet)";
         meter.className = "danger";
     } else if (count < 3) {
-        meter.innerHTML = "LEARNER (WARNING)";
+        meter.innerHTML = "LEARNER (You're starting to build your awareness)";
         meter.className = "warning";
     } else if (count < 5) {
-        meter.innerHTML = "CITIZEN GUARD (SAFE)";
+        meter.innerHTML = "CITIZEN GUARD (You can identify major digital threats)";
         meter.className = "success";
     } else {
-        meter.innerHTML = "DIGITAL SURAKSHAK (PROTECTED)";
+        meter.innerHTML = "DIGITAL SURAKSHAK (You understand basic cyber safety practices)";
         meter.className = "success";
         meter.style.textShadow = "0 0 10px var(--success-color)";
     }
@@ -111,7 +112,7 @@ function processCommand(command) {
             output.innerHTML += `
             <div class="panic-box" style="border: 1px solid #f85149; padding: 15px; margin: 10px 0; border-radius: 8px; background: rgba(248, 81, 73, 0.15); animation: fadeIn 0.5s;">
                 <p class="danger" style="font-weight: bold; font-size: 1.1rem;">NEPAL CYBER BUREAU - EMERGENCY HELP</p>
-                <p>If you have been scammed or threatened online, you are not alone. Help is available.</p>
+                <p><b>If you feel unsafe online, help is available.</b> You are not alone.</p>
                 <p style="margin-top: 10px;">📞 **Call 1144** (Toll Free)</p>
                 <p>📧 **Email:** cyberbureau@nepalpolice.gov.np</p>
                 <p style="margin-top: 10px; font-size: 0.8rem; color: #8b949e;">The Electronic Transactions Act (2063) protects your rights. Report early, save all evidence.</p>
@@ -133,6 +134,11 @@ function processCommand(command) {
 
         default:
             output.innerHTML += `<p class="danger">I don't recognize '${cmd}'. If you're lost, type 'help' or click a button below. I'm here to guide you to safety.</p>`;
+    }
+
+    // Append hint if output is getting long
+    if (output.children.length % 5 === 0) {
+        output.innerHTML += `<p style="opacity: 0.5; font-size: 0.8rem;"><i>Hint: Try learn | scan | protect | rights | quiz | panic</i></p>`;
     }
 
     // Auto-scroll to bottom
