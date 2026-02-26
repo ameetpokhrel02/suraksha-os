@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn | Cyber Awareness Nepal</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        .learn-section {
+            margin-bottom: 25px;
+            padding: 15px;
+            border-left: 2px solid var(--command-color);
+            background: rgba(88, 166, 255, 0.02);
+        }
+
+        .checklist {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+
+        .alert-box {
+            background: rgba(248, 81, 73, 0.1);
+            border: 1px solid var(--danger-color);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            color: var(--danger-color);
+        }
+
+        .scam-message {
+            background: #1a1a1a;
+            padding: 15px;
+            border-radius: 4px;
+            font-style: italic;
+            border-left: 4px solid var(--warning-color);
+            margin: 10px 0;
+        }
+
+        .sim-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-right: 10px;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+
+        .sim-btn:hover {
+            background: rgba(63, 185, 80, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="terminal">
+        <div class="terminal-header">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+            <span class="title">SURAKSHA OS — CITIZEN_SAFETY_GUIDE.EXE</span>
+        </div>
+
+        <div class="terminal-body" id="output">
+            <h3>Guide: Staying Safe in Digital Nepal</h3>
+            <p>Your journey to a "Digital Shield" starts with understanding how scams work in our local context.</p>
+            <br>
+
+            <!-- Daily Risks -->
+            <div class="learn-section">
+                <h4 class="warning">1. Daily Risks in Nepal</h4>
+                <p>Digital fraud is rising on platforms we use every day:</p>
+                <ul style="margin-left: 20px; list-style-type: none;">
+                    <li>⚠ <b>Facebook Marketplace:</b> Sellers asking for "advance payment" or QR code scans to receive
+                        money.</li>
+                    <li>⚠ <b>E-Sewa / Khalti Fraud:</b> Fake calls claiming you won a "Lottery" (LuckDraw) to get your
+                        OTP.</li>
+                    <li>⚠ <b>Job Scams:</b> WhatsApp messages offering high-paying "typing" jobs that ask for fees.</li>
+                </ul>
+            </div>
+
+            <!-- Scam Simulation SECTION -->
+            <div class="learn-section" style="border-left-color: var(--warning-color);">
+                <h4 class="warning">2. Try a Scam Scenario</h4>
+                <p>Imagine you receive the following SMS message:</p>
+                <div class="scam-message">
+                    "Congratulations! You won Rs 50,000 in the Digital Nepal Lucky Draw! Click here now to claim your
+                    prize: http://bit.ly/nepal-win-50k"
+                </div>
+                <p>What would you do?</p>
+                <div id="sim-options">
+                    <button class="sim-btn success-stroke" onclick="runSim('click')">Click Link</button>
+                    <button class="sim-btn success-stroke" onclick="runSim('verify')">Verify Source</button>
+                    <button class="sim-btn success-stroke" onclick="runSim('ignore')">Ignore</button>
+                </div>
+                <div id="sim-feedback"></div>
+            </div>
+
+            <!-- Before You Click Checklist -->
+            <div class="checklist">
+                <h4 class="success">✅ "Before You Click" Checklist</h4>
+                <p>🔒 1. Is the link spelling correct? (e.g., <small>faceboook.com</small> vs
+                    <small>facebook.com</small>)
+                </p>
+                <p>🔒 2. Did I expect this message?</p>
+                <p>🔒 3. Is it asking for my <span class="command">OTP</span> or <span class="command">PIN</span>? (If
+                    yes, STOP!)</p>
+            </div>
+
+            <!-- What to do if scammed -->
+            <div class="learn-section" style="border-left-color: var(--danger-color);">
+                <h4 class="danger">🚨 If You Are Scammed (Action Plan)</h4>
+                <p>Don't panic. Take these steps immediately:</p>
+                <p>❌ 1. **Call 1144:** Report to Nepal Cyber Bureau immediately.</p>
+                <p>❌ 2. **Contact Bank:** Call your bank or E-wallet support to freeze your account.</p>
+                <p>✔ 3. **Save Evidence:** Don't delete the chat or call logs. Take screenshots.</p>
+                <p>✔ 4. **Inform Others:** Tell your family so they don't fall for the same trick.</p>
+            </div>
+
+            <br>
+            <p>Mastered these basics? Move to the practical test.</p>
+            <br>
+            <p>Type <span class="command">home</span> to save your progress.</p>
+        </div>
+
+        <div class="terminal-input-container">
+            <div class="command-chips">
+                <button class="chip" onclick="executeChip('home')">Return to Home</button>
+                <button class="chip" onclick="executeChip('quiz')">Take the Quiz</button>
+            </div>
+            <div class="terminal-input">
+                <span class="prompt">learn@suraksha:~$</span>
+                <input type="text" id="commandInput" autofocus autocomplete="off" spellcheck="false">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const input = document.getElementById("commandInput");
+        const output = document.getElementById("output");
+
+        function executeChip(command) {
+            if (command === "home") window.location.href = "../index.html?achieved=learn";
+            if (command === "quiz") window.location.href = "quiz.html";
+        }
+
+        function runSim(choice) {
+            const feedback = document.getElementById('sim-feedback');
+            if (choice === 'click') {
+                feedback.innerHTML = `
+                    <div class="alert-box">
+                        ❌ <b>UNSAFE DECISION!</b><br>
+                        Clicking the link could have installed malware on your phone or stolen your banking logins. 
+                        Scammers use "Prizes" to create artificial urgency.
+                    </div>`;
+            } else if (choice === 'verify') {
+                feedback.innerHTML = `
+                    <div class="alert-box" style="border-color: var(--success-color); color: var(--success-color); background: rgba(63, 185, 80, 0.1);">
+                        ✔ <b>SAFE DECISION!</b><br>
+                        Verifying through official channels (like calling the bank directly) is the best way to avoid being scammed.
+                    </div>`;
+            } else {
+                feedback.innerHTML = `
+                    <div class="alert-box" style="border-color: var(--success-color); color: var(--success-color); background: rgba(63, 185, 80, 0.1);">
+                        ✔ <b>SAFE DECISION!</b><br>
+                        Ignoring unknown lottery messages is the easiest way to stay safe. If it sounds too good to be true, it is.
+                    </div>`;
+            }
+            output.scrollTop = output.scrollHeight;
+        }
+
+        input.addEventListener("keypress", function (e) {
+            if (e.key === "Enter") {
+                let command = input.value.toLowerCase().trim();
+                if (command === "home") {
+                    window.location.href = "../index.html?achieved=learn";
+                } else if (command === "quiz") {
+                    window.location.href = "quiz.html";
+                } else {
+                    output.innerHTML += `<p><span class="prompt">learn@suraksha:~$</span> ${command}</p>`;
+                    output.innerHTML += `<p class="danger">Error: Unknown command. Type 'home' to finish this lesson.</p>`;
+                }
+                input.value = "";
+                output.scrollTop = output.scrollHeight;
+            }
+        });
+    </script>
+</body>
+
+</html>

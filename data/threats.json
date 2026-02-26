@@ -1,0 +1,37 @@
+[
+    {
+        "id": 1,
+        "message": "\"प्रिय ग्राहक, तपाईंको बैंक खाता आज रोक्का हुँदैछ। तुरुन्तै यो लिङ्क क्लिक गरी प्रमाणित गर्नुहोस्: http://bit.ly/nepal-bank-verify\"",
+        "isScam": true,
+        "type": "Phishing",
+        "feedback": "✔ <b>Correct!</b> This is a phishing scam. Real banks in Nepal never use bit.ly links or ask you to 'verify' via SMS."
+    },
+    {
+        "id": 2,
+        "message": "\"Hello, I want to buy your laptop from Facebook Marketplace. I am sending a QR code. Just scan it to RECEIVE the payment in your eSewa.\"",
+        "isScam": true,
+        "type": "QR Fraud",
+        "feedback": "✔ <b>Correct!</b> Scanning a QR code is for SENDING money, not receiving it. This is a common tactic to drain your wallet."
+    },
+    {
+        "id": 3,
+        "message": "\"Nepal Police Cyber Bureau: We have noticed an increase in OTP fraud. Never share your OTP with anyone, even if they claim to be from a bank.\"",
+        "isScam": false,
+        "type": "Official Alert",
+        "feedback": "✔ <b>Correct!</b> This is a genuine public safety notice. Official alerts provide advice without asking for personal actions or links."
+    },
+    {
+        "id": 4,
+        "message": "\"URGENT: Your brother is in the hospital after an accident. Please send Rs. 10,000 to this Khalti ID (98XXXXXXXX) immediately for the operation fee!\"",
+        "isScam": true,
+        "type": "Impersonation",
+        "feedback": "✔ <b>Correct!</b> This is an emotional 'Emergency Scam'. Always call your relative directly on their known number to verify before sending money."
+    },
+    {
+        "id": 5,
+        "message": "\"Congratulations! You have been selected for a part-time job from home. Salary: Rs. 5000/day. Just pay a Rs. 500 registration fee to start.\"",
+        "isScam": true,
+        "type": "Job Scam",
+        "feedback": "✔ <b>Correct!</b> Real jobs NEVER ask you to pay before you start working. Registration or 'laptop security' fees are always a scam."
+    }
+]

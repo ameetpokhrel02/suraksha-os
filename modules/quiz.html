@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz | Test Awareness</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="terminal">
+        <div class="terminal-header">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+            <span class="title">SURAKSHA OS — AWARENESS_CERTIFIER.EXE</span>
+        </div>
+
+        <div class="terminal-body" id="output">
+            <h3>Cyber Safety Challenge</h3>
+            <p id="quiz-intro">Test your knowledge to increase your <span class="command">Safety Level</span>.</p>
+            <br>
+
+            <div id="quiz-container">
+                <p class="warning" id="question-label">Question 1:</p>
+                <p id="question-text" style="color: white; font-size: 1.1rem; margin-bottom: 20px;"></p>
+
+                <div id="options">
+                    <!-- Buttons will be injected here -->
+                </div>
+            </div>
+
+            <div id="quizResult"></div>
+            <br>
+            <div id="navigation-area" style="display: none;">
+                <button class="chip" id="nextBtn" onclick="nextQuestion()"
+                    style="background: var(--command-color); color: white;">Next Question →</button>
+            </div>
+
+            <p id="footer-text" style="margin-top: 20px;">Type <span class="command">home</span> to return.</p>
+        </div>
+
+        <div class="terminal-input-container">
+            <div class="command-chips">
+                <button class="chip" onclick="executeChip('home')">home</button>
+                <button class="chip" onclick="executeChip('protect')">protect</button>
+            </div>
+            <div class="terminal-input">
+                <span class="prompt">quiz@suraksha:~$</span>
+                <input type="text" id="commandInput" autofocus autocomplete="off" spellcheck="false">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const input = document.getElementById("commandInput");
+        const output = document.getElementById("output");
+        const questionText = document.getElementById("question-text");
+        const optionsDiv = document.getElementById("options");
+        const resultDiv = document.getElementById("quizResult");
+        const navArea = document.getElementById("navigation-area");
+        const questionLabel = document.getElementById("question-label");
+
+        const quizData = [
+            {
+                q: "तपाईंलाई कसैले फोन गरेर 'म बैंकबाट बोलेको, समस्या छ, ओटीपी (OTP) भन्नुहोस्' भन्यो भने के दिनुहुन्छ? (Should you share OTP over the phone?)",
+                options: ["हो, दिन्छु (YES)", "कहिले पनि दिन्न (NO)"],
+                correct: 1,
+                feedback: "उत्कृष्ट! (Correct!) Banks in Nepal will NEVER ask for your OTP over a call."
+            },
+            {
+                q: "के 'bit.ly' वा नचिनिएको लिङ्क क्लिक गरेर बैंक खाता प्रमाणित गर्न सुरक्षित छ? (Is it safe to click unknown banking links?)",
+                options: ["सुरक्षित छ (YES)", "असुरक्षित छ (NO)"],
+                correct: 1,
+                feedback: "सही! (Correct!) Never click unofficial links. They are usually phishing attempts."
+            },
+            {
+                q: "बैकिङ्ग कारोबारको लागि सार्वजनिक वाइफाइ (Public WiFi) प्रयोग गर्नु राम्रो हो? (Can you use public WiFi for banking?)",
+                options: ["राम्रो हो (YES)", "जोखिमपूर्ण छ (NO)"],
+                correct: 1,
+                feedback: "एकदम सही! (Correct!) Public WiFi is insecure. Use your mobile data for banking."
+            }
+        ];
+
+        let currentQ = 0;
+        let score = 0;
+
+        function renderQuestion() {
+            const data = quizData[currentQ];
+            questionLabel.innerText = `Question ${currentQ + 1} of ${quizData.length}:`;
+            questionText.innerText = data.q;
+            optionsDiv.innerHTML = "";
+            resultDiv.innerHTML = "";
+            navArea.style.display = "none";
+
+            data.options.forEach((opt, index) => {
+                const btn = document.createElement("button");
+                btn.className = "chip success-stroke";
+                btn.style.display = "block";
+                btn.style.width = "100%";
+                btn.style.textAlign = "left";
+                btn.style.marginBottom = "10px";
+                btn.style.padding = "12px";
+                btn.innerText = opt;
+                btn.onclick = () => selectOption(index);
+                optionsDiv.appendChild(btn);
+            });
+        }
+
+        function selectOption(index) {
+            const data = quizData[currentQ];
+            const allBtns = optionsDiv.querySelectorAll("button");
+
+            // Disable all buttons after selection
+            allBtns.forEach(btn => btn.disabled = true);
+
+            if (index === data.correct) {
+                score++;
+                resultDiv.innerHTML = `<p class="success" style="padding: 10px; border: 1px solid var(--success-color); border-radius: 4px;">✔ ${data.feedback}</p>`;
+            } else {
+                resultDiv.innerHTML = `<p class="danger" style="padding: 10px; border: 1px solid var(--danger-color); border-radius: 4px;">✖ गलत! (Incorrect). ${data.feedback}</p>`;
+            }
+
+            navArea.style.display = "block";
+            output.scrollTop = output.scrollHeight;
+        }
+
+        function nextQuestion() {
+            currentQ++;
+            if (currentQ < quizData.length) {
+                renderQuestion();
+            } else {
+                showFinal();
+            }
+        }
+
+        function showFinal() {
+            document.getElementById("quiz-container").innerHTML = `
+                <div style="text-align: center; padding: 20px; border: 2px solid var(--success-color); border-radius: 12px; background: rgba(63, 185, 80, 0.05);">
+                    <h2 class="success">Quiz Completed!</h2>
+                    <p style="font-size: 1.2rem; margin: 15px 0;">Final Score: ${score}/${quizData.length}</p>
+                    <p>Congratulations, Citizen! You have gained significant digital safety knowledge.</p>
+                    <br>
+                    <button class="chip" onclick="executeChip('home')" style="background: var(--success-color); color: white; border: none; padding: 10px 30px;">
+                        Return to Dashboard
+                    </button>
+                </div>
+            `;
+            resultDiv.innerHTML = "";
+            navArea.style.display = "none";
+            document.getElementById("footer-text").style.display = "none";
+            output.scrollTop = output.scrollHeight;
+        }
+
+        function executeChip(command) {
+            if (command === "home") window.location.href = "../index.html?achieved=quiz";
+            if (command === "protect") window.location.href = "protect.html";
+        }
+
+        input.addEventListener("keypress", function (e) {
+            if (e.key === "Enter") {
+                let command = input.value.toLowerCase().trim();
+                if (command === "home") {
+                    window.location.href = "../index.html?achieved=quiz";
+                } else if (command === "protect") {
+                    window.location.href = "protect.html";
+                } else {
+                    output.innerHTML += `<p><span class="prompt">quiz@suraksha:~$</span> ${command}</p>`;
+                    output.innerHTML += `<p class="danger">Error: Unknown command. Type 'home' to finish.</p>`;
+                }
+                input.value = "";
+                output.scrollTop = output.scrollHeight;
+            }
+        });
+
+        // Start Quiz
+        renderQuestion();
+    </script>
+</body>
+
+</html>

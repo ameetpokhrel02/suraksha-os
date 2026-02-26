@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protect | Password Tools</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        .privacy-checklist {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+
+        .checklist-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .checklist-item input {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--command-color);
+            cursor: pointer;
+        }
+
+        .risk-feedback {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .risk-safe {
+            background: rgba(63, 185, 80, 0.1);
+            border: 1px solid var(--success-color);
+            color: var(--success-color);
+        }
+
+        .risk-warning {
+            background: rgba(255, 189, 46, 0.1);
+            border: 1px solid var(--warning-color);
+            color: var(--warning-color);
+        }
+
+        .risk-danger {
+            background: rgba(248, 81, 73, 0.1);
+            border: 1px solid var(--danger-color);
+            color: var(--danger-color);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="terminal">
+        <div class="terminal-header">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+            <span class="title">SURAKSHA OS — PROTECTION_TOOLS.EXE</span>
+        </div>
+
+        <div class="terminal-body" id="output">
+            <h3>Password Strength Checker</h3>
+            <p>A strong password is your first line of defense. Test yours below:</p>
+            <br>
+            <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                <div class="password-wrapper">
+                    <input type="password" id="passwordIn" placeholder="Enter password to test..."
+                        class="success-stroke"
+                        style="background: rgba(255,255,255,0.05); padding: 12px; border-radius: 8px; color: white; flex: 1; outline: none; width: 100%;">
+                    <button class="toggle-password" onclick="togglePasswordVisibility()" title="Toggle visibility">
+                        <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                            <circle cx="12" cy="12" r="3" />
+                        </svg>
+                        <svg id="eyeOffIcon" style="display:none;" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24">
+                            </path>
+                            <line x1="1" y1="1" x2="23" y2="23"></line>
+                        </svg>
+                    </button>
+                </div>
+                <button onclick="checkPassword()" class="chip success-stroke"
+                    style="background: rgba(63, 185, 80, 0.1); color: var(--success-color); padding: 0 20px;">Analyze</button>
+            </div>
+
+            <div id="strengthResult"></div>
+
+            <!-- Privacy Awareness Tool -->
+            <div class="privacy-checklist">
+                <h4>Check What You Share Online</h4>
+                <p style="font-size: 0.9rem; margin-bottom: 20px;">Select the items you commonly share on social media
+                    or apps:</p>
+
+                <label class="checklist-item">
+                    <input type="checkbox" value="email"> <span>Email Address</span>
+                </label>
+                <label class="checklist-item">
+                    <input type="checkbox" value="phone"> <span>Phone Number</span>
+                </label>
+                <label class="checklist-item">
+                    <input type="checkbox" value="location"> <span>Current Location</span>
+                </label>
+                <label class="checklist-item">
+                    <input type="checkbox" value="id"> <span>Personal ID (Nagarpalika/License)</span>
+                </label>
+                <label class="checklist-item">
+                    <input type="checkbox" value="bank"> <span>Bank/E-Sewa Screenshots</span>
+                </label>
+
+                <button onclick="checkPrivacyRisk()" class="chip success-stroke"
+                    style="margin-top: 15px; width: 100%; background: rgba(63, 185, 80, 0.1); color: var(--success-color);">Check
+                    Privacy Risk</button>
+
+                <div id="privacyFeedback" class="risk-feedback"></div>
+            </div>
+
+            <br>
+            <div class="info-guide" style="border-top: 1px dashed var(--border-color); padding-top: 15px;">
+                <p class="warning">Tips for Stronger Passwords:</p>
+                <p>• Use 12+ characters</p>
+                <p>• Mix Upper, Lower, Numbers & Symbols (@, #, $)</p>
+                <p>• Avoid common Nepali words like 'Nepal123' or 'Kathmandu'</p>
+            </div>
+            <br>
+            <p>Type <span class="command">home</span> to return.</p>
+        </div>
+
+        <div class="terminal-input-container">
+            <div class="command-chips">
+                <button class="chip" onclick="executeChip('home')">home</button>
+                <button class="chip" onclick="executeChip('learn')">learn</button>
+            </div>
+            <div class="terminal-input">
+                <span class="prompt">protect@suraksha:~$</span>
+                <input type="text" id="commandInput" autofocus autocomplete="off" spellcheck="false">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const input = document.getElementById("commandInput");
+        const output = document.getElementById("output");
+
+        function executeChip(command) {
+            if (command === "home") window.location.href = "../index.html?achieved=protect";
+            if (command === "learn") window.location.href = "learn.html";
+        }
+
+        function togglePasswordVisibility() {
+            const passwordIn = document.getElementById("passwordIn");
+            const eyeIcon = document.getElementById("eyeIcon");
+            const eyeOffIcon = document.getElementById("eyeOffIcon");
+
+            if (passwordIn.type === "password") {
+                passwordIn.type = "text";
+                eyeIcon.style.display = "none";
+                eyeOffIcon.style.display = "block";
+            } else {
+                passwordIn.type = "password";
+                eyeIcon.style.display = "block";
+                eyeOffIcon.style.display = "none";
+            }
+        }
+
+        function checkPassword() {
+            let password = document.getElementById("passwordIn").value;
+            let result = document.getElementById("strengthResult");
+
+            if (!password) return;
+
+            if (password.length < 8) {
+                result.innerHTML = `<p class="danger">✖ <b>WEAK:</b> Too short. Don't worry, even a few more characters make a huge difference.</p>`;
+            }
+            else if (password.match(/[A-Z]/) && password.match(/[0-9]/) && password.match(/[@$!%*?&]/)) {
+                result.innerHTML = `<p class="success">✔ <b>STRONG:</b> Excellent! Your digital keys are now much harder to duplicate.</p>`;
+            }
+            else {
+                result.innerHTML = `<p class="warning">⚠ <b>MEDIUM:</b> You're on the right track! Add a few symbols or numbers to reach maximum safety.</p>`;
+            }
+            output.scrollTop = output.scrollHeight;
+        }
+
+        function checkPrivacyRisk() {
+            const checkboxes = document.querySelectorAll('.privacy-checklist input[type="checkbox"]');
+            const feedback = document.getElementById('privacyFeedback');
+            let riskLevel = 'safe';
+            let message = '';
+            let selectedItems = [];
+
+            checkboxes.forEach(cb => {
+                if (cb.checked) selectedItems.push(cb.value);
+            });
+
+            if (selectedItems.length === 0) {
+                feedback.style.display = 'none';
+                return;
+            }
+
+            feedback.style.display = 'block';
+            feedback.className = 'risk-feedback'; // reset
+
+            if (selectedItems.includes('bank') || selectedItems.includes('id')) {
+                riskLevel = 'danger';
+                message = '❌ <b>EXTREME DANGER:</b> Sharing financial screenshots or official IDs online is the #1 way to lose your account or identity. Scammers can use these to impersonate you or drain your bank.';
+                feedback.classList.add('risk-danger');
+            } else if (selectedItems.includes('phone') || selectedItems.includes('location')) {
+                riskLevel = 'warning';
+                message = '⚠ <b>RISKY:</b> Sharing your phone number or live location makes you a target for physical stalking or "Vishing" (voice scams). Scammers use your number to send fake OTP requests.';
+                feedback.classList.add('risk-warning');
+            } else {
+                riskLevel = 'safe';
+                message = '✔ <b>LOW RISK:</b> Email addresses are generally safer to share, but ensure you have Two-Factor Authentication (2FA) enabled to prevent unauthorized logins.';
+                feedback.classList.add('risk-safe');
+            }
+
+            feedback.innerHTML = message;
+            const terminalBody = document.getElementById('output');
+            terminalBody.scrollTop = terminalBody.scrollHeight;
+        }
+
+        input.addEventListener("keypress", function (e) {
+            if (e.key === "Enter") {
+                let command = input.value.toLowerCase().trim();
+                if (command === "home") {
+                    window.location.href = "../index.html?achieved=protect";
+                } else if (command === "learn") {
+                    window.location.href = "learn.html";
+                } else {
+                    output.innerHTML += `<p><span class="prompt">protect@suraksha:~$</span> ${command}</p>`;
+                    output.innerHTML += `<p class="danger">Error: Unknown command. Type 'home' to exit.</p>`;
+                }
+                input.value = "";
+                output.scrollTop = output.scrollHeight;
+            }
+        });
+    </script>
+</body>
+
+</html>

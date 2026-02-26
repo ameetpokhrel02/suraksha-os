@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scan | Threat Simulator</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        .scenario-box {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid var(--command-color);
+            margin: 15px 0;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+        }
+
+        #result {
+            margin-top: 15px;
+            min-height: 50px;
+        }
+
+        .next-btn-container {
+            margin-top: 20px;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="terminal">
+        <div class="terminal-header">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+            <span class="title">SURAKSHA OS — THREAT_SCANNER.EXE</span>
+        </div>
+
+        <div class="terminal-body" id="output">
+            <h3>Scam Detection Simulator</h3>
+            <p>Analyze the incoming message below. Is it a <span class="danger">THREAT</span>?</p>
+            <br>
+
+            <p id="case-counter" style="opacity: 0.6; font-size: 0.8rem;">CASE #1</p>
+            <div id="messageBox" class="scenario-box">
+                <p id="scenario-text" style="color: white; font-style: italic;"></p>
+            </div>
+
+            <p>What is your assessment?</p>
+
+            <div id="result"></div>
+
+            <div class="next-btn-container" id="next-area">
+                <button class="chip success-stroke" onclick="loadNextScenario()"
+                    style="background: var(--command-color); color: white; padding: 10px 25px;">Next Case →</button>
+            </div>
+
+            <br>
+            <p>Type <span class="command">home</span> to return.</p>
+        </div>
+
+        <div class="terminal-input-container">
+            <div class="command-chips" id="action-chips">
+                <button class="chip success-stroke" onclick="checkAnswer(false)"
+                    style="background: rgba(63, 185, 80, 0.1); color: var(--success-color);">SAFE (Genuine)</button>
+                <button class="chip"
+                    style="background: rgba(248, 81, 73, 0.1); border: 1px solid rgba(248, 81, 73, 0.5); color: var(--danger-color);"
+                    onclick="checkAnswer(true)">SCAM (Threat)</button>
+                <button class="chip success-stroke" onclick="executeChip('home')"
+                    style="background: rgba(63, 185, 80, 0.1); color: var(--success-color);">home</button>
+            </div>
+            <div class="terminal-input">
+                <span class="prompt">scan@suraksha:~$</span>
+                <input type="text" id="commandInput" autofocus autocomplete="off" spellcheck="false">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const output = document.getElementById("output");
+        const scenarioText = document.getElementById("scenario-text");
+        const caseCounter = document.getElementById("case-counter");
+        const resultDiv = document.getElementById("result");
+        const nextArea = document.getElementById("next-area");
+        const actionChips = document.getElementById("action-chips");
+        const input = document.getElementById("commandInput");
+
+        const threats = [
+            {
+                "message": "\"प्रिय ग्राहक, तपाईंको बैंक खाता आज रोक्का हुँदैछ। तुरुन्तै यो लिङ्क क्लिक गरी प्रमाणित गर्नुहोस्: http://bit.ly/nepal-bank-verify\"",
+                "isScam": true,
+                "feedback": "✔ <b>Correct!</b> Real banks in Nepal never use bit.ly links or ask you to 'verify' via SMS."
+            },
+            {
+                "message": "\"Hello, I want to buy your laptop from Facebook Marketplace. I am sending a QR code. Just scan it to RECEIVE the payment in your eSewa.\"",
+                "isScam": true,
+                "feedback": "✔ <b>Correct!</b> Scanning a QR code is for SENDING money, not receiving it. This is a common tactic to drain your wallet."
+            },
+            {
+                "message": "\"Nepal Police Cyber Bureau: We have noticed an increase in OTP fraud. Never share your OTP with anyone, even if they claim to be from a bank.\"",
+                "isScam": false,
+                "feedback": "✔ <b>Correct!</b> This is a genuine public safety notice. Official alerts provide advice without asking for personal actions or links."
+            },
+            {
+                "message": "\"URGENT: Your brother is in the hospital after an accident. Please send Rs. 10,000 to this Khalti ID (98XXXXXXXX) immediately for the operation fee!\"",
+                "isScam": true,
+                "feedback": "✔ <b>Correct!</b> This is an emotional 'Emergency Scam'. Always call your relative directly to verify first."
+            },
+            {
+                "message": "\"Congratulations! You have been selected for a part-time job from home. Salary: Rs. 5000/day. Just pay a Rs. 500 registration fee to start.\"",
+                "isScam": true,
+                "feedback": "✔ <b>Correct!</b> Real jobs NEVER ask for a 'registration fee'. This is a golden rule in job searching."
+            }
+        ];
+
+        let currentIndex = 0;
+        let score = 0;
+
+        function renderScenario() {
+            const current = threats[currentIndex];
+            caseCounter.innerText = `CASE #${currentIndex + 1} OF ${threats.length}`;
+            scenarioText.innerText = current.message;
+            resultDiv.innerHTML = "";
+            nextArea.style.display = "none";
+            // Enable chips
+            const buttons = actionChips.querySelectorAll("button");
+            buttons.forEach(btn => btn.disabled = false);
+        }
+
+        function checkAnswer(userIsScam) {
+            const current = threats[currentIndex];
+            const buttons = actionChips.querySelectorAll("button");
+            buttons.forEach(btn => btn.disabled = true);
+
+            if (userIsScam === current.isScam) {
+                score++;
+                resultDiv.innerHTML = `
+                    <div style="color: var(--success-color); border: 1px solid var(--success-color); padding: 10px; border-radius: 4px; background: rgba(63, 185, 80, 0.05);">
+                        ✔ ${current.feedback}
+                    </div>`;
+            } else {
+                resultDiv.innerHTML = `
+                    <div style="color: var(--danger-color); border: 1px solid var(--danger-color); padding: 10px; border-radius: 4px; background: rgba(248, 81, 73, 0.05);">
+                        ✖ <b>Incorrect Assessment!</b> ${current.isScam ? "This was a THREAT." : "This was a SAFE message."}
+                        <p style="font-size: 0.8rem; margin-top: 5px; color: #8b949e;">Don't worry, we practice so you stay safe in the real world.</p>
+                    </div>`;
+            }
+
+            nextArea.style.display = "block";
+            output.scrollTop = output.scrollHeight;
+        }
+
+        function loadNextScenario() {
+            currentIndex++;
+            if (currentIndex < threats.length) {
+                renderScenario();
+            } else {
+                showFinal();
+            }
+        }
+
+        function showFinal() {
+            output.innerHTML = `
+                <div style="text-align: center; padding: 30px; border: 2px solid var(--success-color); border-radius: 12px; background: rgba(63, 185, 80, 0.05); animation: fadeIn 0.5s;">
+                    <h3 class="success">Simulation Complete!</h3>
+                    <p style="font-size: 1.2rem; margin: 15px 0;">Final Score: ${score}/${threats.length}</p>
+                    <p>You have successfully analyzed all threat scenarios. Your ability to spot digital fraud is significantly improved!</p>
+                    <br>
+                    <button class="chip success-stroke" onclick="executeChip('home')" style="background: var(--success-color); color: white; padding: 12px 30px; font-weight: bold;">
+                        RETURN TO HOME
+                    </button>
+                    <p style="margin-top: 20px; font-size: 0.8rem; opacity: 0.7;">Progress saved. Your Safety Shield has been strengthened.</p>
+                </div>`;
+            output.scrollTop = output.scrollHeight;
+        }
+
+        function executeChip(command) {
+            if (command === "home") window.location.href = "../index.html?achieved=scan";
+        }
+
+        input.addEventListener("keypress", function (e) {
+            if (e.key === "Enter") {
+                let command = input.value.toLowerCase().trim();
+                if (command === "home") {
+                    window.location.href = "../index.html?achieved=scan";
+                } else {
+                    output.innerHTML += `<p><span class="prompt">scan@suraksha:~$</span> ${command}</p>`;
+                    output.innerHTML += `<p class="danger">Error: Unknown command. Type 'home' to exit.</p>`;
+                }
+                input.value = "";
+                output.scrollTop = output.scrollHeight;
+            }
+        });
+
+        // Initialize
+        renderScenario();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rights | Digital Rights Nepal</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="terminal">
+        <div class="terminal-header">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+            <span class="title">SURAKSHA OS — DIGITAL_RIGHTS_REGISTRY.EXE</span>
+        </div>
+
+        <div class="terminal-body" id="output">
+            <h3>Your Digital Legal Shield</h3>
+            <p>In Nepal, you are protected by the **Electronic Transactions Act (2063)**. Your rights don't end at the
+                keyboard.</p>
+            <br>
+            <div
+                style="background: rgba(88, 166, 255, 0.05); border: 1px solid rgba(88, 166, 255, 0.2); border-radius: 8px; padding: 20px;">
+                <p class="command">LAWS THAT PROTECT YOU:</p>
+                <p>✔ <span style="color: white;">Data Privacy:</span> Protection against unauthorized access to your
+                    information.</p>
+                <p>✔ <span style="color: white;">Freedom:</span> The right to safe digital expression without bullying.
+                </p>
+                <p>✔ <span style="color: white;">Electronic Transactions:</span> Legal validity for online banking and
+                    signatures.</p>
+            </div>
+            <br>
+            <h4>Taking Action:</h4>
+            <p>If you feel threatened, the **Cyber Bureau** is your partner. Under the ETA law, you have the right to
+                report and seek justice.</p>
+            <br>
+            <p class="warning">Remember: You are the owner of your digital footprint. No one has the right to misuse
+                your identity.</p>
+            <br>
+            <p>Type <span class="command">home</span> to secure your progress.</p>
+        </div>
+
+        <div class="terminal-input-container">
+            <div class="command-chips">
+                <button class="chip success-stroke" onclick="executeChip('home')"
+                    style="background: rgba(63, 185, 80, 0.1); color: var(--success-color);">Return to Home</button>
+                <button class="chip" onclick="executeChip('panic')"
+                    style="background: rgba(248, 81, 73, 0.1); border-color: rgba(248, 81, 73, 0.3); color: var(--danger-color);">Emergency
+                    Help</button>
+            </div>
+            <div class="terminal-input">
+                <span class="prompt">rights@suraksha:~$</span>
+                <input type="text" id="commandInput" autofocus autocomplete="off" spellcheck="false">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const input = document.getElementById("commandInput");
+        const output = document.getElementById("output");
+
+        function executeChip(command) {
+            if (command === "home") window.location.href = "../index.html?achieved=rights";
+            if (command === "panic") {
+                output.innerHTML += `
+            <div style="border: 1px solid #f85149; padding: 10px; margin: 10px 0; border-radius: 4px; background: rgba(248, 81, 73, 0.1);">
+                <p class="danger">YOU ARE PROTECTED BY LAW:</p>
+                <p>📞 Cyber Bureau: 1144</p>
+                <p>📍 Location: Bhotahity, Kathmandu</p>
+                <p>Never hesitate to reach out if you feel unsafe. Help is available.</p>
+            </div>`;
+                output.scrollTop = output.scrollHeight;
+            }
+        }
+
+        input.addEventListener("keypress", function (e) {
+            if (e.key === "Enter") {
+                let command = input.value.toLowerCase().trim();
+                if (command === "home") {
+                    window.location.href = "../index.html?achieved=rights";
+                } else {
+                    output.innerHTML += `<p><span class="prompt">rights@suraksha:~$</span> ${command}</p>`;
+                    output.innerHTML += `<p class="danger">Error: Unknown command. Type 'home' to exit.</p>`;
+                }
+                input.value = "";
+                output.scrollTop = output.scrollHeight;
+            }
+        });
+    </script>
+</body>
+
+</html>

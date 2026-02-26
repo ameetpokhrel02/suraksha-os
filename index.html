@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suraksha OS | Nepal Digital Safety System</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="terminal">
+        <!-- Header -->
+        <div class="terminal-header">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+            <span class="title">SURAKSHA OS [Version 1.0.4] - CITIZEN SAFETY GATEWAY</span>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="terminal-body" id="output">
+            <div class="intro-guidance">
+                <p><b>Protecting Your Digital Life in Nepal.</b></p>
+                <p>Suraksha OS is your personal guide to staying safe in our digital world.
+                    From detecting scams to securing your identity, we'll build your "Digital Shield" together.</p>
+                <p><i>Type commands below OR click the buttons to begin your journey.</i></p>
+            </div>
+
+            <div id="boot-sequence">
+                <p>Initializing Nepal Citizen Protection Protocol...</p>
+                <p>Loading Educational Journey [ETA Act Compliance]...</p>
+                <p class="success">System Ready. You are currently in the safety gateway.</p>
+            </div>
+
+            <br>
+            <p>Welcome back, Citizen.</p>
+            <p>Your Current Safety Shield: <span class="danger" id="safetyLevel">UNVERIFIED</span></p>
+            <br>
+            <p>Explore the modules below to strengthen your shield. If you ever feel unsafe, use the **Emergency Help**
+                button.</p>
+        </div>
+
+        <!-- Hybrid UI: Simple Mode Navigation -->
+        <div class="terminal-input-container">
+            <div class="command-chips">
+                <button class="chip success-stroke" onclick="executeChip('learn')"
+                    style="background: rgba(63, 185, 80, 0.1); color: var(--success-color);">Learn Safety</button>
+                <button class="chip success-stroke" onclick="executeChip('scan')"
+                    style="background: rgba(63, 185, 80, 0.1); color: var(--success-color);">Check Scam</button>
+                <button class="chip success-stroke" onclick="executeChip('protect')"
+                    style="background: rgba(63, 185, 80, 0.1); color: var(--success-color);">Password Tool</button>
+                <button class="chip success-stroke" onclick="executeChip('rights')"
+                    style="background: rgba(63, 185, 80, 0.1); color: var(--success-color);">Your Rights</button>
+                <button class="chip success-stroke" onclick="executeChip('quiz')"
+                    style="background: rgba(63, 185, 80, 0.1); color: var(--success-color);">Quiz</button>
+                <button class="chip success-stroke" onclick="executeChip('help')"
+                    style="background: rgba(63, 185, 80, 0.1); color: var(--success-color);">All Commands</button>
+                <button class="chip"
+                    style="color: #ff5f56; border: 1px solid rgba(255,95,86,0.5); background: rgba(255,95,86,0.1); box-shadow: 0 0 10px rgba(255,95,86,0.2);"
+                    onclick="executeChip('panic')">Emergency Help</button>
+            </div>
+
+            <div class="terminal-input">
+                <span class="prompt">citizen@suraksha:~$</span>
+                <input type="text" id="commandInput" autofocus autocomplete="off" spellcheck="false">
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/terminal.js"></script>
+</body>
+
+</html>
