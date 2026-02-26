@@ -65,6 +65,31 @@
             border: 1px solid var(--danger-color);
             color: var(--danger-color);
         }
+
+        /* Mobile Responsive Fixes for Protect Module */
+        .password-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+
+        @media (max-width: 600px) {
+            .password-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .password-wrapper {
+                width: 100%;
+            }
+
+            .analyze-btn {
+                width: 100%;
+                padding: 12px !important;
+                height: 45px;
+            }
+        }
     </style>
 </head>
 
@@ -82,7 +107,7 @@
             <h3>Password Strength Checker</h3>
             <p>A strong password is your first line of defense. Test yours below:</p>
             <br>
-            <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+            <div class="password-container">
                 <div class="password-wrapper">
                     <input type="password" id="passwordIn" placeholder="Enter password to test..."
                         class="success-stroke"
@@ -103,7 +128,7 @@
                         </svg>
                     </button>
                 </div>
-                <button onclick="checkPassword()" class="chip success-stroke"
+                <button onclick="checkPassword()" class="chip success-stroke analyze-btn"
                     style="background: rgba(63, 185, 80, 0.1); color: var(--success-color); padding: 0 20px;">Analyze</button>
             </div>
 
