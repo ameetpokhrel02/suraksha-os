@@ -140,14 +140,19 @@
         }
 
         function showFinal() {
+            // Update localStorage for safetyScore
+            localStorage.setItem("safetyScore", "100");
+
             document.getElementById("quiz-container").innerHTML = `
-                <div style="text-align: center; padding: 20px; border: 2px solid var(--success-color); border-radius: 12px; background: rgba(63, 185, 80, 0.05);">
-                    <h2 class="success">Quiz Completed!</h2>
-                    <p style="font-size: 1.2rem; margin: 15px 0;">Final Score: ${score}/${quizData.length}</p>
-                    <p>Congratulations, Citizen! You have gained significant digital safety knowledge.</p>
-                    <br>
-                    <button class="chip" onclick="executeChip('home')" style="background: var(--success-color); color: white; border: none; padding: 10px 30px;">
-                        Return to Dashboard
+                <div style="text-align: center; padding: 25px; border: 2px solid var(--success-color); border-radius: 12px; background: rgba(63, 185, 80, 0.05); animation: fadeIn 0.5s;">
+                    <h2 class="success">You are now a DIGITAL SURAKSHAK</h2>
+                    <p style="font-size: 1.1rem; margin: 10px 0; color: white;">You understand safe digital practices and your rights.</p>
+                    <p style="font-size: 1rem; margin: 15px 0; opacity: 0.8;">Final Score: ${score}/${quizData.length}</p>
+                    <div style="margin: 20px 0; padding: 10px; border: 1px dashed var(--success-color); border-radius: 8px;">
+                        <span class="success">✔ Verified Protector Status</span>
+                    </div>
+                    <button class="chip success-stroke" onclick="executeChip('home')" style="background: var(--success-color); color: white; border: none; padding: 12px 35px; font-weight: bold; cursor: pointer;">
+                        RETURN TO DASHBOARD
                     </button>
                 </div>
             `;
