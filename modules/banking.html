@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banking Fraud Simulator - Suraksha OS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0e17;
+            --card-bg: #111827;
+            --header-bg: #0f1520;
+            --accent: #00ff9c;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --success: #10b981;
+            --text: #e2e8f0;
+            --muted: #64748b;
+            --border: rgba(255,255,255,0.08);
+            --esewa-green: #60bb46;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: var(--bg);
+            font-family: 'Inter', sans-serif;
+            height: 100vh; height: 100dvh;
+            display: flex; flex-direction: column;
+            overflow: hidden; color: var(--text);
+        }
+
+        /* Awareness Banner */
+        .awareness-banner {
+            background: #0d1117;
+            display: flex; align-items: center; justify-content: center;
+            gap: 10px; padding: 8px 16px; flex-shrink: 0;
+            border-bottom: 1px solid var(--danger);
+        }
+        .alert-icon { color: #ffcc00; font-size: 1rem; }
+        .alert-text { color: var(--danger); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+
+        /* Phone Screen */
+        .phone-screen {
+            flex: 1; display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            padding: 20px; position: relative; overflow-y: auto;
+        }
+
+        /* Incoming Call UI */
+        .call-card {
+            width: 100%; max-width: 380px;
+            background: linear-gradient(145deg, #1a2332, #0f1825);
+            border: 1px solid var(--border);
+            border-radius: 24px; padding: 40px 28px;
+            text-align: center; animation: slideUp 0.5s ease-out;
+        }
+        .caller-avatar {
+            width: 90px; height: 90px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--esewa-green), #3a8f28);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2.2rem; margin: 0 auto 20px;
+            box-shadow: 0 0 30px rgba(96,187,70,0.25);
+            animation: pulse 2s infinite;
+        }
+        .caller-name { font-size: 1.3rem; font-weight: 700; margin-bottom: 4px; }
+        .caller-label { font-size: 0.8rem; color: var(--muted); margin-bottom: 24px; }
+        .call-status { font-size: 0.85rem; color: var(--accent); margin-bottom: 28px; animation: blink 1.2s infinite; }
+        .call-actions { display: flex; gap: 40px; justify-content: center; }
+        .call-btn {
+            width: 64px; height: 64px; border-radius: 50%;
+            border: none; font-size: 1.5rem; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .call-btn:hover { transform: scale(1.1); }
+        .call-btn.accept { background: var(--success); color: white; box-shadow: 0 0 20px rgba(16,185,129,0.4); }
+        .call-btn.reject { background: var(--danger); color: white; box-shadow: 0 0 20px rgba(239,68,68,0.4); }
+        .call-btn-label { font-size: 0.7rem; color: var(--muted); margin-top: 8px; text-align: center; }
+
+        /* Chat Conversation Phase */
+        .convo-screen { display: none; flex: 1; flex-direction: column; width: 100%; }
+        .convo-header {
+            background: var(--header-bg); padding: 12px 16px;
+            display: flex; align-items: center; gap: 12px;
+            border-bottom: 1px solid var(--border); flex-shrink: 0;
+        }
+        .back-btn { text-decoration: none; color: var(--accent); display: flex; align-items: center; padding: 4px; }
+        .convo-avatar {
+            width: 40px; height: 40px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--esewa-green), #3a8f28);
+            display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0;
+        }
+        .convo-info { flex: 1; }
+        .convo-name { font-weight: 600; font-size: 0.95rem; }
+        .convo-status { font-size: 0.72rem; color: var(--success); }
+        .call-timer { font-size: 0.75rem; color: var(--accent); font-family: monospace; }
+
+        /* Transcript */
+        .transcript {
+            flex: 1; padding: 20px 5%; overflow-y: auto;
+            display: flex; flex-direction: column; gap: 12px;
+        }
+        .msg-bubble {
+            max-width: 85%; padding: 12px 16px; border-radius: 16px;
+            font-size: 0.88rem; line-height: 1.55;
+            animation: fadeSlide 0.35s ease-out; position: relative;
+        }
+        .msg-bubble.caller {
+            align-self: flex-start; background: var(--card-bg);
+            border: 1px solid var(--border); border-bottom-left-radius: 4px;
+        }
+        .msg-bubble.narration {
+            align-self: center; background: rgba(0,255,156,0.08);
+            border: 1px dashed rgba(0,255,156,0.3); font-size: 0.78rem;
+            color: var(--accent); text-align: center; max-width: 90%;
+            padding: 8px 16px; border-radius: 8px;
+        }
+        .msg-bubble .speaker { font-size: 0.72rem; font-weight: 700; color: var(--esewa-green); margin-bottom: 4px; }
+
+        /* Decision */
+        .decision-area {
+            background: var(--header-bg); padding: 16px;
+            border-top: 1px solid var(--border); flex-shrink: 0;
+            display: none; flex-direction: column; gap: 10px;
+            animation: slideUp 0.4s ease-out;
+        }
+        .decision-title { font-weight: 600; font-size: 0.85rem; text-align: center; color: var(--warning); }
+        .btn-row { display: flex; gap: 8px; }
+        .btn {
+            flex: 1; padding: 13px 8px; border: none; border-radius: 12px;
+            font-weight: 700; cursor: pointer; font-size: 0.8rem;
+            transition: all 0.2s; letter-spacing: 0.3px; font-family: 'Inter', sans-serif;
+        }
+        .btn:hover { opacity: 0.9; transform: translateY(-1px); }
+        .btn-danger { background: var(--danger); color: white; }
+        .btn-warn { background: var(--warning); color: #1a1a1a; }
+        .btn-safe { background: var(--success); color: white; }
+
+        /* Overlay Result */
+        .overlay {
+            display: none; position: fixed; inset: 0;
+            background: rgba(0,0,0,0.92); z-index: 3000;
+            align-items: center; justify-content: center;
+            padding: 20px; backdrop-filter: blur(5px);
+        }
+        .result-box {
+            background: var(--card-bg); border: 1px solid var(--border);
+            border-radius: 16px; padding: 30px 24px; max-width: 440px;
+            width: 100%; text-align: center; animation: zoomIn 0.3s ease-out;
+        }
+        .result-icon { font-size: 3.5rem; margin-bottom: 16px; display: block; }
+        .result-title { font-size: 1.3rem; font-weight: 800; margin-bottom: 14px; }
+        .result-body { color: var(--muted); line-height: 1.7; margin-bottom: 22px; text-align: left; font-size: 0.85rem; }
+        .result-body p { margin: 0 0 10px; }
+        .result-body b { color: var(--text); }
+        .finish-btn {
+            background: var(--accent); color: var(--bg); border: none;
+            padding: 14px; border-radius: 12px; font-weight: 700;
+            cursor: pointer; width: 100%; font-size: 0.95rem;
+            font-family: 'Inter', sans-serif;
+        }
+        .finish-btn:hover { opacity: 0.9; }
+        .retry-btn { background: transparent; border: 1px solid var(--muted); color: var(--text); margin-top: 10px; }
+
+        /* Scenario Picker */
+        .scenario-picker {
+            width: 100%; max-width: 440px; display: flex; flex-direction: column; gap: 16px;
+        }
+        .scenario-title { text-align: center; font-size: 1.1rem; font-weight: 700; color: var(--accent); }
+        .scenario-sub { text-align: center; font-size: 0.8rem; color: var(--muted); margin-top: -8px; }
+        .scenario-card {
+            background: var(--card-bg); border: 1px solid var(--border);
+            border-radius: 16px; padding: 20px; cursor: pointer;
+            transition: all 0.3s; display: flex; gap: 16px; align-items: center;
+        }
+        .scenario-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,255,156,0.1); }
+        .scenario-icon { font-size: 2rem; flex-shrink: 0; }
+        .scenario-info h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 4px; }
+        .scenario-info p { font-size: 0.78rem; color: var(--muted); line-height: 1.4; }
+
+        @keyframes pulse { 0%,100% { box-shadow: 0 0 30px rgba(96,187,70,0.25); } 50% { box-shadow: 0 0 50px rgba(96,187,70,0.45); } }
+        @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+        @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes fadeSlide { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes zoomIn { from { transform: scale(0.92); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        @media (max-width: 480px) {
+            .call-card { padding: 30px 20px; }
+            .caller-avatar { width: 72px; height: 72px; font-size: 1.8rem; }
+            .btn { padding: 11px 6px; font-size: 0.75rem; }
+            .msg-bubble { max-width: 92%; font-size: 0.84rem; }
+            .scenario-card { padding: 16px; }
+        }
+        @media (max-width: 360px) { .btn-row { flex-direction: column; } }
+        @media (min-width: 768px) {
+            .transcript { padding: 20px 18%; }
+            .msg-bubble { max-width: 70%; }
+            .decision-area { padding: 16px 18%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="awareness-banner">
+        <span class="alert-icon">⚠️</span>
+        <span class="alert-text">Cybersecurity Awareness Simulation · NO DATA STORED</span>
+    </div>
+
+    <!-- Phase 0: Scenario Picker -->
+    <div class="phone-screen" id="pickerPhase">
+        <div class="scenario-picker">
+            <div class="scenario-title">🏦 Banking Fraud Lab</div>
+            <div class="scenario-sub">Choose a scam scenario to experience</div>
+            <div class="scenario-card" onclick="startScenario('lottery')">
+                <div class="scenario-icon">📞</div>
+                <div class="scenario-info">
+                    <h3>Lottery Prize Call</h3>
+                    <p>You receive a phone call claiming you've won a Rs. 5,00,000 lottery prize from Nepal Telecom.</p>
+                </div>
+            </div>
+            <div class="scenario-card" onclick="startScenario('cashback')">
+                <div class="scenario-icon">💸</div>
+                <div class="scenario-info">
+                    <h3>eSewa Cashback Scam</h3>
+                    <p>An "eSewa Support Agent" calls about a Rs. 2,000 cashback stuck in your account.</p>
+                </div>
+            </div>
+            <a href="../index.html" style="text-align:center;color:var(--muted);font-size:0.8rem;margin-top:10px;">← Return to Suraksha OS</a>
+        </div>
+    </div>
+
+    <!-- Phase 1: Incoming Call -->
+    <div class="phone-screen" id="callPhase" style="display:none;">
+        <div class="call-card">
+            <div class="caller-avatar" id="callerAvatar">📞</div>
+            <div class="caller-name" id="callerName">Unknown</div>
+            <div class="caller-label" id="callerLabel">Incoming call</div>
+            <div class="call-status">📱 Incoming Call...</div>
+            <div class="call-actions">
+                <div>
+                    <button class="call-btn reject" onclick="rejectCall()">✕</button>
+                    <div class="call-btn-label">Decline</div>
+                </div>
+                <div>
+                    <button class="call-btn accept" onclick="acceptCall()">📞</button>
+                    <div class="call-btn-label">Accept</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Phase 2: Call Conversation -->
+    <div class="convo-screen" id="convoPhase">
+        <div class="convo-header">
+            <a href="../index.html" class="back-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            </a>
+            <div class="convo-avatar" id="convoAvatar">📞</div>
+            <div class="convo-info">
+                <div class="convo-name" id="convoName">Caller</div>
+                <div class="convo-status">🔴 Call in progress</div>
+            </div>
+            <div class="call-timer" id="callTimer">00:00</div>
+        </div>
+        <div class="transcript" id="transcript"></div>
+        <div class="decision-area" id="decisionArea">
+            <div class="decision-title" id="decisionTitle">⚠️ What do you do?</div>
+            <div class="btn-row" id="btnRow"></div>
+        </div>
+    </div>
+
+    <!-- Result Overlay -->
+    <div class="overlay" id="overlay">
+        <div class="result-box" id="resultBox"></div>
+    </div>
+
+    <script>
+        // Scenario Data
+        const SCENARIOS = {
+            lottery: {
+                avatar: '🎰', name: 'Nepal Telecom Lottery', label: '+977-01-44XXXXX · Landline',
+                convoAvatar: '🎰',
+                messages: [
+                    { type: 'narration', text: '📞 You answered a call from an unknown landline number...' },
+                    { type: 'caller', speaker: 'Caller', text: 'Namaste! Am I speaking with the owner of this mobile number? Congratulations! Your SIM card number has been selected in the Nepal Telecom Annual Lucky Draw!' },
+                    { type: 'caller', speaker: 'Caller', text: 'You have won a cash prize of Rs. 5,00,000! This is verified by Nepal Telecom head office, Sundhara.' },
+                    { type: 'narration', text: '🔍 The caller sounds very professional and confident...' },
+                    { type: 'caller', speaker: 'Caller', text: 'To claim your prize, you need to pay a small processing fee of Rs. 5,000 via eSewa. Also, I will need your full name and citizenship number for verification.' },
+                ],
+                decision: {
+                    title: '🎰 They want Rs. 5,000 "processing fee" and your citizenship number. What do you do?',
+                    buttons: [
+                        { label: '💸 PAY & SHARE INFO', class: 'btn-danger', action: 'comply' },
+                        { label: '🤔 ASK QUESTIONS', class: 'btn-warn', action: 'question' },
+                        { label: '🚫 HANG UP', class: 'btn-safe', action: 'hangup' }
+                    ]
+                },
+                outcomes: {
+                    comply: {
+                        icon: '🚨', color: '#ef4444', title: 'SCAMMED — Rs. 5,000 LOST!',
+                        body: `<p><b>What happened:</b> You sent Rs. 5,000 to a scammer and gave away your personal identity documents. There is no lottery — Nepal Telecom does NOT run lucky draws via phone calls.</p>
+                        <p><b>The Danger:</b> With your citizenship number, scammers can open fake bank accounts, take loans in your name, or commit identity fraud.</p>
+                        <p><b>Real Nepal Telecom Policy:</b> NTC never calls customers for prize claims. All official promotions are announced on ntc.net.np only.</p>
+                        <p><b>If this happens to you:</b> Call Nepal Police Cyber Bureau at <b>1144</b> immediately and file a complaint at the nearest police station.</p>`,
+                        retry: true
+                    },
+                    question: {
+                        icon: '🔍', color: '#f59e0b', title: 'SMART THINKING!',
+                        body: `<p><b>You asked questions — here's what you would discover:</b></p>
+                        <p><b>Red Flag 1:</b> No official lottery requires "processing fees." Real prizes are delivered free of charge.</p>
+                        <p><b>Red Flag 2:</b> Nepal Telecom doesn't announce winners via phone calls. Check ntc.net.np for official promos.</p>
+                        <p><b>Red Flag 3:</b> Asking for citizenship number over phone is illegal. No legitimate company does this.</p>
+                        <p><b>Red Flag 4:</b> The "urgency" ("claim within 24 hours") is pressure tactics to prevent you from verifying.</p>
+                        <p><b>Always verify:</b> Call Nepal Telecom's official helpline at <b>1498</b> to confirm any promotion.</p>`,
+                        retry: false
+                    },
+                    hangup: {
+                        icon: '✅', color: '#10b981', title: 'EXCELLENT — STAYED SAFE!',
+                        body: `<p><b>Perfect response!</b> Hanging up is always the safest action when you receive unsolicited prize calls.</p>
+                        <p><b>Why this was a scam:</b></p>
+                        <p>• Nepal Telecom does NOT conduct phone lotteries<br>• Real prizes never require "processing fees"<br>• Asking for citizenship numbers over phone is illegal<br>• Scammers use urgency to bypass your critical thinking</p>
+                        <p><b>Protect your community:</b> Warn your family and friends — elderly citizens are the most targeted by lottery scams in Nepal.</p>`,
+                        retry: false
+                    }
+                }
+            },
+            cashback: {
+                avatar: '💚', name: 'eSewa Support', label: '+977-98XXXXXXXX · Mobile',
+                convoAvatar: '💚',
+                messages: [
+                    { type: 'narration', text: '📞 You answered a call from an unknown mobile number...' },
+                    { type: 'caller', speaker: '"eSewa Support"', text: 'Namaste! This is calling from eSewa customer support. We found that a cashback of Rs. 2,000 is pending in your account due to a system error.' },
+                    { type: 'caller', speaker: '"eSewa Support"', text: 'To release this cashback to your wallet, I need to verify your account. Can you please open your eSewa app and tell me your registered number?' },
+                    { type: 'narration', text: '⚠️ The caller seems to know you have an eSewa account...' },
+                    { type: 'caller', speaker: '"eSewa Support"', text: 'Now I am sending a verification code to your phone. Please read the 6-digit code to me so I can release your Rs. 2,000 cashback immediately.' },
+                ],
+                decision: {
+                    title: '💸 They want your eSewa login code. What do you do?',
+                    buttons: [
+                        { label: '🔢 SHARE CODE', class: 'btn-danger', action: 'comply' },
+                        { label: '🤔 VERIFY IDENTITY', class: 'btn-warn', action: 'question' },
+                        { label: '🚫 HANG UP', class: 'btn-safe', action: 'hangup' }
+                    ]
+                },
+                outcomes: {
+                    comply: {
+                        icon: '🚨', color: '#ef4444', title: 'WALLET EMPTIED!',
+                        body: `<p><b>What happened:</b> That "verification code" was actually your eSewa login OTP. The scammer now has full access to your digital wallet.</p>
+                        <p><b>The Damage:</b> They can transfer all your balance, linked bank funds, and make purchases using your account within seconds.</p>
+                        <p><b>Real eSewa Policy:</b> eSewa support will NEVER call you asking for OTPs, PINs, or passwords. Their official helpline is <b>01-5970016</b>.</p>
+                        <p><b>If this happens:</b> Immediately call eSewa at 01-5970016, block your account, and file a report at Nepal Cyber Bureau <b>1144</b>.</p>`,
+                        retry: true
+                    },
+                    question: {
+                        icon: '🔍', color: '#f59e0b', title: 'GOOD INSTINCT!',
+                        body: `<p><b>You chose to verify — here's what a real check would reveal:</b></p>
+                        <p><b>Red Flag 1:</b> eSewa never calls users about "pending cashback." All cashbacks are credited automatically.</p>
+                        <p><b>Red Flag 2:</b> No support agent will ever ask for your OTP or PIN. These codes are for YOUR eyes only.</p>
+                        <p><b>Red Flag 3:</b> The caller used a personal mobile number, not eSewa's official line (01-5970016).</p>
+                        <p><b>How to verify:</b> Always call eSewa directly at <b>01-5970016</b> or visit esewa.com.np for support.</p>`,
+                        retry: false
+                    },
+                    hangup: {
+                        icon: '✅', color: '#10b981', title: 'WALLET PROTECTED!',
+                        body: `<p><b>Smart move!</b> Hanging up protected your entire digital wallet balance.</p>
+                        <p><b>Why this was a scam:</b></p>
+                        <p>• eSewa never calls about "pending cashback"<br>• OTP codes are NEVER shared with anyone, including support<br>• Scammer used personal number, not official eSewa line<br>• "Verification code" = your login password</p>
+                        <p><b>Remember:</b> Your OTP is your KEY. Sharing it = giving your house keys to a stranger. Protect it always.</p>`,
+                        retry: false
+                    }
+                }
+            }
+        };
+
+        let currentScenario = null;
+        let msgIndex = 0;
+        let timerInterval = null;
+        let seconds = 0;
+
+        function startScenario(type) {
+            currentScenario = SCENARIOS[type];
+            msgIndex = 0; seconds = 0;
+            document.getElementById('pickerPhase').style.display = 'none';
+            document.getElementById('callerAvatar').textContent = currentScenario.avatar;
+            document.getElementById('callerName').textContent = currentScenario.name;
+            document.getElementById('callerLabel').textContent = currentScenario.label;
+            document.getElementById('callPhase').style.display = 'flex';
+        }
+
+        function rejectCall() {
+            const o = currentScenario.outcomes.hangup;
+            showResult(o.icon, o.color, o.title, o.body, o.retry);
+        }
+
+        function acceptCall() {
+            document.getElementById('callPhase').style.display = 'none';
+            document.getElementById('convoPhase').style.display = 'flex';
+            document.getElementById('convoAvatar').textContent = currentScenario.convoAvatar;
+            document.getElementById('convoName').textContent = currentScenario.name;
+            timerInterval = setInterval(() => {
+                seconds++;
+                const m = String(Math.floor(seconds / 60)).padStart(2, '0');
+                const s = String(seconds % 60).padStart(2, '0');
+                document.getElementById('callTimer').textContent = m + ':' + s;
+            }, 1000);
+            setTimeout(playMessages, 800);
+        }
+
+        function playMessages() {
+            const transcript = document.getElementById('transcript');
+            if (msgIndex >= currentScenario.messages.length) {
+                showDecision(); return;
+            }
+            const m = currentScenario.messages[msgIndex];
+            const div = document.createElement('div');
+            div.className = 'msg-bubble ' + m.type;
+            if (m.type === 'caller') {
+                div.innerHTML = `<div class="speaker">${m.speaker}</div>${m.text}`;
+            } else {
+                div.textContent = m.text;
+            }
+            transcript.appendChild(div);
+            transcript.scrollTop = transcript.scrollHeight;
+            msgIndex++;
+            setTimeout(playMessages, 2200);
+        }
+
+        function showDecision() {
+            const d = currentScenario.decision;
+            document.getElementById('decisionTitle').textContent = d.title;
+            const row = document.getElementById('btnRow');
+            row.innerHTML = '';
+            d.buttons.forEach(b => {
+                const btn = document.createElement('button');
+                btn.className = 'btn ' + b.class;
+                btn.textContent = b.label;
+                btn.onclick = () => handleChoice(b.action);
+                row.appendChild(btn);
+            });
+            document.getElementById('decisionArea').style.display = 'flex';
+        }
+
+        function handleChoice(action) {
+            clearInterval(timerInterval);
+            const o = currentScenario.outcomes[action];
+            showResult(o.icon, o.color, o.title, o.body, o.retry);
+        }
+
+        function showResult(icon, color, title, body, retry) {
+            clearInterval(timerInterval);
+            const overlay = document.getElementById('overlay');
+            overlay.style.display = 'flex';
+            document.getElementById('resultBox').innerHTML = `
+                <span class="result-icon">${icon}</span>
+                <h2 class="result-title" style="color:${color};">${title}</h2>
+                <div class="result-body">${body}</div>
+                ${retry ? '<button class="finish-btn retry-btn" onclick="location.reload()">TRY AGAIN</button>' : ''}
+                <button class="finish-btn" onclick="location.assign('../index.html?achieved=banking')">FINISH SIMULATION</button>
+            `;
+        }
+    </script>
+</body>
+</html>

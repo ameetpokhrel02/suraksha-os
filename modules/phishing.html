@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phishing Email Simulator - Suraksha OS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0f1118;
+            --sidebar-bg: #1a1d2e;
+            --card-bg: #1e2235;
+            --header-bg: #151828;
+            --accent: #00ff9c;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --success: #10b981;
+            --text: #e2e8f0;
+            --muted: #64748b;
+            --border: rgba(255,255,255,0.08);
+            --blue: #3b82f6;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: var(--bg); font-family: 'Inter', sans-serif;
+            height: 100vh; height: 100dvh;
+            display: flex; flex-direction: column;
+            overflow: hidden; color: var(--text);
+        }
+
+        /* Awareness Banner */
+        .awareness-banner {
+            background: #0d1117; display: flex; align-items: center; justify-content: center;
+            gap: 10px; padding: 8px 16px; flex-shrink: 0;
+            border-bottom: 1px solid var(--danger);
+        }
+        .alert-icon { color: #ffcc00; font-size: 1rem; }
+        .alert-text { color: var(--danger); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+
+        /* Email Client Layout */
+        .email-client { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+
+        /* Toolbar */
+        .toolbar {
+            background: var(--header-bg); padding: 10px 16px;
+            display: flex; align-items: center; gap: 12px;
+            border-bottom: 1px solid var(--border); flex-shrink: 0;
+        }
+        .back-link { text-decoration: none; color: var(--accent); display: flex; align-items: center; padding: 4px; }
+        .toolbar-logo { font-weight: 800; font-size: 1rem; color: var(--accent); letter-spacing: 1px; }
+        .toolbar-right { margin-left: auto; display: flex; gap: 12px; align-items: center; }
+        .inbox-badge {
+            background: var(--danger); color: white; font-size: 0.65rem; font-weight: 700;
+            padding: 2px 7px; border-radius: 10px;
+        }
+        .toolbar-user {
+            width: 32px; height: 32px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--blue), #6366f1);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.8rem; font-weight: 700;
+        }
+
+        /* Inbox List */
+        .inbox { flex: 1; overflow-y: auto; display: flex; flex-direction: column; }
+        .inbox-header {
+            padding: 14px 16px; font-weight: 700; font-size: 0.85rem;
+            color: var(--muted); border-bottom: 1px solid var(--border);
+            display: flex; align-items: center; gap: 8px;
+        }
+        .email-item {
+            padding: 14px 16px; border-bottom: 1px solid var(--border);
+            cursor: pointer; transition: background 0.2s; display: flex; gap: 12px;
+            animation: fadeSlide 0.3s ease-out;
+        }
+        .email-item:hover { background: rgba(255,255,255,0.03); }
+        .email-item.unread { background: rgba(59,130,246,0.06); }
+        .email-item.phishing { border-left: 3px solid transparent; }
+        .email-avatar {
+            width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1rem; font-weight: 700; color: white;
+        }
+        .email-content { flex: 1; min-width: 0; }
+        .email-from { font-weight: 600; font-size: 0.88rem; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .email-subject { font-size: 0.82rem; color: var(--text); margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .email-preview { font-size: 0.75rem; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .email-meta { flex-shrink: 0; text-align: right; }
+        .email-time { font-size: 0.7rem; color: var(--muted); }
+        .email-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--blue); margin-left: auto; margin-top: 6px; }
+
+        /* Email Detail View */
+        .email-detail { display: none; flex: 1; flex-direction: column; overflow: hidden; }
+        .detail-header {
+            padding: 16px; border-bottom: 1px solid var(--border);
+            display: flex; gap: 12px; align-items: flex-start; flex-shrink: 0;
+        }
+        .detail-back {
+            background: none; border: 1px solid var(--border); color: var(--text);
+            border-radius: 8px; padding: 6px 10px; cursor: pointer; font-size: 0.8rem;
+            font-family: 'Inter',sans-serif; flex-shrink: 0;
+        }
+        .detail-back:hover { border-color: var(--accent); color: var(--accent); }
+        .detail-subject { font-weight: 700; font-size: 1.05rem; flex: 1; }
+        .detail-sender {
+            padding: 12px 16px; border-bottom: 1px solid var(--border);
+            display: flex; gap: 12px; align-items: center; flex-shrink: 0;
+        }
+        .sender-avatar {
+            width: 42px; height: 42px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.1rem; font-weight: 700; color: white; flex-shrink: 0;
+        }
+        .sender-info { flex: 1; min-width: 0; }
+        .sender-name { font-weight: 600; font-size: 0.9rem; }
+        .sender-email { font-size: 0.75rem; color: var(--muted); word-break: break-all; }
+        .sender-email.suspicious { color: var(--warning); }
+
+        .detail-body {
+            flex: 1; padding: 20px 16px; overflow-y: auto;
+            font-size: 0.88rem; line-height: 1.7; color: var(--text);
+        }
+        .detail-body p { margin-bottom: 14px; }
+        .detail-body .fake-link {
+            color: var(--blue); text-decoration: underline; cursor: pointer;
+            word-break: break-all;
+        }
+        .detail-body .fake-btn {
+            display: inline-block; background: var(--danger); color: white;
+            padding: 10px 24px; border-radius: 8px; font-weight: 700;
+            text-decoration: none; cursor: pointer; margin: 10px 0;
+            transition: opacity 0.2s;
+        }
+        .detail-body .fake-btn:hover { opacity: 0.85; }
+
+        /* Analysis Panel */
+        .analysis-panel {
+            display: none; flex-shrink: 0;
+            background: var(--header-bg); border-top: 1px solid var(--border);
+            padding: 16px; animation: slideUp 0.4s ease-out;
+            max-height: 45vh; overflow-y: auto;
+        }
+        .analysis-title { font-weight: 700; font-size: 0.9rem; color: var(--accent); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+        .flag-item {
+            display: flex; gap: 10px; align-items: flex-start;
+            padding: 10px; margin-bottom: 8px;
+            background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.2);
+            border-radius: 10px; font-size: 0.82rem; line-height: 1.5;
+        }
+        .flag-icon { font-size: 1rem; flex-shrink: 0; margin-top: 2px; }
+        .flag-item.safe { background: rgba(16,185,129,0.08); border-color: rgba(16,185,129,0.2); }
+
+        /* Action Bar */
+        .action-bar {
+            display: none; flex-shrink: 0;
+            background: var(--header-bg); border-top: 1px solid var(--border);
+            padding: 12px 16px; gap: 8px;
+            animation: slideUp 0.3s ease-out;
+        }
+        .action-bar .btn {
+            flex: 1; padding: 12px 8px; border: none; border-radius: 10px;
+            font-weight: 700; cursor: pointer; font-size: 0.8rem;
+            transition: all 0.2s; font-family: 'Inter', sans-serif;
+        }
+        .action-bar .btn:hover { opacity: 0.9; transform: translateY(-1px); }
+        .btn-danger { background: var(--danger); color: white; }
+        .btn-warn { background: var(--warning); color: #1a1a1a; }
+        .btn-safe { background: var(--success); color: white; }
+
+        /* Overlay Result */
+        .overlay {
+            display: none; position: fixed; inset: 0;
+            background: rgba(0,0,0,0.92); z-index: 3000;
+            align-items: center; justify-content: center;
+            padding: 20px; backdrop-filter: blur(5px);
+        }
+        .result-box {
+            background: var(--card-bg); border: 1px solid var(--border);
+            border-radius: 16px; padding: 28px 22px; max-width: 440px;
+            width: 100%; text-align: center; animation: zoomIn 0.3s ease-out;
+        }
+        .result-icon { font-size: 3.5rem; margin-bottom: 14px; display: block; }
+        .result-title { font-size: 1.25rem; font-weight: 800; margin-bottom: 12px; }
+        .result-body { color: var(--muted); line-height: 1.7; margin-bottom: 20px; text-align: left; font-size: 0.83rem; }
+        .result-body p { margin: 0 0 10px; }
+        .result-body b { color: var(--text); }
+        .finish-btn {
+            background: var(--accent); color: var(--bg); border: none;
+            padding: 13px; border-radius: 10px; font-weight: 700;
+            cursor: pointer; width: 100%; font-size: 0.92rem;
+            font-family: 'Inter', sans-serif;
+        }
+        .finish-btn:hover { opacity: 0.9; }
+        .retry-btn { background: transparent; border: 1px solid var(--muted); color: var(--text); margin-top: 10px; }
+
+        .score-badge {
+            display: inline-block; background: rgba(0,255,156,0.1);
+            border: 1px solid rgba(0,255,156,0.3); color: var(--accent);
+            padding: 6px 16px; border-radius: 20px; font-weight: 700;
+            font-size: 1rem; margin-bottom: 12px;
+        }
+
+        @keyframes fadeSlide { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes zoomIn { from { transform: scale(0.92); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        @media (max-width: 480px) {
+            .email-item { padding: 12px; }
+            .detail-body { padding: 16px 12px; font-size: 0.84rem; }
+            .flag-item { font-size: 0.78rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="awareness-banner">
+        <span class="alert-icon">⚠️</span>
+        <span class="alert-text">Phishing Awareness Simulation · NO DATA STORED</span>
+    </div>
+
+    <div class="email-client">
+        <!-- Toolbar -->
+        <div class="toolbar">
+            <a href="../index.html" class="back-link">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            </a>
+            <span class="toolbar-logo">📧 SurakshaMail</span>
+            <div class="toolbar-right">
+                <span class="inbox-badge">4 new</span>
+                <div class="toolbar-user">C</div>
+            </div>
+        </div>
+
+        <!-- Inbox View -->
+        <div class="inbox" id="inboxView">
+            <div class="inbox-header">📥 Inbox <span style="margin-left:auto;font-size:0.75rem;color:var(--accent);">Tap an email to inspect it</span></div>
+        </div>
+
+        <!-- Email Detail View -->
+        <div class="email-detail" id="detailView">
+            <div class="detail-header">
+                <button class="detail-back" onclick="goBackToInbox()">← Back</button>
+                <div class="detail-subject" id="detailSubject"></div>
+            </div>
+            <div class="detail-sender" id="detailSender"></div>
+            <div class="detail-body" id="detailBody"></div>
+            <div class="analysis-panel" id="analysisPanel"></div>
+            <div class="action-bar" id="actionBar" style="display:none;"></div>
+        </div>
+    </div>
+
+    <!-- Result Overlay -->
+    <div class="overlay" id="overlay">
+        <div class="result-box" id="resultBox"></div>
+    </div>
+
+    <script>
+        let score = 0;
+        let answered = 0;
+        const totalEmails = 4;
+
+        const EMAILS = [
+            {
+                id: 1, unread: true, phishing: true,
+                avatar: '🏦', avatarBg: '#1e40af',
+                from: 'Nepal Rastra Bank', email: 'security@nrb-alerts-verify.com.np',
+                subject: '⚠️ Urgent: Your Bank Account Will Be Suspended',
+                preview: 'Dear Customer, we detected suspicious activity on your account...',
+                time: '10:32 AM',
+                body: `<p>Dear Valued Customer,</p>
+                <p>We have detected <b>unusual login activity</b> on your bank account linked to Nepal Rastra Bank. For your security, your account will be <b>permanently suspended within 24 hours</b> unless you verify your identity.</p>
+                <p>Click the button below to verify your account immediately:</p>
+                <p><span class="fake-btn" onclick="clickedLink(1)">🔒 Verify My Account Now</span></p>
+                <p><span class="fake-link" onclick="clickedLink(1)">https://nrb-alerts-verify.com.np/secure-login</span></p>
+                <p>Failure to verify will result in permanent account closure.</p>
+                <p>Regards,<br>Nepal Rastra Bank Security Team<br>Baluwatar, Kathmandu</p>`,
+                flags: [
+                    { icon: '🚩', text: '<b>Fake domain:</b> "nrb-alerts-verify.com.np" is NOT the real NRB domain (nrb.org.np).', safe: false },
+                    { icon: '🚩', text: '<b>Urgency pressure:</b> "Suspended within 24 hours" is a classic fear tactic.', safe: false },
+                    { icon: '🚩', text: '<b>Generic greeting:</b> Real banks address you by name, not "Dear Customer."', safe: false },
+                    { icon: '🚩', text: '<b>Suspicious link:</b> The URL leads to a phishing site, not the real NRB portal.', safe: false }
+                ]
+            },
+            {
+                id: 2, unread: true, phishing: false,
+                avatar: '🎓', avatarBg: '#059669',
+                from: 'Tribhuvan University', email: 'exam@tu.edu.np',
+                subject: 'Exam Schedule Update — Spring 2026',
+                preview: 'Dear students, the updated examination schedule for spring semester...',
+                time: '9:15 AM',
+                body: `<p>Dear Students,</p>
+                <p>The updated examination schedule for <b>Spring Semester 2026</b> has been published on the official TU website.</p>
+                <p>Please visit <span class="fake-link" style="color:var(--success);" onclick="clickedLink(2)">https://tu.edu.np/examschedule</span> to view your exam dates and room assignments.</p>
+                <p>Ensure you bring your admit card and a valid ID on examination day.</p>
+                <p>Best regards,<br>Office of the Controller of Examinations<br>Tribhuvan University, Kirtipur</p>`,
+                flags: [
+                    { icon: '✅', text: '<b>Legitimate domain:</b> tu.edu.np is the official TU domain.', safe: true },
+                    { icon: '✅', text: '<b>No urgency pressure:</b> Informational tone, no threats or deadlines.', safe: true },
+                    { icon: '✅', text: '<b>No sensitive data requested:</b> Does not ask for passwords or OTPs.', safe: true }
+                ]
+            },
+            {
+                id: 3, unread: true, phishing: true,
+                avatar: '💼', avatarBg: '#7c3aed',
+                from: 'Microsoft 365', email: 'admin@m1crosoft-365-verify.com',
+                subject: 'Your Microsoft 365 password expires today!',
+                preview: 'Your Office 365 password will expire in 2 hours. Update now...',
+                time: '8:47 AM',
+                body: `<p>Dear User,</p>
+                <p>Your <b>Microsoft 365</b> password will expire in <b>2 hours</b>. To avoid losing access to your email, OneDrive, and Teams, please update your password immediately.</p>
+                <p><span class="fake-btn" onclick="clickedLink(3)">🔑 Update Password Now</span></p>
+                <p>If you did not request this, please ignore this email (but your access WILL be revoked).</p>
+                <p>Microsoft 365 Security Team</p>`,
+                flags: [
+                    { icon: '🚩', text: '<b>Misspelled domain:</b> "m1crosoft" uses the number 1 instead of letter i — classic spoofing.', safe: false },
+                    { icon: '🚩', text: '<b>False urgency:</b> "Expires in 2 hours" pressures you to act without thinking.', safe: false },
+                    { icon: '🚩', text: '<b>Contradictory message:</b> "Ignore this email BUT your access will be revoked" is manipulative.', safe: false },
+                    { icon: '🚩', text: '<b>No personalization:</b> Real Microsoft emails include your name and organization.', safe: false }
+                ]
+            },
+            {
+                id: 4, unread: true, phishing: true,
+                avatar: '📦', avatarBg: '#ea580c',
+                from: 'Nepal Post Delivery', email: 'tracking@nepalpost-delivery-center.com',
+                subject: 'Your package could not be delivered — Action Required',
+                preview: 'We attempted to deliver your parcel but no one was available...',
+                time: '7:20 AM',
+                body: `<p>Dear Recipient,</p>
+                <p>We attempted to deliver your parcel (Tracking: <b>NP-2026-88471</b>) but no one was available to receive it.</p>
+                <p>Your package will be <b>returned to the sender in 48 hours</b> unless you confirm your delivery address and pay the re-delivery fee of <b>Rs. 250</b>.</p>
+                <p><span class="fake-btn" onclick="clickedLink(4)">📦 Confirm Delivery & Pay Rs. 250</span></p>
+                <p><span class="fake-link" onclick="clickedLink(4)">https://nepalpost-delivery-center.com/redelivery</span></p>
+                <p>Nepal Post Express Delivery Service</p>`,
+                flags: [
+                    { icon: '🚩', text: '<b>Fake domain:</b> "nepalpost-delivery-center.com" is NOT the real Nepal Post (nepalpost.gov.np).', safe: false },
+                    { icon: '🚩', text: '<b>Fake tracking number:</b> Invented ID with no way to verify independently.', safe: false },
+                    { icon: '🚩', text: '<b>Payment request:</b> Nepal Post does not charge "re-delivery fees" via email links.', safe: false },
+                    { icon: '🚩', text: '<b>Urgency tactic:</b> "Returned in 48 hours" creates panic to override judgement.', safe: false }
+                ]
+            }
+        ];
+
+        let emailStates = {};
+        EMAILS.forEach(e => { emailStates[e.id] = { opened: false, judged: false }; });
+
+        function renderInbox() {
+            const inbox = document.getElementById('inboxView');
+            inbox.innerHTML = '<div class="inbox-header">📥 Inbox <span style="margin-left:auto;font-size:0.75rem;color:var(--accent);">Tap an email to inspect it</span></div>';
+            EMAILS.forEach(e => {
+                const item = document.createElement('div');
+                item.className = 'email-item' + (e.unread && !emailStates[e.id].opened ? ' unread' : '') + (e.phishing ? ' phishing' : '');
+                item.onclick = () => openEmail(e.id);
+                const judgedIcon = emailStates[e.id].judged ? (emailStates[e.id].correct ? '✅' : '❌') : '';
+                item.innerHTML = `
+                    <div class="email-avatar" style="background:${e.avatarBg}">${e.avatar}</div>
+                    <div class="email-content">
+                        <div class="email-from">${judgedIcon} ${e.from}</div>
+                        <div class="email-subject">${e.subject}</div>
+                        <div class="email-preview">${e.preview}</div>
+                    </div>
+                    <div class="email-meta">
+                        <div class="email-time">${e.time}</div>
+                        ${!emailStates[e.id].opened ? '<div class="email-dot"></div>' : ''}
+                    </div>`;
+                inbox.appendChild(item);
+            });
+        }
+
+        function openEmail(id) {
+            const e = EMAILS.find(em => em.id === id);
+            emailStates[id].opened = true;
+            document.getElementById('inboxView').style.display = 'none';
+            document.getElementById('detailView').style.display = 'flex';
+            document.getElementById('detailSubject').textContent = e.subject;
+            document.getElementById('detailSender').innerHTML = `
+                <div class="sender-avatar" style="background:${e.avatarBg}">${e.avatar}</div>
+                <div class="sender-info">
+                    <div class="sender-name">${e.from}</div>
+                    <div class="sender-email ${e.phishing ? 'suspicious' : ''}">${e.email}</div>
+                </div>
+                <div style="font-size:0.72rem;color:var(--muted);">${e.time}</div>`;
+            document.getElementById('detailBody').innerHTML = e.body;
+            const ap = document.getElementById('analysisPanel');
+            ap.style.display = 'none';
+            ap.innerHTML = '';
+            const ab = document.getElementById('actionBar');
+            if (emailStates[id].judged) {
+                ab.style.display = 'none';
+                showAnalysis(e);
+            } else {
+                ab.style.display = 'flex';
+                ab.innerHTML = `
+                    <button class="btn btn-danger" onclick="judgeEmail(${id}, true)">🚩 PHISHING</button>
+                    <button class="btn btn-safe" onclick="judgeEmail(${id}, false)">✅ LEGITIMATE</button>`;
+            }
+        }
+
+        function clickedLink(id) {
+            const e = EMAILS.find(em => em.id === id);
+            if (e.phishing) {
+                showAnalysis(e);
+                const ab = document.getElementById('actionBar');
+                ab.style.display = 'flex';
+                if (!emailStates[id].judged) {
+                    ab.innerHTML = `
+                        <button class="btn btn-danger" onclick="judgeEmail(${id}, true)">🚩 PHISHING</button>
+                        <button class="btn btn-safe" onclick="judgeEmail(${id}, false)">✅ LEGITIMATE</button>`;
+                }
+            }
+        }
+
+        function showAnalysis(e) {
+            const ap = document.getElementById('analysisPanel');
+            ap.style.display = 'block';
+            ap.innerHTML = `<div class="analysis-title">🔍 Email Analysis</div>` +
+                e.flags.map(f => `<div class="flag-item ${f.safe ? 'safe' : ''}"><span class="flag-icon">${f.icon}</span><span>${f.text}</span></div>`).join('');
+        }
+
+        function judgeEmail(id, calledPhishing) {
+            const e = EMAILS.find(em => em.id === id);
+            const correct = calledPhishing === e.phishing;
+            emailStates[id].judged = true;
+            emailStates[id].correct = correct;
+            if (correct) score++;
+            answered++;
+            showAnalysis(e);
+            document.getElementById('actionBar').style.display = 'none';
+
+            if (answered >= totalEmails) {
+                setTimeout(showFinalResult, 800);
+            }
+        }
+
+        function goBackToInbox() {
+            document.getElementById('detailView').style.display = 'none';
+            document.getElementById('inboxView').style.display = 'flex';
+            renderInbox();
+        }
+
+        function showFinalResult() {
+            const pct = Math.round((score / totalEmails) * 100);
+            const isGood = pct >= 75;
+            document.getElementById('overlay').style.display = 'flex';
+            document.getElementById('resultBox').innerHTML = `
+                <span class="result-icon">${isGood ? '🛡️' : '⚠️'}</span>
+                <div class="score-badge">${score}/${totalEmails} Correct — ${pct}%</div>
+                <h2 class="result-title" style="color:${isGood ? '#10b981' : '#f59e0b'};">${isGood ? 'Phishing Expert!' : 'Keep Practicing!'}</h2>
+                <div class="result-body">
+                    <p><b>Your Score:</b> You correctly identified ${score} out of ${totalEmails} emails.</p>
+                    <p><b>Key Takeaways:</b></p>
+                    <p>• <b>Check the sender's email domain</b> — look for misspellings (m1crosoft vs microsoft).</p>
+                    <p>• <b>Watch for urgency</b> — "Your account will be suspended" is almost always a scam.</p>
+                    <p>• <b>Never click suspicious links</b> — hover to check the real URL before clicking.</p>
+                    <p>• <b>Verify independently</b> — call the organization directly using their official number.</p>
+                    <p>• <b>Legitimate emails</b> use your real name and don't ask for passwords via links.</p>
+                </div>
+                <button class="finish-btn" onclick="location.assign('../index.html?achieved=phishing')">FINISH SIMULATION</button>
+                <button class="finish-btn retry-btn" onclick="location.reload()">TRY AGAIN</button>`;
+        }
+
+        // Init
+        renderInbox();
+    </script>
+</body>
+</html>

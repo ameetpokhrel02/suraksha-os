@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp OTP Scam Simulator - Suraksha OS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --wa-green: #075e54;
+            --wa-light-green: #128c7e;
+            --wa-bg: #0b141a;
+            --wa-chat-bg: #0b141a;
+            --wa-message-in: #202c33;
+            --wa-message-out: #005c4b;
+            --wa-secondary: #008069;
+            --alert-red: #ff4444;
+            --danger: #cf222e;
+            --success: #1f883d;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--wa-bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            height: 100vh;
+            height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Static Top Awareness Banner */
+        .awareness-banner {
+            background: #0d1117;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 8px 16px;
+            flex-shrink: 0;
+            border-bottom: 1px solid var(--alert-red);
+        }
+
+        .alert-icon {
+            color: #ffcc00;
+            font-size: 1rem;
+        }
+
+        .alert-text {
+            color: var(--alert-red);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--wa-green);
+            color: white;
+            padding: 0 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            height: 56px;
+            flex-shrink: 0;
+        }
+
+        .back-btn {
+            text-decoration: none;
+            color: white;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            padding: 4px;
+        }
+
+        .profile-pic {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #25d366;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        .contact-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .contact-name {
+            font-weight: 600;
+            font-size: 1rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .typing-status {
+            font-size: 0.75rem;
+            opacity: 0.85;
+        }
+
+        /* Chat Window */
+        .chat-window {
+            flex: 1;
+            padding: 16px 5%;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            background-color: var(--wa-chat-bg);
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            position: relative;
+            line-height: 1.45;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
+            animation: slideIn 0.3s ease-out;
+            word-wrap: break-word;
+        }
+
+        .received {
+            align-self: flex-start;
+            background-color: var(--wa-message-in);
+            color: #e9edef;
+            border-top-left-radius: 0;
+        }
+
+        .sent {
+            align-self: flex-end;
+            background-color: var(--wa-message-out);
+            color: #e9edef;
+            border-top-right-radius: 0;
+        }
+
+        .system-msg {
+            align-self: center;
+            background: rgba(255, 255, 255, 0.08);
+            font-size: 0.72rem;
+            color: rgba(233, 237, 239, 0.6);
+            padding: 5px 12px;
+            border-radius: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .timestamp {
+            font-size: 0.65rem;
+            color: rgba(233, 237, 239, 0.45);
+            float: right;
+            margin-top: 4px;
+            margin-left: 10px;
+        }
+
+        /* Bottom Bar */
+        .input-bar {
+            background: var(--wa-green);
+            padding: 8px 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
+        .fake-input {
+            flex: 1;
+            background: var(--wa-message-in);
+            padding: 10px 16px;
+            border-radius: 24px;
+            color: rgba(233, 237, 239, 0.45);
+            font-size: 0.9rem;
+        }
+
+        .mic-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #25d366;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        /* Decision Section */
+        .decision-section {
+            background: #111b21;
+            padding: 16px;
+            border-top: 1px solid #233138;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            animation: slideUp 0.4s ease-out;
+            flex-shrink: 0;
+        }
+
+        .decision-title {
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: #e9edef;
+            text-align: center;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px 8px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.8rem;
+            letter-spacing: 0.3px;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #3b4a54;
+            color: #e9edef;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        /* Outcome Overlay */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.92);
+            z-index: 3000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            backdrop-filter: blur(5px);
+        }
+
+        .outcome-box {
+            background: #111b21;
+            border: 1px solid #233138;
+            border-radius: 12px;
+            padding: 24px;
+            max-width: 420px;
+            width: 100%;
+            text-align: center;
+            animation: zoomIn 0.3s ease-out;
+        }
+
+        .outcome-icon {
+            font-size: 3rem;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .outcome-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .outcome-text {
+            color: #8696a0;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        .outcome-text p {
+            margin: 0 0 10px;
+        }
+
+        .reset-btn {
+            background: #25d366;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            font-size: 0.95rem;
+        }
+
+        .otp-bubble {
+            background: rgba(37, 211, 102, 0.15) !important;
+            border: 1px dashed #25d366 !important;
+            color: #25d366 !important;
+            font-weight: 700;
+            font-family: 'Courier New', monospace;
+            font-size: 1rem !important;
+            text-align: center;
+            padding: 12px 16px !important;
+            max-width: 90% !important;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(100%);
+            }
+
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .chat-window {
+                padding: 12px 3%;
+            }
+
+            .message {
+                max-width: 88%;
+                font-size: 0.85rem;
+            }
+
+            .btn {
+                padding: 10px 4px;
+                font-size: 0.75rem;
+            }
+
+            .decision-title {
+                font-size: 0.8rem;
+            }
+
+            .alert-text {
+                font-size: 0.65rem;
+                letter-spacing: 0;
+            }
+
+            .awareness-banner {
+                padding: 6px 10px;
+                gap: 6px;
+            }
+
+            header {
+                height: 50px;
+            }
+
+            .profile-pic {
+                width: 34px;
+                height: 34px;
+                font-size: 1.1rem;
+            }
+
+            .contact-name {
+                font-size: 0.9rem;
+            }
+
+            .outcome-box {
+                padding: 18px;
+            }
+
+            .outcome-title {
+                font-size: 1.2rem;
+            }
+
+            .outcome-text {
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .btn-group {
+                flex-direction: column;
+            }
+
+            .alert-text {
+                font-size: 0.6rem;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .chat-window {
+                padding: 20px 20%;
+            }
+
+            .message {
+                max-width: 65%;
+            }
+
+            .decision-section {
+                padding: 16px 20%;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .chat-window {
+                padding: 20px 25%;
+            }
+
+            .message {
+                max-width: 55%;
+            }
+
+            .decision-section {
+                padding: 16px 25%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="awareness-banner">
+        <span class="alert-icon">⚠️</span>
+        <span class="alert-text">Cybersecurity Awareness Simulation. NO DATA STORED.</span>
+    </div>
+
+    <header>
+        <a href="../index.html" class="back-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M19 12H5M12 19l-7-7 7-7" />
+            </svg>
+        </a>
+        <div class="profile-pic">👤</div>
+        <div class="contact-info">
+            <div class="contact-name">+977-981XXXXXXX</div>
+            <div class="typing-status" id="status">online</div>
+        </div>
+    </header>
+
+    <div class="chat-window" id="chat">
+        <div class="system-msg">Today</div>
+    </div>
+
+    <div class="input-bar" id="inputBar">
+        <div class="fake-input">Type a message...</div>
+        <div class="mic-icon">🎤</div>
+    </div>
+
+    <div class="decision-section" id="decision" style="display: none;">
+        <div class="decision-title">⚠️ A suspicious request for your OTP. What do you do?</div>
+        <div class="btn-group">
+            <button class="btn btn-danger" onclick="makeChoice('share')">SHARE OTP</button>
+            <button class="btn btn-secondary" onclick="makeChoice('ignore')">IGNORE</button>
+            <button class="btn btn-success" onclick="makeChoice('report')">REPORT & BLOCK</button>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay">
+        <div class="outcome-box" id="outcome"></div>
+    </div>
+
+    <script>
+        const chat = document.getElementById('chat');
+        const statusEl = document.getElementById('status');
+        const decision = document.getElementById('decision');
+        const inputBar = document.getElementById('inputBar');
+        const overlay = document.getElementById('overlay');
+        const outcome = document.getElementById('outcome');
+
+        const messages = [
+            { type: 'received', text: "Hey! I'm so sorry. I was trying to log into my account but I typed your number by mistake. 🤦‍♂️" },
+            { type: 'received', text: "WhatsApp sent the code to your phone instead of mine. Can you please tell me the 6-digit code you just got? I really need it for my work! 🙏" },
+            { type: 'system', text: "Your WhatsApp code is 482-910. Do not share it with anyone." }
+        ];
+
+        let msgIndex = 0;
+
+        function addMessage() {
+            if (msgIndex < messages.length) {
+                const m = messages[msgIndex];
+                const div = document.createElement('div');
+
+                if (m.type === 'system') {
+                    div.className = 'message system-msg otp-bubble';
+                } else {
+                    div.className = `message ${m.type}`;
+                }
+
+                const now = new Date();
+                const time = now.getHours() + ":" + now.getMinutes().toString().padStart(2, '0');
+
+                div.innerHTML = `${m.text} <span class="timestamp">${time}</span>`;
+                chat.appendChild(div);
+                chat.scrollTop = chat.scrollHeight;
+
+                msgIndex++;
+
+                if (msgIndex < messages.length) {
+                    statusEl.innerText = 'typing...';
+                    setTimeout(addMessage, 2000);
+                } else {
+                    statusEl.innerText = 'online';
+                    setTimeout(() => {
+                        inputBar.style.display = 'none';
+                        decision.style.display = 'flex';
+                    }, 1000);
+                }
+            }
+        }
+
+        setTimeout(addMessage, 1000);
+
+        function makeChoice(choice) {
+            if (window.parent !== window) window.parent.postMessage({ module: 'whatsapp', action: choice === 'share' ? 'risky' : 'safe' }, '*');
+            overlay.style.display = 'flex';
+            let content = '';
+
+            if (choice === 'share') {
+                content = `
+                    <span class="outcome-icon">🚨</span>
+                    <h2 class="outcome-title" style="color: #ff4444;">ACCOUNT HACKED!</h2>
+                    <div class="outcome-text">
+                        <p><b>What happened:</b> By sharing that 6-digit code, you gave the scammer full access to your WhatsApp account.</p>
+                        <p><b>The Trick:</b> Scammers use the "I sent it by mistake" excuse to trigger a real login OTP for YOUR account.</p>
+                        <p><b>The Danger:</b> They will now message your friends and family asking for money, pretending to be you.</p>
+                    </div>
+                    <button class="reset-btn" onclick="location.reload()">TRY AGAIN</button>
+                `;
+            } else {
+                const title = choice === 'report' ? 'SMART & SAFE!' : 'STAYED SAFE';
+                const color = choice === 'report' ? '#25d366' : '#e9edef';
+                content = `
+                    <span class="outcome-icon">✅</span>
+                    <h2 class="outcome-title" style="color: ${color};">${title}</h2>
+                    <div class="outcome-text">
+                        <p><b>The Right Choice:</b> You recognized the red flags! No official service or real friend will ever ask for your OTP via chat.</p>
+                        <p><b>Security Tip:</b> Enable <b>Two-Step Verification</b> in WhatsApp settings (Settings > Account > Two-step verification) for an extra layer of protection.</p>
+                        <p><b>Remember:</b> If a friend messages this, their account might already be hacked. Call them on a normal phone call to verify.</p>
+                    </div>
+                    <button class="reset-btn" onclick="location.assign('../index.html')">FINISH SIMULATION</button>
+                `;
+            }
+            outcome.innerHTML = content;
+        }
+    </script>
+</body>
+
+</html>

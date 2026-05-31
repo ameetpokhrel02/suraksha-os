@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telegram Investment Scam Simulator - Suraksha OS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --tg-bg: #17212b;
+            --tg-header: #1b2836;
+            --tg-chat-bg: #0e1621;
+            --tg-msg-in: #182533;
+            --tg-msg-out: #2b5278;
+            --tg-text: #f5f5f5;
+            --tg-secondary: #6c7883;
+            --tg-blue: #5eaaec;
+            --tg-link: #6ab3f3;
+            --tg-divider: #0d1621;
+            --alert-red: #ff4444;
+            --danger: #cf222e;
+            --success: #1f883d;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--tg-chat-bg);
+            font-family: 'Inter', -apple-system, sans-serif;
+            height: 100vh;
+            height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            color: var(--tg-text);
+        }
+
+        /* Awareness Banner */
+        .awareness-banner {
+            background: #0d1117;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 8px 16px;
+            flex-shrink: 0;
+            border-bottom: 1px solid var(--alert-red);
+        }
+
+        .alert-icon {
+            color: #ffcc00;
+            font-size: 1rem;
+        }
+
+        .alert-text {
+            color: var(--alert-red);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Header */
+        header {
+            background: var(--tg-header);
+            padding: 0 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            height: 56px;
+            flex-shrink: 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .back-btn {
+            text-decoration: none;
+            color: var(--tg-blue);
+            display: flex;
+            align-items: center;
+            padding: 4px;
+        }
+
+        .avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #5eaaec, #3b7dd8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .contact-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .contact-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--tg-text);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .contact-status {
+            font-size: 0.75rem;
+            color: var(--tg-secondary);
+        }
+
+        .members-count {
+            font-size: 0.72rem;
+            color: var(--tg-secondary);
+        }
+
+        /* Chat Area */
+        .chat-area {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 5%;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            background: var(--tg-chat-bg);
+        }
+
+        .msg-group {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .bubble {
+            max-width: 80%;
+            padding: 8px 12px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            animation: fadeSlide 0.35s ease-out;
+            word-wrap: break-word;
+        }
+
+        .bubble.incoming {
+            align-self: flex-start;
+            background: var(--tg-msg-in);
+            border-bottom-left-radius: 4px;
+        }
+
+        .bubble.outgoing {
+            align-self: flex-end;
+            background: var(--tg-msg-out);
+            border-bottom-right-radius: 4px;
+        }
+
+        .sender-name {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--tg-blue);
+            margin-bottom: 2px;
+        }
+
+        .msg-time {
+            font-size: 0.65rem;
+            color: rgba(255, 255, 255, 0.35);
+            float: right;
+            margin-left: 12px;
+            margin-top: 4px;
+        }
+
+        .date-badge {
+            align-self: center;
+            background: rgba(0, 0, 0, 0.3);
+            color: rgba(255, 255, 255, 0.5);
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 0.72rem;
+            letter-spacing: 0.3px;
+            margin: 8px 0;
+        }
+
+        /* Proof Card */
+        .proof-card {
+            background: linear-gradient(135deg, #1a3a1a, #0f2b0f);
+            border: 1px solid #2d6a2d;
+            border-radius: 8px;
+            padding: 14px;
+            margin-top: 8px;
+        }
+
+        .proof-title {
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: #4caf50;
+            margin-bottom: 8px;
+        }
+
+        .proof-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.82rem;
+            padding: 4px 0;
+            border-bottom: 1px solid rgba(76, 175, 80, 0.15);
+        }
+
+        .proof-label {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .proof-value {
+            color: #66bb6a;
+            font-weight: 600;
+            font-family: 'Courier New', monospace;
+        }
+
+        .proof-value.highlight {
+            color: #4caf50;
+            font-size: 1rem;
+        }
+
+        /* Payment Request */
+        .payment-card {
+            background: linear-gradient(135deg, #2b1e0e, #1e1408);
+            border: 1px solid #8b6914;
+            border-radius: 8px;
+            padding: 14px;
+            margin-top: 8px;
+        }
+
+        .payment-title {
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: #ffa726;
+            margin-bottom: 6px;
+        }
+
+        .payment-detail {
+            font-size: 0.82rem;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.5;
+        }
+
+        .payment-amount {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #ffb74d;
+            text-align: center;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* Input Placeholder */
+        .input-bar {
+            background: var(--tg-header);
+            padding: 8px 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .fake-input {
+            flex: 1;
+            background: var(--tg-bg);
+            padding: 10px 16px;
+            border-radius: 20px;
+            color: var(--tg-secondary);
+            font-size: 0.88rem;
+        }
+
+        .send-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: var(--tg-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+
+        .send-icon svg {
+            transform: rotate(-30deg) translateX(1px);
+        }
+
+        /* Decision Panel */
+        .decision-panel {
+            background: var(--tg-header);
+            padding: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            animation: slideUp 0.4s ease-out;
+            flex-shrink: 0;
+        }
+
+        .decision-label {
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: var(--tg-text);
+            text-align: center;
+        }
+
+        .btn-row {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px 8px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 0.82rem;
+            transition: all 0.2s;
+            letter-spacing: 0.3px;
+        }
+
+        .btn-invest {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-verify {
+            background: #e6a817;
+            color: #1a1a1a;
+        }
+
+        .btn-ignore {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        /* Overlay */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.92);
+            z-index: 3000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            backdrop-filter: blur(5px);
+        }
+
+        .result-box {
+            background: var(--tg-header);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            padding: 28px 24px;
+            max-width: 420px;
+            width: 100%;
+            text-align: center;
+            animation: zoomIn 0.3s ease-out;
+        }
+
+        .result-icon {
+            font-size: 3.5rem;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .result-title {
+            font-size: 1.35rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+        }
+
+        .result-body {
+            color: var(--tg-secondary);
+            line-height: 1.65;
+            margin-bottom: 22px;
+            text-align: left;
+            font-size: 0.88rem;
+        }
+
+        .result-body p {
+            margin: 0 0 10px;
+        }
+
+        .result-body b {
+            color: var(--tg-text);
+        }
+
+        .finish-btn {
+            background: var(--tg-blue);
+            color: white;
+            border: none;
+            padding: 13px;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            font-size: 0.95rem;
+        }
+
+        @keyframes fadeSlide {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(100%);
+            }
+
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.92);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .chat-area {
+                padding: 12px 3%;
+            }
+
+            .bubble {
+                max-width: 90%;
+                font-size: 0.85rem;
+            }
+
+            .btn {
+                padding: 10px 4px;
+                font-size: 0.75rem;
+            }
+
+            .alert-text {
+                font-size: 0.65rem;
+                letter-spacing: 0;
+            }
+
+            .awareness-banner {
+                padding: 6px 10px;
+                gap: 6px;
+            }
+
+            header {
+                height: 50px;
+            }
+
+            .avatar {
+                width: 36px;
+                height: 36px;
+                font-size: 0.95rem;
+            }
+
+            .contact-name {
+                font-size: 0.88rem;
+            }
+
+            .result-box {
+                padding: 20px 18px;
+            }
+
+            .result-title {
+                font-size: 1.15rem;
+            }
+
+            .result-body {
+                font-size: 0.82rem;
+            }
+
+            .proof-card,
+            .payment-card {
+                padding: 10px;
+            }
+
+            .payment-amount {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .btn-row {
+                flex-direction: column;
+            }
+
+            .alert-text {
+                font-size: 0.6rem;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .chat-area {
+                padding: 20px 18%;
+            }
+
+            .bubble {
+                max-width: 65%;
+            }
+
+            .decision-panel {
+                padding: 16px 18%;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .chat-area {
+                padding: 20px 25%;
+            }
+
+            .bubble {
+                max-width: 55%;
+            }
+
+            .decision-panel {
+                padding: 16px 25%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="awareness-banner">
+        <span class="alert-icon">⚠️</span>
+        <span class="alert-text">Cybersecurity Awareness Simulation. NO DATA STORED.</span>
+    </div>
+
+    <header>
+        <a href="../index.html" class="back-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M19 12H5M12 19l-7-7 7-7" />
+            </svg>
+        </a>
+        <div class="avatar">💎</div>
+        <div class="contact-info">
+            <div class="contact-name">Nepal Crypto VIP Group</div>
+            <div class="members-count">3,214 members, 489 online</div>
+        </div>
+    </header>
+
+    <div class="chat-area" id="chat">
+        <div class="date-badge">Today</div>
+    </div>
+
+    <div class="input-bar" id="inputBar">
+        <div class="fake-input">Message...</div>
+        <div class="send-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
+                <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+            </svg>
+        </div>
+    </div>
+
+    <div class="decision-panel" id="decision" style="display: none;">
+        <div class="decision-label">💰 An investment opportunity has been offered. What do you do?</div>
+        <div class="btn-row">
+            <button class="btn btn-invest" onclick="makeChoice('invest')">💸 INVEST</button>
+            <button class="btn btn-verify" onclick="makeChoice('verify')">🔍 VERIFY</button>
+            <button class="btn btn-ignore" onclick="makeChoice('ignore')">🚫 IGNORE</button>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay">
+        <div class="result-box" id="result"></div>
+    </div>
+
+    <script>
+        const chat = document.getElementById('chat');
+        const inputBar = document.getElementById('inputBar');
+        const decision = document.getElementById('decision');
+        const overlay = document.getElementById('overlay');
+        const result = document.getElementById('result');
+
+        function getTime() {
+            const d = new Date();
+            return d.getHours() + ':' + d.getMinutes().toString().padStart(2, '0');
+        }
+
+        const sequence = [
+            {
+                sender: 'Admin • Raj Sharma',
+                text: `🚀 <b>ATTENTION MEMBERS!</b><br><br>We just closed another successful trade. Our VIP signals have a 97% win rate this month!<br><br>If you missed yesterday's trade, don't worry — another opportunity is coming in 30 minutes. 💰`,
+                delay: 1200
+            },
+            {
+                sender: 'Admin • Raj Sharma',
+                text: `proof`,
+                delay: 2500
+            },
+            {
+                sender: 'Fake Member 1',
+                text: `Just received Rs. 25,000 profit! Best group ever 🙏🔥`,
+                delay: 1800
+            },
+            {
+                sender: 'Fake Member 2',
+                text: `I was skeptical at first but admin is legit. Already earned Rs. 80,000 this week!`,
+                delay: 1500
+            },
+            {
+                sender: 'Admin • Raj Sharma',
+                text: `payment`,
+                delay: 2200
+            }
+        ];
+
+        let step = 0;
+
+        function addBubble() {
+            if (step >= sequence.length) return;
+
+            const s = sequence[step];
+            const div = document.createElement('div');
+            div.className = 'bubble incoming';
+
+            if (s.text === 'proof') {
+                div.innerHTML = `
+                    <div class="sender-name">${s.sender}</div>
+                    <div class="proof-card">
+                        <div class="proof-title">📊 Today's Verified Profit</div>
+                        <div class="proof-row"><span class="proof-label">Trade Pair</span><span class="proof-value">BTC/USDT</span></div>
+                        <div class="proof-row"><span class="proof-label">Entry</span><span class="proof-value">$62,340</span></div>
+                        <div class="proof-row"><span class="proof-label">Exit</span><span class="proof-value">$64,890</span></div>
+                        <div class="proof-row"><span class="proof-label">Profit</span><span class="proof-value highlight">+Rs. 45,000 ✅</span></div>
+                    </div>
+                    <span class="msg-time">${getTime()}</span>`;
+            } else if (s.text === 'payment') {
+                div.innerHTML = `
+                    <div class="sender-name">${s.sender}</div>
+                    <div class="payment-card">
+                        <div class="payment-title">⏰ LIMITED TIME — Join VIP Now</div>
+                        <div class="payment-detail">
+                            Send your deposit to secure your VIP slot.<br>
+                            Only <b>5 slots left</b> at this price!
+                        </div>
+                        <div class="payment-amount">Rs. 15,000</div>
+                        <div class="payment-detail" style="font-size:0.78rem; text-align:center;">
+                            eSewa: 981XXXXXXX<br>
+                            "Deposit is 100% refundable"
+                        </div>
+                    </div>
+                    <span class="msg-time">${getTime()}</span>`;
+            } else {
+                const isMember = s.sender.startsWith('Fake');
+                div.innerHTML = `
+                    ${isMember ? '' : '<div class="sender-name">' + s.sender + '</div>'}
+                    ${s.text}
+                    <span class="msg-time">${getTime()}</span>`;
+                if (isMember) {
+                    div.style.background = '#1c2e3d';
+                }
+            }
+
+            chat.appendChild(div);
+            chat.scrollTop = chat.scrollHeight;
+            step++;
+
+            if (step < sequence.length) {
+                setTimeout(addBubble, sequence[step].delay);
+            } else {
+                setTimeout(() => {
+                    inputBar.style.display = 'none';
+                    decision.style.display = 'flex';
+                }, 1200);
+            }
+        }
+
+        setTimeout(addBubble, 1000);
+
+        function makeChoice(choice) {
+            overlay.style.display = 'flex';
+            let html = '';
+
+            if (choice === 'invest') {
+                html = `
+                    <span class="result-icon">🚨</span>
+                    <h2 class="result-title" style="color: #ff4444;">YOU LOST Rs. 15,000!</h2>
+                    <div class="result-body">
+                        <p><b>What happened:</b> You sent money to a scammer. There is no "VIP group," no real trades, and no way to get your deposit back.</p>
+                        <p><b>The Trick:</b> Fake profit screenshots and planted "member testimonials" create an illusion of legitimacy. The urgency ("5 slots left!") pressures you into acting without thinking.</p>
+                        <p><b>Reality:</b> No legitimate investment guarantees 97% returns. The "refundable deposit" is a lie — once sent, your money is gone forever.</p>
+                        <p><b>Did you know?</b> Nepal Police Cyber Bureau receives hundreds of such complaints monthly. Always verify with NRB (Nepal Rastra Bank) before investing.</p>
+                    </div>
+                    <button class="finish-btn" onclick="location.reload()">TRY AGAIN</button>`;
+            } else if (choice === 'verify') {
+                html = `
+                    <span class="result-icon">🔍</span>
+                    <h2 class="result-title" style="color: #e6a817;">SMART THINKING!</h2>
+                    <div class="result-body">
+                        <p><b>You chose wisely</b> by verifying first! Here's what you would have found:</p>
+                        <p><b>Red Flag 1:</b> "97% win rate" is impossible — even top hedge funds average 15-20% annually.</p>
+                        <p><b>Red Flag 2:</b> The profit screenshots are easily faked using photo editors or demo trading accounts.</p>
+                        <p><b>Red Flag 3:</b> The "member testimonials" are planted by the scammer using fake accounts.</p>
+                        <p><b>Red Flag 4:</b> Asking for payment via eSewa/personal number instead of a registered business account is a major warning sign.</p>
+                        <p><b>Always check:</b> Is the company registered with NRB? Do they have a SEBON license? If not — it's a scam.</p>
+                    </div>
+                    <button class="finish-btn" onclick="location.assign('../index.html')">FINISH SIMULATION</button>`;
+            } else {
+                html = `
+                    <span class="result-icon">✅</span>
+                    <h2 class="result-title" style="color: #4caf50;">STAYED SAFE!</h2>
+                    <div class="result-body">
+                        <p><b>Excellent decision!</b> Ignoring unsolicited investment offers is the safest approach.</p>
+                        <p><b>Why this was a scam:</b></p>
+                        <p>• Unrealistic returns ("97% win rate")<br>
+                           • Fake social proof (planted member messages)<br>
+                           • Artificial urgency ("Only 5 slots left!")<br>
+                           • Payment to personal eSewa, not a business<br>
+                           • "100% refundable" — classic bait line</p>
+                        <p><b>Protect yourself:</b> Block the group, report it to Telegram, and warn friends who might be in similar groups.</p>
+                    </div>
+                    <button class="finish-btn" onclick="location.assign('../index.html')">FINISH SIMULATION</button>`;
+            }
+
+            result.innerHTML = html;
+        }
+    </script>
+</body>
+
+</html>

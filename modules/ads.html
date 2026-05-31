@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Malicious Ads Detector | Suraksha OS</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .main-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px;
+        }
+
+        .ad-container {
+            width: 100%;
+            max-width: 500px;
+            background: #1a1b1e;
+            border: 1px solid #2d2e32;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .ad-header {
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid #2d2e32;
+        }
+
+        .ad-profile-pic {
+            width: 40px;
+            height: 40px;
+            background: #2d2e32;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .ad-user-info {
+            flex: 1;
+        }
+
+        .ad-user-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .verified-badge {
+            color: #0095f6;
+            width: 14px;
+            height: 14px;
+        }
+
+        .ad-sponsored {
+            font-size: 0.75rem;
+            color: #8b949e;
+        }
+
+        .ad-content {
+            padding: 15px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .ad-image {
+            width: 100%;
+            height: 250px;
+            background: #2d2e32;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .ad-cta {
+            padding: 12px 15px;
+            background: #2d2e32;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #36373b;
+        }
+
+        .ad-cta-text {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #0095f6;
+        }
+
+        .ad-cta-btn {
+            background: #0095f6;
+            color: white;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .quiz-controls {
+            padding: 20px;
+            display: flex;
+            gap: 15px;
+            background: #161b22;
+        }
+
+        .control-btn {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            background: transparent;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-safe {
+            border-color: #238636;
+        }
+
+        .btn-safe:hover {
+            background: rgba(35, 134, 54, 0.1);
+        }
+
+        .btn-scam {
+            border-color: #da3633;
+        }
+
+        .btn-scam:hover {
+            background: rgba(218, 54, 51, 0.1);
+        }
+
+        .explanation-card {
+            display: none;
+            padding: 20px;
+            margin: 0 20px 20px;
+            border-radius: 8px;
+            animation: slideIn 0.4s ease-out;
+        }
+
+        .explanation-card.correct {
+            background: rgba(35, 134, 54, 0.15);
+            border: 1px solid #238636;
+        }
+
+        .explanation-card.wrong {
+            background: rgba(218, 54, 51, 0.15);
+            border: 1px solid #da3633;
+        }
+
+        .expl-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .expl-text {
+            font-size: 0.9rem;
+            color: #d1d5db;
+            line-height: 1.6;
+        }
+
+        .next-btn {
+            margin-top: 15px;
+            background: var(--accent-color);
+            color: var(--bg-color);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .disclaimer-bar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 63, 63, 0.1);
+            color: #ff3f3f;
+            text-align: center;
+            padding: 10px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 100;
+            border-bottom: 1px solid #ff3f3f;
+        }
+
+        .safety-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            max-width: 500px;
+            width: 100%;
+            margin-top: 40px;
+        }
+
+        .back-link {
+            text-decoration: none;
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="disclaimer-bar">
+        ⚠️ CYBERSECURITY AWARENESS: FAKE ADS SIMULATION
+    </div>
+
+    <div class="main-wrapper">
+        <div style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+            <div class="safety-header">
+                <a href="../index.html" class="back-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 12H5M12 19l-7-7 7-7" />
+                    </svg>
+                    Back to Gateway
+                </a>
+                <h2 style="margin: 0; font-size: 1.2rem; color: var(--accent-color);">Ads Detector</h2>
+            </div>
+
+            <div class="ad-container">
+                <div id="ad-card">
+                    <!-- Dynamic Ad Content -->
+                    <div class="ad-header">
+                        <div class="ad-profile-pic" id="profile-initial">I</div>
+                        <div class="ad-user-info">
+                            <div class="ad-user-name" id="user-name">QuickInvest Nepal
+                                <svg class="verified-badge" viewBox="0 0 24 24" fill="currentColor">
+                                    <path
+                                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+                                </svg>
+                            </div>
+                            <div class="ad-sponsored">Sponsored</div>
+                        </div>
+                    </div>
+                    <div class="ad-content" id="ad-text">
+                        Don't miss out! 🚀 Turn 10,000 into 1,00,000 in just 24 hours. NO RISK. Guaranteed returns.
+                        Click below to start your journey to wealth! 💰🇳🇵
+                    </div>
+                    <div class="ad-image" id="ad-visual" style="background-color: #0095f6; color: white;">
+                        FIXED 10X RETURNS<br>GUARANTEED
+                    </div>
+                    <div class="ad-cta">
+                        <span class="ad-cta-text" id="cta-label">Learn More</span>
+                        <button class="ad-cta-btn">Sign Up</button>
+                    </div>
+                </div>
+
+                <div class="quiz-controls" id="quiz-ui">
+                    <button class="control-btn btn-safe" onclick="checkAnswer(false)">SAFE</button>
+                    <button class="control-btn btn-scam" onclick="checkAnswer(true)">SCAM</button>
+                </div>
+
+                <div id="explanation" class="explanation-card">
+                    <div class="expl-title" id="expl-result-title"></div>
+                    <div class="expl-text" id="expl-result-text"></div>
+                    <button class="next-btn" onclick="nextAd()">Next Ad</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const ads = [
+            {
+                name: "QuickInvest Nepal",
+                initial: "Q",
+                verified: true,
+                text: "Don't miss out! 🚀 Turn 10,000 into 1,00,000 in just 24 hours. NO RISK. Guaranteed returns. Click below to start your journey to wealth! 💰🇳🇵",
+                visual: "FIXED 10X RETURNS<br>GUARANTEED",
+                bgColor: "#0095f6",
+                cta: "Apply Now",
+                isScam: true,
+                explanation: "This is a classic <b>Investment Scam</b>. Legitimate investments never guarantee 10x returns, especially in 24 hours. The sense of urgency and 'No Risk' claims are major red flags."
+            },
+            {
+                name: "System Security Pro",
+                initial: "S",
+                verified: false,
+                text: "⚠️ CRITICAL ALERT: Your device has 4 potential virus infections! Your photos and data are at risk. Download our secure cleaner to fix immediately.",
+                visual: "SCANNING...<br>4 DEVICES INFECTED",
+                bgColor: "#da3633",
+                cta: "Protect Now",
+                isScam: true,
+                explanation: "This is a <b>Fake Security Alert</b> (Scareware). Web browsers cannot scan your local files for viruses. This ad tries to scare you into downloading malware disguised as a 'cleaner'."
+            },
+            {
+                name: "Kathmandu Home Rentals",
+                initial: "K",
+                verified: false,
+                text: "Luxury 3BHK flat in heart of Kathmandu. Only 10,000 NRs. Full furnished. Moving abroad tomorrow, need tenant ASAP! Message on WhatsApp.",
+                visual: "LUXURY LIVING<br>LOWEST PRICE",
+                bgColor: "#238636",
+                cta: "Contact",
+                isScam: true,
+                explanation: "This is a <b>Rental Scam</b>. The price is unrealistically low for a luxury flat. Scammers often use 'moving abroad' as an excuse to demand an upfront deposit without a physical tour."
+            }
+        ];
+
+        let currentIndex = 0;
+
+        function checkAnswer(userSelectedScam) {
+            const ad = ads[currentIndex];
+            const isCorrect = (userSelectedScam === ad.isScam);
+
+            const explCard = document.getElementById('explanation');
+            const quizUI = document.getElementById('quiz-ui');
+            const title = document.getElementById('expl-result-title');
+            const text = document.getElementById('expl-result-text');
+
+            quizUI.style.display = 'none';
+            explCard.style.display = 'block';
+
+            if (isCorrect) {
+                explCard.className = 'explanation-card correct';
+                title.innerHTML = '✅ Correct! It\'s a Scam.';
+            } else {
+                explCard.className = 'explanation-card wrong';
+                title.innerHTML = '❌ Mistake! It\'s a Scam.';
+            }
+
+            text.innerHTML = ad.explanation;
+        }
+
+        function nextAd() {
+            currentIndex++;
+            if (currentIndex >= ads.length) {
+                // Show final summary or reset
+                document.querySelector('.ad-container').innerHTML = `
+                    <div style="padding: 40px; text-align: center;">
+                        <h3 style="color: var(--accent-color);">Awareness Complete!</h3>
+                        <p style="color: #8b949e; margin-bottom: 20px;">You are now better at spotting malicious ads on social media.</p>
+                        <button class="next-btn" onclick="location.reload()">Try Again</button>
+                        <a href="../index.html" class="next-btn" style="display: block; text-decoration: none; margin-top: 10px; background: #2d2e32; color: white;">Return to Gateway</a>
+                    </div>
+                `;
+                return;
+            }
+
+            const ad = ads[currentIndex];
+            document.getElementById('profile-initial').innerText = ad.initial;
+            document.getElementById('user-name').innerHTML = ad.name + (ad.verified ? `
+                <svg class="verified-badge" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+                </svg>` : '');
+            document.getElementById('ad-text').innerText = ad.text;
+            document.getElementById('ad-visual').innerHTML = ad.visual;
+            document.getElementById('ad-visual').style.backgroundColor = ad.bgColor;
+            document.getElementById('cta-label').innerText = ad.cta;
+
+            document.getElementById('explanation').style.display = 'none';
+            document.getElementById('quiz-ui').style.display = 'flex';
+        }
+    </script>
+</body>
+
+</html>

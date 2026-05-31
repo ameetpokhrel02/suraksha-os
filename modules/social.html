@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Media Simulation | Suraksha OS</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            color: var(--text-color);
+        }
+
+        .disclaimer-bar {
+            background: rgba(13, 17, 23, 0.95);
+            backdrop-filter: blur(5px);
+            color: var(--danger-color);
+            padding: 8px 20px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.75rem;
+            position: fixed;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: fit-content;
+            max-width: 90%;
+            z-index: 10000;
+            border: 1px solid var(--danger-color);
+            border-radius: 50px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translate(-50%, 0);
+            }
+        }
+
+        .main-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px;
+            width: 100%;
+        }
+
+        .simulation-flow {
+            width: 100%;
+            max-width: 350px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .step-content {
+            display: none;
+            width: 100%;
+        }
+
+        .step-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        /* Instagram Style Login Card */
+        .insta-card {
+            background: white;
+            border: 1px solid #dbdbdb;
+            padding: 40px 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-radius: 1px;
+            color: #262626;
+        }
+
+        .insta-logo {
+            width: 175px;
+            margin-bottom: 30px;
+        }
+
+        .insta-form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .insta-input {
+            width: 100%;
+            background: #fafafa;
+            border: 1px solid #dbdbdb;
+            padding: 11px 10px;
+            border-radius: 3px;
+            font-size: 0.75rem;
+            outline: none;
+            box-sizing: border-box;
+        }
+
+        .insta-input:focus {
+            border-color: #a8a8a8;
+        }
+
+        .insta-btn {
+            background-color: #0095f6;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 7px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 8px;
+            margin-bottom: 20px;
+        }
+
+        .insta-btn:hover {
+            background-color: #1877f2;
+        }
+
+        /* 6-Digit OTP Grid Styles */
+        .otp-grid {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin: 25px 0;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .otp-box {
+            flex: 1;
+            max-width: 42px;
+            height: 56px;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 500;
+            border: 1.5px solid #dbedff;
+            border-radius: 10px;
+            background: #fcfdff;
+            color: #262626;
+            transition: all 0.2s ease;
+            min-width: 0;
+            /* Allow shrinking */
+            padding: 0;
+        }
+
+        .otp-box:focus {
+            border-color: #0095f6;
+            background: white;
+            box-shadow: 0 0 0 2px rgba(0, 149, 246, 0.1);
+            outline: none;
+        }
+
+        .otp-box::placeholder {
+            color: #dbdbdb;
+            opacity: 0.5;
+        }
+
+        .otp-title {
+            color: #0095f6;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-align: center;
+            margin-bottom: 5px;
+            line-height: 1.3;
+        }
+
+        .password-field {
+            position: relative;
+            width: 100%;
+        }
+
+        .eye-toggle {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #8e8e8e;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .eye-toggle svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .system-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #262626;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            z-index: 2000;
+            display: none;
+            animation: slideInRight 0.5s ease-out;
+            border-left: 4px solid var(--accent-color);
+            max-width: 250px;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 25px;
+        }
+
+        .divider div {
+            flex: 1;
+            height: 1px;
+            background: #dbdbdb;
+        }
+
+        .divider span {
+            padding: 0 18px;
+            color: #8e8e8e;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .facebook-login {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: #385185;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            margin-bottom: 20px;
+            background: none;
+            border: none;
+        }
+
+        .facebook-icon {
+            width: 16px;
+            height: 16px;
+        }
+
+        .forgot-password {
+            font-size: 0.75rem;
+            color: #00376b;
+            text-decoration: none;
+            margin-bottom: 10px;
+        }
+
+        .signup-card {
+            background: white;
+            border: 1px solid #dbdbdb;
+            padding: 20px;
+            text-align: center;
+            margin-top: 10px;
+            font-size: 0.85rem;
+            color: #262626;
+        }
+
+        .signup-card span {
+            color: #0095f6;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* App Store banners */
+        .get-app {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.85rem;
+            color: var(--text-color);
+        }
+
+        .app-links {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        .app-badge {
+            height: 40px;
+        }
+
+        /* Reveal Screens (Suraksha OS Theme) */
+        .reveal-card {
+            background: var(--terminal-bg);
+            border: 1px solid var(--accent-color);
+            padding: 30px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .safety-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
+        }
+
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            background: var(--danger-color);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--danger-color);
+        }
+
+        .safety-title {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--accent-color);
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .safety-advice-list {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+
+        .safety-advice-list li {
+            margin-bottom: 15px;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .check-icon {
+            color: var(--success-color);
+            margin-top: 4px;
+            flex-shrink: 0;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: var(--accent-color);
+            text-decoration: none;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            border: 1px solid var(--accent-color);
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+
+        .back-link:hover {
+            background: rgba(0, 255, 156, 0.1);
+            transform: translateX(-5px);
+        }
+
+        .abort-btn {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #8b949e;
+            text-decoration: none;
+            font-size: 0.8rem;
+            opacity: 0.6;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Mobile specific adjustments */
+        @media (max-width: 450px) {
+
+            .insta-card,
+            .signup-card {
+                background: transparent;
+                border: none;
+            }
+
+            body {
+                background-color: white;
+            }
+
+            .insta-card {
+                padding: 40px 15px;
+            }
+
+            /* When revealing, switch back to dark theme look */
+            .step-reveal body {
+                background-color: var(--bg-color) !important;
+            }
+        }
+    </style>
+</head>
+
+<body id="body-context">
+    <div class="disclaimer-bar">
+        ⚠️ This is a cybersecurity awareness simulation. NO DATA STORED.
+    </div>
+
+    <div class="main-wrapper">
+        <div class="simulation-flow" id="flow-container">
+            <!-- Step 0: Registration (Signup) -->
+            <div id="step-0" class="step-content active">
+                <div class="insta-card">
+                    <svg class="insta-logo" aria-label="Instagram" role="img" viewBox="0 0 175 51">
+                        <path fill="#262626"
+                            d="M30.6 8.7C27.5 8.7 26.6 8.8 25.1 9.4c-1.6.4-2.8 1.2-3.8 2.2-1 1-1.8 2.3-2.2 3.8-.5 1.5-.7 2.4-.7 5.5s.1 4 .7 5.5c.4 1.6 1.2 2.8 2.2 3.8 1 1 2.3 1.8 3.8 2.2 1.5.5 2.4.7 5.5.7s4-.1 5.5-.7c1.6-.4 2.8-1.2 3.8-2.2 1-1 1.8-2.3 2.2-3.8.5-1.5.7-2.4.7-5.5s-.1-4-.7-5.5c-.4-1.6-1.2-2.8-2.2-3.8-1-1-2.3-1.8-3.8-2.2-1.5-.5-2.4-.7-5.5-.7zm0-2.3c3.1 0 3.5 0 4.7.1 1.2.1 2 .3 2.7.5.7.3 1.4.7 2 1.3.6.6 1 1.3 1.3 2 .3.7.4 1.5.5 2.7.1 1.2.1 1.6.1 4.7s0 3.5-.1 4.7c-.1 1.2-.3 2-.5 2.7-.3.7-.7 1.4-1.3 2-.6.6-1.3 1-2 1.3-.7.3-1.5.4-2.7.5-1.2.1-1.6.1-4.7.1s-3.5 0-4.7-.1c-1.2-.1-2-.3-2.7-.5-.7-.3-1.4-.7-2-1.3-.6-.6-1-1.3-1.3-2-.3-.7-.4-1.5-.5-2.7-.1-1.2-.1-1.6-.1-4.7s0-3.5.1-4.7c.1-1.2.3-2 .5-2.7.3-.7.7-1.4 1.3-2 .6-.6 1.3-1 2-1.3.7-.3 1.5-.4 2.7-.5 1.2-.1 1.6-.1 4.7-.1z">
+                        </path>
+                        <path fill="#262626"
+                            d="M30.6 16.2c-2.4 0-4.3 1.9-4.3 4.3s1.9 4.3 4.3 4.3 4.3-1.9 4.3-4.3-1.9-4.3-4.3-4.3zm0 6.4c-1.1 0-2.1-.9-2.1-2.1s.9-2.1 2.1-2.1 2.1.9 2.1 2.1-.9 2.1-2.1 2.1zm5.5-7.1c0-.4.3-.7.7-.7s.7.3.7.7-.3.7-.7.7-.7-.3-.7-.7z">
+                        </path>
+                        <path fill="#262626"
+                            d="M50.4 12.5c4.7 0 7.8 2.1 7.8 6.4v13s-2.1-3.6-6-3.6c-2.9 0-4.8 1.9-4.8 4.7 0 3 2.1 4.8 5.6 4.8 3.7 0 6-3.2 6-3.2v3h1.3V18.9c0-5-3.6-7.8-9.1-7.8-2.9 0-5.7.8-8.1 2.3l.7 1.1c2-1.3 4.5-2 6.6-2zm2.1 9.4c3 0 4.6 2.7 4.6 5.3 0 2.2-1.3 3.9-3.4 3.9-2.1 0-3.8-1.4-3.8-3.7-.1-2.7 1.1-5.5 2.6-5.5zM71 19.3V38h1.4V19.3s2.9-2 5.5-2c1.7 0 3 1.1 3 3.3V38h1.4V20c0-3.3-2.1-4.8-4.6-4.8-3.2.1-6.7 4.1-6.7 4.1V15.5h-1.3v3.8h1.3zM98.6 15.5H97.2V19h-2.1v1.3h2.1V32c0 4.1 2.3 5.4 5 5.4 1 0 2-.2 2.9-.5l-.3-1.3c-.8.3-1.7.4-2.5.4-2.1 0-3.7-.9-3.7-4.1V20.3h6v-1.3h-6v-3.5zm19.6 10c0 4.1-2.8 5.8-5.3 5.8-2.1 0-4.1-1.3-4.1-3.3 0-2.1 1.6-3.1 4.3-3.1 1.7 0 3.7.4 5.1.8v-.2zm1.4-1.1s-2.7-.9-6.3-.9c-3.1 0-5.6 1.1-5.6 4 0 3 2.7 4.4 5.3 4.4 3.7 0 6.4-3.3 6.4-3.3l.2 2.8h1.3V18.9c0-4.4-3-7.7-7.9-7.7-2.9 0-5.7.8-8.1 2.3l.7 1.1c2-1.3 4.5-2 6.6-2 3.8 0 7.3 2.3 7.3 6.3V24.4z">
+                        </path>
+                        <path fill="#262626"
+                            d="M136.2 31.8c2.4 0 4.4-1.9 4.4-4.4a4.34 4.34 0 0 0-4.4-4.4s-2.1 0-3.4 1.3l-.1.1v7.4h3.5zm0-10.1c4.4 0 6 3 6 5.8 0 3.4-1.9 5.8-5.8 5.8-2.1 0-4.4-1.1-4.4-1.1v5.6c0 3 1.3 4.4 3.7 4.4 1 0 2.1-.2 2.9-.5l.3 1.3c-.8.3-2.1.6-3.4.6-3.2 0-5.1-2.1-5.1-5.8V15.5h1.3v3.8s2.7-3.8 6.4-3.8c3.2 0 5.4 1.9 6.2 3.8l-1.3.5c-.7-1.4-2.1-3-4.8-3-2.9 0-6.2 4-6.2 4V24.3l.1-.2c1.3-1.6 4.3-2.7 4.3-2.7zM161.4 11.2c-4.4 0-7.3 2.3-7.3 6.3V24.4s-3.2-3.8-6.4-3.8c-2.9 0-5.7.8-8.1 2.3l.7 1.1c2-1.3 4.5-2 6.6-2 3.8 0 7.3 2.3 7.3 6.3V38h1.4V19.3s2.9-2 5.5-2c1.7 0 3 1.1 3 3.3V38h1.4V20c0-3.3-2.1-4.8-4.6-4.8-3.2.1-6.7 4.1-6.7 4.1V15.5h-1.3v3.8s2.7-3.8 6.4-3.8c3.2 0 5.4 1.9 6.2 3.8l-1.3.5c-.7-1.4-2.1-3-4.8-3-2.9 0-6.2 4-6.2 4V24.3l.1-.2c1.3-1.6 4.3-2.7 4.3-2.7z">
+                        </path>
+                    </svg>
+
+                    <h3 style="margin-bottom: 20px; font-size: 1.1rem; color: #8e8e8e;">Sign up to see photos and videos
+                        from your friends.</h3>
+
+                    <div class="insta-form">
+                        <input type="text" class="insta-input" placeholder="Mobile Number or Email" id="reg-email">
+                        <input type="text" class="insta-input" placeholder="Full Name" id="reg-name">
+                        <input type="text" class="insta-input" placeholder="Username" id="reg-username">
+                        <div class="password-field">
+                            <input type="password" class="insta-input" placeholder="Password" id="reg-password">
+                            <button class="eye-toggle" onclick="togglePass('reg-password')">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                    <circle cx="12" cy="12" r="3" />
+                                </svg>
+                            </button>
+                        </div>
+                        <button class="insta-btn" onclick="handleRegister()">Sign Up</button>
+                    </div>
+
+                    <p style="font-size: 0.75rem; color: #8e8e8e; text-align: center; margin-top: 15px;">
+                        By signing up, you agree to our Terms, Privacy Policy and Cookies Policy.
+                    </p>
+                </div>
+
+                <div class="signup-card">
+                    Have an account? <span onclick="nextStep(1)">Log in</span>
+                </div>
+            </div>
+
+            <!-- Step 1: Login (Phishing Page) -->
+            <div id="step-1" class="step-content">
+                <div class="insta-card">
+                    <svg class="insta-logo" aria-label="Instagram" role="img" viewBox="0 0 175 51">
+                        <path fill="#262626"
+                            d="M30.6 8.7C27.5 8.7 26.6 8.8 25.1 9.4c-1.6.4-2.8 1.2-3.8 2.2-1 1-1.8 2.3-2.2 3.8-.5 1.5-.7 2.4-.7 5.5s.1 4 .7 5.5c.4 1.6 1.2 2.8 2.2 3.8 1 1 2.3 1.8 3.8 2.2 1.5.5 2.4.7 5.5.7s4-.1 5.5-.7c1.6-.4 2.8-1.2 3.8-2.2 1-1 1.8-2.3 2.2-3.8.5-1.5.7-2.4.7-5.5s-.1-4-.7-5.5c-.4-1.6-1.2-2.8-2.2-3.8-1-1-2.3-1.8-3.8-2.2-1.5-.5-2.4-.7-5.5-.7zm0-2.3c3.1 0 3.5 0 4.7.1 1.2.1 2 .3 2.7.5.7.3 1.4.7 2 1.3.6.6 1 1.3 1.3 2 .3.7.4 1.5.5 2.7.1 1.2.1 1.6.1 4.7s0 3.5-.1 4.7c-.1 1.2-.3 2-.5 2.7-.3.7-.7 1.4-1.3 2-.6.6-1.3 1-2 1.3-.7.3-1.5.4-2.7.5-1.2.1-1.6.1-4.7.1s-3.5 0-4.7-.1c-1.2-.1-2-.3-2.7-.5-.7-.3-1.4-.7-2-1.3-.6-.6-1-1.3-1.3-2-.3-.7-.4-1.5-.5-2.7-.1-1.2-.1-1.6-.1-4.7s0-3.5.1-4.7c.1-1.2.3-2 .5-2.7.3-.7.7-1.4 1.3-2 .6-.6 1.3-1 2-1.3.7-.3 1.5-.4 2.7-.5 1.2-.1 1.6-.1 4.7-.1z">
+                        </path>
+                        <path fill="#262626"
+                            d="M30.6 16.2c-2.4 0-4.3 1.9-4.3 4.3s1.9 4.3 4.3 4.3 4.3-1.9 4.3-4.3-1.9-4.3-4.3-4.3zm0 6.4c-1.1 0-2.1-.9-2.1-2.1s.9-2.1 2.1-2.1 2.1.9 2.1 2.1-.9 2.1-2.1 2.1zm5.5-7.1c0-.4.3-.7.7-.7s.7.3.7.7-.3.7-.7.7-.7-.3-.7-.7z">
+                        </path>
+                        <path fill="#262626"
+                            d="M50.4 12.5c4.7 0 7.8 2.1 7.8 6.4v13s-2.1-3.6-6-3.6c-2.9 0-4.8 1.9-4.8 4.7 0 3 2.1 4.8 5.6 4.8 3.7 0 6-3.2 6-3.2v3h1.3V18.9c0-5-3.6-7.8-9.1-7.8-2.9 0-5.7.8-8.1 2.3l.7 1.1c2-1.3 4.5-2 6.6-2zm2.1 9.4c3 0 4.6 2.7 4.6 5.3 0 2.2-1.3 3.9-3.4 3.9-2.1 0-3.8-1.4-3.8-3.7-.1-2.7 1.1-5.5 2.6-5.5zM71 19.3V38h1.4V19.3s2.9-2 5.5-2c1.7 0 3 1.1 3 3.3V38h1.4V20c0-3.3-2.1-4.8-4.6-4.8-3.2.1-6.7 4.1-6.7 4.1V15.5h-1.3v3.8h1.3zM98.6 15.5H97.2V19h-2.1v1.3h2.1V32c0 4.1 2.3 5.4 5 5.4 1 0 2-.2 2.9-.5l-.3-1.3c-.8.3-1.7.4-2.5.4-2.1 0-3.7-.9-3.7-4.1V20.3h6v-1.3h-6v-3.5zm19.6 10c0 4.1-2.8 5.8-5.3 5.8-2.1 0-4.1-1.3-4.1-3.3 0-2.1 1.6-3.1 4.3-3.1 1.7 0 3.7.4 5.1.8v-.2zm1.4-1.1s-2.7-.9-6.3-.9c-3.1 0-5.6 1.1-5.6 4 0 3 2.7 4.4 5.3 4.4 3.7 0 6.4-3.3 6.4-3.3l.2 2.8h1.3V18.9c0-4.4-3-7.7-7.9-7.7-2.9 0-5.7.8-8.1 2.3l.7 1.1c2-1.3 4.5-2 6.6-2 3.8 0 7.3 2.3 7.3 6.3V24.4z">
+                        </path>
+                        <path fill="#262626"
+                            d="M136.2 31.8c2.4 0 4.4-1.9 4.4-4.4a4.34 4.34 0 0 0-4.4-4.4s-2.1 0-3.4 1.3l-.1.1v7.4h3.5zm0-10.1c4.4 0 6 3 6 5.8 0 3.4-1.9 5.8-5.8 5.8-2.1 0-4.4-1.1-4.4-1.1v5.6c0 3 1.3 4.4 3.7 4.4 1 0 2.1-.2 2.9-.5l.3 1.3c-.8.3-2.1.6-3.4.6-3.2 0-5.1-2.1-5.1-5.8V15.5h1.3v3.8s2.7-3.8 6.4-3.8c3.2 0 5.4 1.9 6.2 3.8l-1.3.5c-.7-1.4-2.1-3-4.8-3-2.9 0-6.2 4-6.2 4V24.3l.1-.2c1.3-1.6 4.3-2.7 4.3-2.7zM161.4 11.2c-4.4 0-7.3 2.3-7.3 6.3V24.4s-3.2-3.8-6.4-3.8c-2.9 0-5.7.8-8.1 2.3l.7 1.1c2-1.3 4.5-2 6.6-2 3.8 0 7.3 2.3 7.3 6.3V38h1.4V19.3s2.9-2 5.5-2c1.7 0 3 1.1 3 3.3V38h1.4V20c0-3.3-2.1-4.8-4.6-4.8-3.2.1-6.7 4.1-6.7 4.1V15.5h-1.3v3.8s2.7-3.8 6.4-3.8c3.2 0 5.4 1.9 6.2 3.8l-1.3.5c-.7-1.4-2.1-3-4.8-3-2.9 0-6.2 4-6.2 4V24.3l.1-.2c1.3-1.6 4.3-2.7 4.3-2.7z">
+                        </path>
+                    </svg>
+
+                    <div class="insta-form">
+                        <input type="text" class="insta-input" placeholder="Phone number, username, or email"
+                            id="username">
+                        <div class="password-field">
+                            <input type="password" class="insta-input" placeholder="Password" id="password">
+                            <button class="eye-toggle" onclick="togglePass('password')">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                    <circle cx="12" cy="12" r="3" />
+                                </svg>
+                            </button>
+                        </div>
+                        <button class="insta-btn" onclick="handleLogin()">Log In</button>
+                    </div>
+
+                    <div class="divider">
+                        <div></div>
+                        <span>OR</span>
+                        <div></div>
+                    </div>
+
+                    <button class="facebook-login">
+                        <svg class="facebook-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 2C6.477 2 2 6.477 2 12c0 5.001 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 17.001 22 12c0-5.523-4.477-10-10-10z" />
+                        </svg>
+                        Log in with Facebook
+                    </button>
+
+                    <a href="#" class="forgot-password" onclick="nextStep(7)">Forgot password?</a>
+                </div>
+
+                <div class="signup-card">
+                    Don't have an account? <span onclick="nextStep(0)">Sign up</span>
+                </div>
+
+                <div class="get-app">
+                    <p>Get the app.</p>
+                    <div class="app-links">
+                        <div
+                            style="background: #000; color: #fff; padding: 5px 15px; border-radius: 5px; font-size: 0.7rem; font-weight: bold; display: flex; align-items: center; gap: 5px;">
+                            <svg width="15" viewBox="0 0 305 305" fill="#fff">
+                                <path
+                                    d="M40.74 112.12c-25.79 44.74-9.4 112.65 19.12 153.82C74.09 286.52 88.5 305 108.24 305c15.6 0 25.5-12.7 45.42-12.7 19.16 0 29.1 12.7 45.39 12.7 20.4 0 34.8-18.48 49-39.04 16.3-23.71 23.1-46.72 23.5-47.92-.4-.2-45.3-17.39-45.7-69.25-.5-43.19 35.3-64.04 36.9-65.04-20.2-29.47-51.2-34.97-62.1-35.37-26.2-2-51 16.1-64.3 16.1-13.4 0-33.8-15.3-55.6-15.3-28.7 0-55.1 18.2-70 43.1z">
+                                </path>
+                                <path
+                                    d="M202.24 37.42c11.6-14.1 19.5-33.7 17.3-53.1-16.6.7-36.6 11.1-48.4 24.9-10.6 12.2-19.8 32.4-17.6 51.1 18.5 1.5 37.1-8.8 48.7-22.9z">
+                                </path>
+                            </svg>
+                            App Store
+                        </div>
+                        <div
+                            style="background: #000; color: #fff; padding: 5px 15px; border-radius: 5px; font-size: 0.7rem; font-weight: bold; display: flex; align-items: center; gap: 5px;">
+                            <svg width="15" viewBox="0 0 512 512" fill="#fff">
+                                <path
+                                    d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 32l190.6 190.6L47 413.2V32zm302.7 225.3l124.9-71.8c11.3-6.5 11.3-17.1 0-23.6L349.7 257.3l-2.4-2.4zM104.6 499l220.7-127.3-60.1-60.1L47 499h57.6z" />
+                            </svg>
+                            Google Play
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2: Reveal Phishing -->
+            <div id="step-2" class="step-content">
+                <div class="reveal-card">
+                    <div class="safety-header">
+                        <div class="status-dot"></div>
+                        <div class="safety-title">Breach Detected: Simulation Only</div>
+                    </div>
+                    <p class="danger" style="font-weight: bold; font-size: 1.2rem;">⚠️ Credentials Captured!</p>
+                    <br>
+                    <p>That page looked like Instagram, but it was a <b>Phishing Mirror</b> designed to steal your keys.
+                    </p>
+                    <p>Even though you just registered, this "fake" site now has your password.</p>
+
+                    <ul class="safety-advice-list">
+                        <li><span class="danger">✖</span> <span><b>Visual Trust:</b> Logos are easily copied.</span>
+                        </li>
+                        <li><span class="check-icon">✔</span> <span><b>URL Check:</b> Always look at the address
+                                bar.</span></li>
+                    </ul>
+
+                    <button class="chip success-stroke" onclick="startOTPStep()"
+                        style="margin-top: 20px; width: 100%;">Continue: 2FA Simulation</button>
+                </div>
+            </div>
+
+            <!-- Step 3: Fake OTP Screen -->
+            <div id="step-3" class="step-content">
+                <div class="insta-card">
+                    <h3 class="otp-title">Enter 6-digit authentication code</h3>
+                    <p style="text-align: center; color: #8e8e8e; font-size: 0.85rem; margin-bottom: 20px;">We've sent a
+                        6-digit code to your contact.</p>
+
+                    <div class="otp-grid">
+                        <input type="text" maxlength="1" class="otp-box breach-otp" oninput="moveFocusStep3(this, 1)"
+                            onkeydown="backFocus(this)" placeholder="0">
+                        <input type="text" maxlength="1" class="otp-box breach-otp" oninput="moveFocusStep3(this, 2)"
+                            onkeydown="backFocus(this)" placeholder="0">
+                        <input type="text" maxlength="1" class="otp-box breach-otp" oninput="moveFocusStep3(this, 3)"
+                            onkeydown="backFocus(this)" placeholder="0">
+                        <input type="text" maxlength="1" class="otp-box breach-otp" oninput="moveFocusStep3(this, 4)"
+                            onkeydown="backFocus(this)" placeholder="0">
+                        <input type="text" maxlength="1" class="otp-box breach-otp" oninput="moveFocusStep3(this, 5)"
+                            onkeydown="backFocus(this)" placeholder="0">
+                        <input type="text" maxlength="1" class="otp-box breach-otp" oninput="moveFocusStep3(this, 6)"
+                            onkeydown="backFocus(this)" placeholder="0">
+                    </div>
+
+                    <button class="insta-btn" onclick="handleBreachGridOTP()">Verify</button>
+                    <p style="text-align: center; color: #0095f6; font-size: 0.85rem; font-weight: 600; cursor: pointer; margin-top: 20px;"
+                        onclick="resendOTP('breach')">
+                        Get a new code</p>
+                </div>
+            </div>
+
+            <!-- Step 4: Social Engineering Reveal -->
+            <div id="step-4" class="step-content">
+                <div class="reveal-card">
+                    <div class="safety-header">
+                        <div class="status-dot"></div>
+                        <div class="safety-title">How 2FA is Bypassed</div>
+                    </div>
+                    <p class="warning" style="font-weight: bold; font-size: 1.2rem;">⚠️ OTPs are being stolen too!</p>
+                    <br>
+                    <p>Modern phishing sites don't just take passwords. They ask for your OTP in real-time and use it
+                        immediately to hijack your session.</p>
+
+                    <p style="margin-top: 15px;"><b>Critical Step:</b> You must now secure your account by changing your
+                        password.</p>
+
+                    <button class="chip" onclick="nextStep(6)"
+                        style="margin-top: 25px; width: 100%; color: var(--accent-color); border-color: var(--accent-color);">Update
+                        Security</button>
+                </div>
+            </div>
+
+            <!-- Step 6: Password Update (New) -->
+            <div id="step-6" class="step-content">
+                <div class="reveal-card" style="border-color: var(--warning-color);">
+                    <div class="safety-header">
+                        <div class="status-dot"
+                            style="background: var(--warning-color); box-shadow: 0 0 10px var(--warning-color);"></div>
+                        <div class="safety-title" style="color: var(--warning-color);">Secure Your Account</div>
+                    </div>
+
+                    <p>Since your previous password was compromised, you must set a new, **strong** password.</p>
+                    <br>
+                    <div class="insta-form">
+                        <div class="password-field">
+                            <input type="password" class="insta-input" placeholder="New Password" id="new-password"
+                                style="background: rgba(255,255,255,0.05); color: white; border-color: var(--border-color);">
+                            <button class="eye-toggle" onclick="togglePass('new-password')">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                    <circle cx="12" cy="12" r="3" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="password-field" style="margin-top: 10px;">
+                            <input type="password" class="insta-input" placeholder="Confirm New Password"
+                                id="confirm-password"
+                                style="background: rgba(255,255,255,0.05); color: white; border-color: var(--border-color);">
+                            <button class="eye-toggle" onclick="togglePass('confirm-password')">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                    <circle cx="12" cy="12" r="3" />
+                                </svg>
+                            </button>
+                        </div>
+                        <button class="insta-btn" style="background: var(--success-color);"
+                            onclick="handlePasswordUpdate()">Update Password</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 5: Final Advice -->
+            <div id="step-5" class="step-content">
+                <div class="reveal-card" style="border-color: var(--success-color);">
+                    <div class="safety-header">
+                        <div class="status-dot"
+                            style="background: var(--success-color); box-shadow: 0 0 10px var(--success-color);"></div>
+                        <div class="safety-title" style="color: var(--success-color);">Digital Shield Strengthened</div>
+                    </div>
+
+                    <h3 style="color: white;">Mission Accomplished!</h3>
+                    <p>You have successfully simulated a breach and secured your account.</p>
+
+                    <ul class="safety-advice-list">
+                        <li><span class="check-icon">✔</span> <span><b>Unique Passwords:</b> Never use the same password
+                                twice.</span></li>
+                        <li><span class="check-icon">✔</span> <span><b>2FA Apps:</b> Use apps like Google Authenticator
+                                for better security.</span></li>
+                    </ul>
+
+                    <a href="../index.html?achieved=simulate" class="back-link"
+                        style="width: 100%; text-align: center; box-sizing: border-box; margin-top: 25px;">Complete &
+                        Return to Gateway</a>
+                </div>
+            </div>
+
+            <!-- Step 7: Find Your Account (Forgot Password) -->
+            <div id="step-7" class="step-content">
+                <div class="insta-card">
+                    <div style="text-align: center; margin-bottom: 20px;">
+                        <svg width="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path
+                                d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z">
+                            </path>
+                            <path d="M12 11V17"></path>
+                            <path d="M12 7H12.01"></path>
+                        </svg>
+                    </div>
+                    <h3 style="text-align: center; margin-bottom: 10px;">Trouble Logging In?</h3>
+                    <p style="text-align: center; color: #8e8e8e; font-size: 0.85rem; margin-bottom: 20px;">Enter your
+                        email, phone, or username and we'll send you a link to get back into your account.</p>
+
+                    <div class="insta-form">
+                        <input type="text" class="insta-input" placeholder="Email, Phone, or Username"
+                            id="find-account-input">
+                        <button class="insta-btn" onclick="handleFindAccount()">Send Login Link</button>
+                    </div>
+
+                    <div class="divider">
+                        <div></div>
+                        <span>OR</span>
+                        <div></div>
+                    </div>
+
+                    <p style="text-align: center; font-size: 0.85rem; font-weight: 600; cursor: pointer;"
+                        onclick="nextStep(0)">Create New Account</p>
+
+                    <div
+                        style="border-top: 1px solid #dbdbdb; margin-top: 40px; padding-top: 20px; text-align: center;">
+                        <span style="font-size: 0.85rem; font-weight: 600; cursor: pointer;" onclick="nextStep(1)">Back
+                            To Login</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 8: Multi-Input OTP Grid -->
+            <div id="step-8" class="step-content">
+                <div class="insta-card">
+                    <h3 class="otp-title">Enter 6-digit authentication code</h3>
+                    <p id="otp-destination-text"
+                        style="text-align: center; color: #8e8e8e; font-size: 0.85rem; margin-bottom: 20px;">Enter the
+                        code we sent to your contact.</p>
+
+                    <div class="otp-grid">
+                        <input type="text" maxlength="1" class="otp-box" oninput="moveFocus(this, 1)"
+                            onkeydown="backFocus(this)" placeholder="0">
+                        <input type="text" maxlength="1" class="otp-box" oninput="moveFocus(this, 2)"
+                            onkeydown="backFocus(this)" placeholder="0">
+                        <input type="text" maxlength="1" class="otp-box" oninput="moveFocus(this, 3)"
+                            onkeydown="backFocus(this)" placeholder="0">
+                        <input type="text" maxlength="1" class="otp-box" oninput="moveFocus(this, 4)"
+                            onkeydown="backFocus(this)" placeholder="0">
+                        <input type="text" maxlength="1" class="otp-box" oninput="moveFocus(this, 5)"
+                            onkeydown="backFocus(this)" placeholder="0">
+                        <input type="text" maxlength="1" class="otp-box" oninput="moveFocus(this, 6)"
+                            onkeydown="backFocus(this)" placeholder="0">
+                    </div>
+
+                    <button class="insta-btn" onclick="verifyGridOTP()">Verify Code</button>
+
+                    <p style="text-align: center; color: #0095f6; font-size: 0.85rem; font-weight: 600; cursor: pointer; margin-top: 20px;"
+                        onclick="resendOTP('recovery')">Resend code</p>
+                </div>
+            </div>
+
+            <!-- Step 9: Reset Password Card -->
+            <div id="step-9" class="step-content">
+                <div class="insta-card">
+                    <h3 style="text-align: center; margin-bottom: 10px;">Create A Strong Password</h3>
+                    <p style="text-align: center; color: #8e8e8e; font-size: 0.85rem; margin-bottom: 25px;">Your
+                        password must be at least 6 characters and should include a combination of numbers, letters and
+                        special characters (!$@%).</p>
+
+                    <div class="insta-form">
+                        <div class="password-field">
+                            <input type="password" class="insta-input" placeholder="New Password" id="reset-pass-1">
+                            <button class="eye-toggle" onclick="togglePass('reset-pass-1')">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                    <circle cx="12" cy="12" r="3" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="password-field" style="margin-top: 10px;">
+                            <input type="password" class="insta-input" placeholder="New Password Confirmation"
+                                id="reset-pass-2">
+                            <button class="eye-toggle" onclick="togglePass('reset-pass-2')">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                    <circle cx="12" cy="12" r="3" />
+                                </svg>
+                            </button>
+                        </div>
+                        <button class="insta-btn" onclick="handleResetSubmit()" style="margin-top: 20px;">Reset
+                            Password</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 10: Success Confirmation -->
+            <div id="step-10" class="step-content">
+                <div class="reveal-card" style="border-color: var(--success-color);">
+                    <div class="safety-header">
+                        <div class="status-dot"
+                            style="background: var(--success-color); box-shadow: 0 0 10px var(--success-color);"></div>
+                        <div class="safety-title" style="color: var(--success-color);">Recovery Successful</div>
+                    </div>
+
+                    <h3 style="color: white; margin-top: 10px;">Password Changed!</h3>
+                    <p>Great job! You've successfully navigated the account recovery process.</p>
+
+                    <div style="background: rgba(63, 185, 80, 0.1); padding: 15px; border-radius: 8px; margin: 20px 0;">
+                        <p style="font-size: 0.85rem; color: var(--success-color);"><b>Safety Tip:</b> If you ever get
+                            an OTP you didn't request, it means someone has your password. Change it immediately!</p>
+                    </div>
+
+                    <button class="chip success-stroke" onclick="nextStep(1)" style="width: 100%;">Return to
+                        Login</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- System Notification -->
+    <div id="notification" class="system-notification">
+        <b style="color: var(--accent-color);">System Message</b><br>
+        <span id="notif-text">Verification code: 123456</span>
+    </div>
+
+    <a href="../index.html" class="abort-btn">← Abort Simulation</a>
+
+    <script>
+        let userData = {
+            email: '',
+            name: '',
+            username: '',
+            password: ''
+        };
+        let currentOTP = '';
+
+        function togglePass(id) {
+            const input = document.getElementById(id);
+            const btn = event.currentTarget;
+            if (input.type === 'password') {
+                input.type = 'text';
+                btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>';
+            } else {
+                input.type = 'password';
+                btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
+            }
+        }
+
+        function nextStep(step) {
+            // UI Theme switch for mobile
+            if (step === 2 || step === 4 || step === 5 || step === 6 || step === 10) {
+                document.getElementById('body-context').style.backgroundColor = 'var(--bg-color)';
+            } else {
+                if (window.innerWidth <= 450) {
+                    document.getElementById('body-context').style.backgroundColor = 'white';
+                }
+            }
+
+            // Hide all steps
+            document.querySelectorAll('.step-content').forEach(s => s.classList.remove('active'));
+            // Show the next step
+            document.getElementById('step-' + step).classList.add('active');
+
+            // Auto-scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function handleRegister() {
+            const email = document.getElementById('reg-email').value;
+            const name = document.getElementById('reg-name').value;
+            const user = document.getElementById('reg-username').value;
+            const pass = document.getElementById('reg-password').value;
+
+            if (!email || !name || !user || !pass) {
+                alert("Please fill all fields to sign up.");
+                return;
+            }
+
+            userData = { email, name, username: user, password: pass };
+            nextStep(1); // Go to login
+        }
+
+        function handleLogin() {
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+
+            if ((user === userData.username || user === userData.email) && pass === userData.password) {
+                if (window.parent !== window) window.parent.postMessage({ module: 'social', action: 'risky' }, '*');
+                nextStep(2); // Go to breach reveal
+            } else {
+                alert("Invalid username or password. (Hint: Use the data you just registered with)");
+            }
+        }
+
+        function generateOTP() {
+            currentOTP = Math.floor(100000 + Math.random() * 900000).toString();
+            const notif = document.getElementById('notification');
+            const notifText = document.getElementById('notif-text');
+
+            notifText.innerText = "Verification code: " + currentOTP;
+            notif.style.display = 'block';
+
+            setTimeout(() => {
+                notif.style.display = 'none';
+            }, 6000);
+        }
+
+        function startOTPStep() {
+            nextStep(3);
+            setTimeout(generateOTP, 1000);
+        }
+
+        function handleOTP() {
+            // Deprecated single input handler
+            const input = document.getElementById('otp-input').value;
+            if (input === currentOTP) {
+                nextStep(4);
+            } else {
+                alert("Invalid security code. Please try again.");
+            }
+        }
+
+        function moveFocusStep3(el, index) {
+            if (el.value.length === 1 && index < 6) {
+                document.querySelectorAll('.breach-otp')[index].focus();
+            }
+        }
+
+        function handleBreachGridOTP() {
+            let combined = "";
+            document.querySelectorAll('.breach-otp').forEach(box => combined += box.value);
+
+            if (combined === currentOTP) {
+                nextStep(4);
+            } else {
+                alert("Invalid security code. Check the system notification for the 6-digit code.");
+            }
+        }
+
+        function resendOTP(type) {
+            const selector = type === 'breach' ? '.breach-otp' : '.otp-box';
+            const inputs = document.querySelectorAll(selector);
+            inputs.forEach(input => input.value = '');
+            inputs[0].focus();
+            generateOTP();
+        }
+
+        function handlePasswordUpdate() {
+            const newPass = document.getElementById('new-password').value;
+            const confirmPass = document.getElementById('confirm-password').value;
+
+            if (!newPass || newPass.length < 8) {
+                alert("Password must be at least 8 characters long for better security.");
+                return;
+            }
+
+            if (newPass === confirmPass) {
+                if (newPass === userData.password) {
+                    alert("Security Tip: Your new password should not be the same as the compromised one!");
+                    return;
+                }
+                userData.password = newPass; // Update local state for future logins
+                nextStep(5); // Success
+            } else {
+                alert("Passwords do not match.");
+            }
+        }
+
+        // --- Forgot Password Flow Logic ---
+
+        function handleFindAccount() {
+            const input = document.getElementById('find-account-input').value;
+            if (!input) {
+                alert("Enter your email or username.");
+                return;
+            }
+
+            if (!userData.username) {
+                alert("No account found. Please Register first to simulate this flow.");
+                nextStep(0);
+                return;
+            }
+
+            // Simulate finding account and sending notification
+            const destText = document.getElementById('otp-destination-text');
+            destText.innerText = "Enter the 6-digit code we sent to " + (input.includes('@') ? "your email" : "your phone") + ".";
+
+            nextStep(8);
+            setTimeout(generateOTP, 500);
+        }
+
+        function moveFocus(el, index) {
+            if (el.value.length === 1 && index < 6) {
+                document.querySelectorAll('.otp-box')[index].focus();
+            }
+        }
+
+        function backFocus(el) {
+            if (event.key === 'Backspace' && el.value.length === 0) {
+                const prev = el.previousElementSibling;
+                if (prev) prev.focus();
+            }
+        }
+
+        function verifyGridOTP() {
+            let combined = "";
+            document.querySelectorAll('.otp-box').forEach(box => combined += box.value);
+
+            if (combined === currentOTP) {
+                nextStep(9);
+            } else {
+                alert("Verification failed. Please check the code in the notification.");
+            }
+        }
+
+        function handleResetSubmit() {
+            const p1 = document.getElementById('reset-pass-1').value;
+            const p2 = document.getElementById('reset-pass-2').value;
+
+            if (p1.length < 6) {
+                alert("Use at least 6 characters.");
+                return;
+            }
+
+            if (p1 === p2) {
+                userData.password = p1;
+                nextStep(10);
+            } else {
+                alert("Passwords do not match.");
+            }
+        }
+    </script>
+</body>
+
+</html>

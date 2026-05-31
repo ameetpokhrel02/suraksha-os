@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Child Online Safety & Parental Dashboard - Suraksha OS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0d1117;
+            --card-bg: rgba(22, 27, 34, 0.7);
+            --header-bg: rgba(22, 27, 34, 0.9);
+            --accent: #00ff9c;
+            --accent-purple: #c77dff;
+            --danger: #f85149;
+            --warning: #ffbd2e;
+            --success: #3fb950;
+            --text: #c9d1d9;
+            --muted: #8b949e;
+            --border: rgba(255,255,255,0.08);
+            --blue: #58a6ff;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: var(--bg); font-family: 'Inter', sans-serif;
+            color: var(--text); min-height: 100vh; display: flex; flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* Awareness Banner */
+        .awareness-banner {
+            background: #0d1117; display: flex; align-items: center; justify-content: center;
+            gap: 10px; padding: 8px 16px; flex-shrink: 0;
+            border-bottom: 1px solid var(--accent);
+        }
+        .alert-icon { color: #ffcc00; font-size: 1rem; }
+        .alert-text { color: var(--accent); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+
+        /* Header */
+        header {
+            background: var(--header-bg); padding: 16px;
+            display: flex; align-items: center; gap: 12px;
+            border-bottom: 1px solid var(--border); backdrop-filter: blur(8px);
+        }
+        .back-btn { text-decoration: none; color: var(--accent); display: flex; align-items: center; padding: 4px; }
+        header h1 { font-size: 1.2rem; font-weight: 800; color: var(--accent); letter-spacing: 0.5px; }
+
+        .dashboard-container {
+            max-width: 1100px; margin: 24px auto; padding: 0 16px;
+            display: flex; flex-direction: column; gap: 24px; width: 100%;
+        }
+
+        .hero-banner {
+            background: linear-gradient(135deg, rgba(199, 125, 255, 0.15) 0%, rgba(0, 255, 156, 0.05) 100%);
+            border: 1px solid rgba(199, 125, 255, 0.3); border-radius: 16px;
+            padding: 24px; text-align: center;
+        }
+        .hero-banner h2 { font-size: 1.5rem; font-weight: 800; color: var(--accent-purple); margin-bottom: 8px; }
+        .hero-banner p { font-size: 0.9rem; color: var(--muted); max-width: 600px; margin: 0 auto; line-height: 1.6; }
+
+        /* Main Columns */
+        .dashboard-grid {
+            display: grid; grid-template-columns: 1fr; gap: 24px;
+        }
+        @media (min-width: 768px) {
+            .dashboard-grid { grid-template-columns: 1.2fr 1fr; }
+        }
+
+        .panel-card {
+            background: var(--card-bg); border: 1px solid var(--border);
+            border-radius: 16px; padding: 20px;
+        }
+        .panel-title {
+            font-size: 1.05rem; font-weight: 700; margin-bottom: 16px;
+            display: flex; align-items: center; gap: 8px; color: var(--accent);
+            border-bottom: 1px solid var(--border); padding-bottom: 10px;
+        }
+
+        /* Profiler Styles */
+        .profiler-form { display: flex; flex-direction: column; gap: 14px; }
+        .form-group { display: flex; flex-direction: column; gap: 6px; }
+        label { font-size: 0.82rem; font-weight: 600; color: var(--muted); }
+        select {
+            background: rgba(0,0,0,0.3); border: 1px solid var(--border);
+            padding: 10px; border-radius: 8px; color: var(--text);
+            font-family: 'Inter', sans-serif; font-size: 0.88rem;
+        }
+        select:focus { border-color: var(--accent); outline: none; }
+        
+        /* App Checkbox Grid */
+        .apps-grid {
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 6px;
+        }
+        .app-option {
+            display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.02);
+            padding: 8px 12px; border: 1px solid var(--border); border-radius: 8px;
+            cursor: pointer; font-size: 0.8rem; transition: background 0.2s;
+        }
+        .app-option:hover { background: rgba(0,255,156,0.05); }
+        .app-option input { accent-color: var(--accent); }
+
+        .btn-action {
+            background: var(--accent); color: var(--bg); border: none;
+            padding: 12px; border-radius: 8px; font-weight: 700;
+            font-size: 0.88rem; cursor: pointer; transition: opacity 0.2s;
+            text-align: center; margin-top: 10px; font-family: 'Inter', sans-serif;
+        }
+        .btn-action:hover { opacity: 0.9; }
+
+        /* Checklist Output */
+        .checklist-output {
+            margin-top: 20px; display: none; flex-direction: column; gap: 10px;
+            animation: fadeIn 0.3s ease-out;
+        }
+        .check-item {
+            display: flex; gap: 10px; background: rgba(255,255,255,0.03);
+            padding: 12px; border-left: 3px solid var(--accent); border-radius: 4px 8px 8px 4px;
+            font-size: 0.83rem; line-height: 1.5;
+        }
+
+        /* Restrictions Simulator */
+        .simulator-controls { display: flex; flex-direction: column; gap: 16px; }
+        .toggle-row {
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(255,255,255,0.02); padding: 12px; border: 1px solid var(--border);
+            border-radius: 10px;
+        }
+        .toggle-info h4 { font-size: 0.88rem; font-weight: 600; margin-bottom: 2px; }
+        .toggle-info p { font-size: 0.72rem; color: var(--muted); }
+        
+        /* Interactive Toggle Switch */
+        .switch {
+            position: relative; display: inline-block; width: 44px; height: 24px;
+        }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute; cursor: pointer; inset: 0; background-color: #333;
+            transition: .3s; border-radius: 24px;
+        }
+        .slider:before {
+            position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px;
+            background-color: white; transition: .3s; border-radius: 50%;
+        }
+        input:checked + .slider { background-color: var(--accent); }
+        input:checked + .slider:before { transform: translateX(20px); }
+
+        /* Scenario Section */
+        .scenario-box {
+            background: rgba(248, 81, 73, 0.05); border: 1px solid rgba(248, 81, 73, 0.2);
+            border-radius: 12px; padding: 16px; margin-top: 14px;
+        }
+        .scenario-desc { font-size: 0.83rem; line-height: 1.5; margin-bottom: 12px; }
+        .guide-box {
+            background: rgba(63, 185, 80, 0.08); border: 1px solid rgba(63, 185, 80, 0.2);
+            padding: 12px; border-radius: 8px; font-size: 0.8rem; margin-top: 10px; display: none;
+            line-height: 1.5; color: #a5d6a7;
+        }
+
+        /* Emergency Hotline Widget */
+        .emergency-widget {
+            background: linear-gradient(135deg, rgba(248,81,73,0.15), rgba(0,0,0,0));
+            border: 1px solid rgba(248,81,73,0.3); border-radius: 16px;
+            padding: 20px; text-align: center;
+        }
+        .hotline-title { font-size: 1.1rem; font-weight: 800; color: var(--danger); margin-bottom: 6px; }
+        .hotline-num { font-size: 1.8rem; font-weight: 800; color: var(--text); font-family: monospace; margin: 8px 0; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+    <div class="awareness-banner">
+        <span class="alert-icon">🛡️</span>
+        <span class="alert-text">Cybersecurity Awareness Portal · Child Online Safety Dashboard</span>
+    </div>
+
+    <header>
+        <a href="../index.html" class="back-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        </a>
+        <h1>👨‍👩‍👧‍👦 Parental Control & Child Safety Center</h1>
+    </header>
+
+    <div class="dashboard-container">
+        <!-- Hero Section -->
+        <div class="hero-banner">
+            <h2>Shield Your Children from Online Threats</h2>
+            <p>Empower your family in the digital age. Select your child's online habits below to receive a localized, offline-friendly cyber security protection checklist, or simulate device safety policies.</p>
+        </div>
+
+        <div class="dashboard-grid">
+            <!-- Left Column: Child habit profiler -->
+            <div class="panel-card">
+                <div class="panel-title">🧠 Child Digital Habits Profiler</div>
+                <div class="profiler-form">
+                    <div class="form-group">
+                        <label for="childAge">Child's Age Group</label>
+                        <select id="childAge">
+                            <option value="under10">Under 10 years (Young Kids)</option>
+                            <option value="teens">10 to 16 years (Teenagers)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Frequently Used Apps / Devices</label>
+                        <div class="apps-grid">
+                            <label class="app-option"><input type="checkbox" value="youtube" checked> YouTube</label>
+                            <label class="app-option"><input type="checkbox" value="tiktok"> TikTok</label>
+                            <label class="app-option"><input type="checkbox" value="gaming"> Mobile Gaming</label>
+                            <label class="app-option"><input type="checkbox" value="facebook"> Facebook/Messenger</label>
+                        </div>
+                    </div>
+                    <button class="btn-action" onclick="generateChecklist()">🔒 GENERATE PROTECTION CHECKLIST</button>
+                </div>
+
+                <div class="checklist-output" id="checklistOutput">
+                    <div class="panel-title" style="border:none;margin-top:14px;">📋 Recommended Safety Steps</div>
+                    <div id="checklistItems"></div>
+                </div>
+            </div>
+
+            <!-- Right Column: Simulated controls and resources -->
+            <div class="panel-card" style="display:flex; flex-direction:column; gap:20px;">
+                <div>
+                    <div class="panel-title">⚙️ Simulated Device Policies</div>
+                    <div class="simulator-controls">
+                        <div class="toggle-row">
+                            <div class="toggle-info">
+                                <h4>SafeSearch Enforced</h4>
+                                <p>Blocks explicit search results on Google/YouTube.</p>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" id="safeSearchToggle" onchange="triggerSimChange('SafeSearch')">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="toggle-row">
+                            <div class="toggle-info">
+                                <h4>Social Media Filtering</h4>
+                                <p>Detects cyberbullying and offensive language.</p>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" id="socialFilterToggle" onchange="triggerSimChange('Social Media Filter')">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="panel-title">📱 Interactive Threat Tester</div>
+                    <div class="scenario-box">
+                        <div class="scenario-desc">
+                            <b>Scenario:</b> A stranger contacts your teenager on social media claiming they are a modeling recruiter in Kathmandu and requests private photos.
+                        </div>
+                        <button class="btn-action" style="margin:0; width:100%; background:var(--accent-purple);" onclick="showTeenGuide()">Get Parental Guidance Policy</button>
+                        <div class="guide-box" id="teenGuideBox">
+                            <b>🛡️ Safety Directive:</b><br>
+                            1. Instruct your child to NEVER send personal photos/credentials.<br>
+                            2. Do not delete the chat log. Screenshot the chat as forensic evidence.<br>
+                            3. Block and report the account immediately.<br>
+                            4. Report the incident directly to Nepal Cyber Bureau.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Emergency Widget -->
+                <div class="emergency-widget">
+                    <div class="hotline-title">🚨 National Child Protection Portal</div>
+                    <div class="hotline-num">1098 / 1144</div>
+                    <p style="font-size:0.75rem; color:var(--muted);">Nepal Government official child helpline/emergency support channels.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function generateChecklist() {
+            const age = document.getElementById('childAge').value;
+            const youtube = document.querySelector('input[value="youtube"]').checked;
+            const tiktok = document.querySelector('input[value="tiktok"]').checked;
+            const gaming = document.querySelector('input[value="gaming"]').checked;
+            const facebook = document.querySelector('input[value="facebook"]').checked;
+
+            const itemsContainer = document.getElementById('checklistItems');
+            itemsContainer.innerHTML = '';
+
+            let list = [];
+
+            if (age === 'under10') {
+                list.push('<b>Restrict app installs:</b> Install Google Family Link or iOS Screen Time to prevent young kids from installing unapproved apps.');
+                list.push('<b>Establish Screen Time:</b> Restrict usage to maximum 1-2 hours per day to prevent cyber addiction.');
+            } else {
+                list.push('<b>Educate on cyberbullying:</b> Tell your teenagers never to engage in harassment, and encourage them to share screenshots with you if threatened.');
+                list.push('<b>Explain digital footprint:</b> Guide them that photos and messages shared online are permanent, even on Snapchat.');
+            }
+
+            if (youtube) {
+                list.push('<b>Enable YouTube Restricted Mode:</b> Restrict adult-oriented videos by turning on "Restricted Mode" in the account settings.');
+            }
+            if (tiktok) {
+                list.push('<b>Enable TikTok Family Pairing:</b> Link your account to your child\'s to filter search terms and set custom screen time limits.');
+            }
+            if (gaming) {
+                list.push('<b>Disable voice chat in online games:</b> Prevent predators from contacting young kids by disabling in-game chat features.');
+            }
+            if (facebook) {
+                list.push('<b>Enforce private profiles:</b> Restrict profile visibility so only real-life friends can view posts and photos.');
+            }
+
+            list.forEach(text => {
+                const item = document.createElement('div');
+                item.className = 'check-item';
+                item.innerHTML = '👉 ' + text;
+                itemsContainer.appendChild(item);
+            });
+
+            document.getElementById('checklistOutput').style.display = 'flex';
+        }
+
+        function triggerSimChange(policyName) {
+            const isChecked = event.target.checked;
+            alert(`[Suraksha OS System Alert]\n${policyName} is now ${isChecked ? 'ENABLED' : 'DISABLED'} on all simulated citizen devices.`);
+        }
+
+        function showTeenGuide() {
+            document.getElementById('teenGuideBox').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

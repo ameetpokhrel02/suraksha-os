@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Scam Simulator - Suraksha OS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0f0f0f;
+            --card: #1a1a2e;
+            --header: #16213e;
+            --bubble-in: #1a1a2e;
+            --bubble-out: #0f3460;
+            --accent: #e94560;
+            --accent-glow: rgba(233, 69, 96, 0.2);
+            --text: #eaeaea;
+            --muted: #7a7a8e;
+            --green: #00c853;
+            --yellow: #ffc107;
+            --divider: rgba(255, 255, 255, 0.06);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--bg);
+            font-family: 'Inter', -apple-system, sans-serif;
+            height: 100vh;
+            height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            color: var(--text);
+        }
+
+        /* Awareness Banner */
+        .awareness-banner {
+            background: #0d1117;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 8px 16px;
+            flex-shrink: 0;
+            border-bottom: 1px solid var(--accent);
+        }
+
+        .alert-icon {
+            color: #ffcc00;
+            font-size: 1rem;
+        }
+
+        .alert-text {
+            color: var(--accent);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Header */
+        header {
+            background: var(--header);
+            padding: 0 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            height: 60px;
+            flex-shrink: 0;
+            border-bottom: 1px solid var(--divider);
+        }
+
+        .back-btn {
+            text-decoration: none;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            padding: 4px;
+        }
+
+        .avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #e94560, #c23152);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .online-dot {
+            width: 10px;
+            height: 10px;
+            background: var(--green);
+            border: 2px solid var(--header);
+            border-radius: 50%;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+        }
+
+        .contact-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .contact-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .contact-sub {
+            font-size: 0.72rem;
+            color: var(--green);
+            font-weight: 500;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            height: 3px;
+            background: rgba(255, 255, 255, 0.05);
+            flex-shrink: 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), #ff6b6b);
+            width: 0%;
+            transition: width 0.6s ease;
+        }
+
+        /* Chat Area */
+        .chat-area {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 5%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .phase-label {
+            align-self: center;
+            background: var(--accent-glow);
+            color: var(--accent);
+            padding: 4px 14px;
+            border-radius: 16px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 8px 0;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .bubble {
+            max-width: 80%;
+            padding: 10px 14px;
+            border-radius: 16px;
+            font-size: 0.88rem;
+            line-height: 1.55;
+            animation: slideUp 0.35s ease-out;
+            word-wrap: break-word;
+        }
+
+        .bubble.in {
+            align-self: flex-start;
+            background: var(--bubble-in);
+            border-bottom-left-radius: 4px;
+            border: 1px solid var(--divider);
+        }
+
+        .bubble.out {
+            align-self: flex-end;
+            background: var(--bubble-out);
+            border-bottom-right-radius: 4px;
+        }
+
+        .bubble .time {
+            font-size: 0.6rem;
+            color: var(--muted);
+            float: right;
+            margin-left: 12px;
+            margin-top: 6px;
+        }
+
+        .typing-indicator {
+            align-self: flex-start;
+            background: var(--bubble-in);
+            border: 1px solid var(--divider);
+            padding: 10px 18px;
+            border-radius: 16px;
+            border-bottom-left-radius: 4px;
+            display: flex;
+            gap: 4px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .typing-indicator span {
+            width: 7px;
+            height: 7px;
+            background: var(--muted);
+            border-radius: 50%;
+            animation: bounce 1.4s infinite;
+        }
+
+        .typing-indicator span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-indicator span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        /* Input Bar */
+        .input-bar {
+            background: var(--header);
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+            border-top: 1px solid var(--divider);
+        }
+
+        .fake-input {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.06);
+            padding: 10px 16px;
+            border-radius: 22px;
+            color: var(--muted);
+            font-size: 0.88rem;
+        }
+
+        /* Decision Panel */
+        .decision-panel {
+            background: var(--header);
+            padding: 16px;
+            border-top: 1px solid var(--divider);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            animation: slideUpPanel 0.4s ease-out;
+            flex-shrink: 0;
+        }
+
+        .decision-label {
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: var(--text);
+            text-align: center;
+        }
+
+        .btn-row {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 13px 8px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 0.82rem;
+            transition: all 0.2s;
+            letter-spacing: 0.3px;
+        }
+
+        .btn-send {
+            background: #cf222e;
+            color: white;
+        }
+
+        .btn-verify {
+            background: var(--yellow);
+            color: #1a1a1a;
+        }
+
+        .btn-ignore {
+            background: var(--green);
+            color: white;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        /* Overlay */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.93);
+            z-index: 3000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            backdrop-filter: blur(6px);
+        }
+
+        .result-box {
+            background: var(--card);
+            border: 1px solid var(--divider);
+            border-radius: 16px;
+            padding: 28px 22px;
+            max-width: 420px;
+            width: 100%;
+            text-align: center;
+            animation: zoomIn 0.3s ease-out;
+        }
+
+        .result-icon {
+            font-size: 3.5rem;
+            margin-bottom: 14px;
+            display: block;
+        }
+
+        .result-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+        }
+
+        .result-body {
+            color: var(--muted);
+            line-height: 1.65;
+            margin-bottom: 22px;
+            text-align: left;
+            font-size: 0.88rem;
+        }
+
+        .result-body p {
+            margin: 0 0 10px;
+        }
+
+        .result-body b {
+            color: var(--text);
+        }
+
+        .finish-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 13px;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            font-size: 0.95rem;
+        }
+
+        /* Animations */
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUpPanel {
+            from {
+                transform: translateY(100%);
+            }
+
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.92);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes bounce {
+
+            0%,
+            60%,
+            100% {
+                transform: translateY(0);
+            }
+
+            30% {
+                transform: translateY(-5px);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .chat-area {
+                padding: 12px 3%;
+            }
+
+            .bubble {
+                max-width: 90%;
+                font-size: 0.84rem;
+            }
+
+            .btn {
+                padding: 11px 4px;
+                font-size: 0.76rem;
+            }
+
+            .alert-text {
+                font-size: 0.65rem;
+                letter-spacing: 0;
+            }
+
+            .awareness-banner {
+                padding: 6px 10px;
+                gap: 6px;
+            }
+
+            header {
+                height: 52px;
+            }
+
+            .avatar {
+                width: 36px;
+                height: 36px;
+                font-size: 1rem;
+            }
+
+            .result-box {
+                padding: 20px 16px;
+            }
+
+            .result-title {
+                font-size: 1.15rem;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .btn-row {
+                flex-direction: column;
+            }
+
+            .alert-text {
+                font-size: 0.6rem;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .chat-area {
+                padding: 20px 18%;
+            }
+
+            .bubble {
+                max-width: 65%;
+            }
+
+            .decision-panel {
+                padding: 16px 18%;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .chat-area {
+                padding: 20px 25%;
+            }
+
+            .bubble {
+                max-width: 55%;
+            }
+
+            .decision-panel {
+                padding: 16px 25%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="awareness-banner">
+        <span class="alert-icon">⚠️</span>
+        <span class="alert-text">Cybersecurity Awareness Simulation. NO DATA STORED.</span>
+    </div>
+
+    <header>
+        <a href="../index.html" class="back-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M19 12H5M12 19l-7-7 7-7" />
+            </svg>
+        </a>
+        <div class="avatar">
+            👩
+            <div class="online-dot"></div>
+        </div>
+        <div class="contact-info">
+            <div class="contact-name">Sita Gurung</div>
+            <div class="contact-sub" id="statusText">Online</div>
+        </div>
+    </header>
+
+    <div class="progress-bar">
+        <div class="progress-fill" id="progress"></div>
+    </div>
+
+    <div class="chat-area" id="chat"></div>
+
+    <div class="input-bar" id="inputBar">
+        <div class="fake-input">Type a message...</div>
+    </div>
+
+    <div class="decision-panel" id="decision" style="display: none;">
+        <div class="decision-label">💸 Sita needs Rs. 5,000 urgently. What do you do?</div>
+        <div class="btn-row">
+            <button class="btn btn-send" onclick="makeChoice('send')">💸 SEND MONEY</button>
+            <button class="btn btn-verify" onclick="makeChoice('verify')">🔍 VERIFY</button>
+            <button class="btn btn-ignore" onclick="makeChoice('ignore')">🚫 IGNORE</button>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay">
+        <div class="result-box" id="result"></div>
+    </div>
+
+    <script>
+        const chatEl = document.getElementById('chat');
+        const inputBar = document.getElementById('inputBar');
+        const decision = document.getElementById('decision');
+        const overlay = document.getElementById('overlay');
+        const resultEl = document.getElementById('result');
+        const progress = document.getElementById('progress');
+        const statusText = document.getElementById('statusText');
+
+        function getTime() {
+            const d = new Date();
+            return d.getHours() + ':' + d.getMinutes().toString().padStart(2, '0');
+        }
+
+        const script = [
+            // Phase 1: Friendly
+            { phase: '🤝 Phase 1 — Building Friendship' },
+            { dir: 'in', text: "Hey! Is this Ramesh from Lalitpur? Someone gave me your number. 😊", delay: 1200 },
+            { dir: 'out', text: "Umm, yes? Who is this?", delay: 2000 },
+            { dir: 'in', text: "I'm Sita! We met at the Dashain program at Bhaktapur last year. I was sitting next to your cousin Maya didi 😄", delay: 2200 },
+            { dir: 'out', text: "Oh okay! I vaguely remember. How are you?", delay: 2000 },
+            { dir: 'in', text: "I'm great! I've been working in an IT company now. It's so nice to reconnect! How's your family? 🙏", delay: 2000 },
+
+            // Phase 2: Trust
+            { phase: '💬 Phase 2 — Deepening Trust' },
+            { dir: 'in', text: "By the way, I saw your Facebook profile. Your photography is amazing! Do you take professional photos too? 📸", delay: 2500 },
+            { dir: 'out', text: "Haha thanks! Just a hobby for now.", delay: 1800 },
+            { dir: 'in', text: "You should really make it a side business! My friend earned Rs. 50,000 last month from event photography 🤯", delay: 2200 },
+
+            // Phase 3: Proof
+            { phase: '📸 Phase 3 — Showing Proof' },
+            { dir: 'in', text: "Actually, I need a small favor. I've been having a really tough week... 😔 My landlord is threatening to kick me out and my salary hasn't come yet.", delay: 2800 },
+            { dir: 'in', text: "I just need Rs. 5,000 until Friday. I'll send you the money back with interest! Here's my eSewa statement as proof that I have the money coming:", delay: 2500 },
+            { dir: 'in', text: "📎 [eSewa_Statement_Feb2026.pdf] — \"Incoming: Rs. 45,000 — Processing\"", delay: 1500 },
+
+            // Phase 4: Request
+            { phase: '🚨 Phase 4 — The Money Request' },
+            { dir: 'in', text: "Please bhai, I really trust you. You're like family to me now. Just Rs. 5,000 to my eSewa: 981XXXXXXX. I'll return it by Friday for sure! 🙏🙏🙏", delay: 2500 },
+        ];
+
+        let step = 0;
+        let typingEl = null;
+
+        function showTyping() {
+            typingEl = document.createElement('div');
+            typingEl.className = 'typing-indicator';
+            typingEl.innerHTML = '<span></span><span></span><span></span>';
+            chatEl.appendChild(typingEl);
+            chatEl.scrollTop = chatEl.scrollHeight;
+            statusText.textContent = 'typing...';
+        }
+
+        function hideTyping() {
+            if (typingEl) { typingEl.remove(); typingEl = null; }
+            statusText.textContent = 'Online';
+        }
+
+        function updateProgress() {
+            const pct = Math.min((step / script.length) * 100, 100);
+            progress.style.width = pct + '%';
+        }
+
+        function runStep() {
+            if (step >= script.length) {
+                hideTyping();
+                setTimeout(() => {
+                    inputBar.style.display = 'none';
+                    decision.style.display = 'flex';
+                }, 800);
+                return;
+            }
+
+            const s = script[step];
+
+            if (s.phase) {
+                const label = document.createElement('div');
+                label.className = 'phase-label';
+                label.textContent = s.phase;
+                chatEl.appendChild(label);
+                chatEl.scrollTop = chatEl.scrollHeight;
+                step++;
+                updateProgress();
+                setTimeout(runStep, 600);
+                return;
+            }
+
+            if (s.dir === 'in') {
+                showTyping();
+                setTimeout(() => {
+                    hideTyping();
+                    addBubble(s);
+                    step++;
+                    updateProgress();
+                    setTimeout(runStep, s.delay);
+                }, 1200);
+            } else {
+                setTimeout(() => {
+                    addBubble(s);
+                    step++;
+                    updateProgress();
+                    setTimeout(runStep, s.delay);
+                }, 800);
+            }
+        }
+
+        function addBubble(s) {
+            const div = document.createElement('div');
+            div.className = `bubble ${s.dir === 'in' ? 'in' : 'out'}`;
+            div.innerHTML = `${s.text} <span class="time">${getTime()}</span>`;
+            chatEl.appendChild(div);
+            chatEl.scrollTop = chatEl.scrollHeight;
+        }
+
+        setTimeout(runStep, 800);
+
+        function makeChoice(choice) {
+            if (window.parent !== window) window.parent.postMessage({ module: 'chat-scam', action: choice === 'send' ? 'risky' : 'safe' }, '*');
+            overlay.style.display = 'flex';
+            let html = '';
+
+            if (choice === 'send') {
+                html = `
+                    <span class="result-icon">🚨</span>
+                    <h2 class="result-title" style="color: #ff4444;">YOU GOT SCAMMED!</h2>
+                    <div class="result-body">
+                        <p><b>What happened:</b> "Sita" is not a real person. This is a classic "Romance/Trust Scam" where a stranger pretends to know you, builds emotional rapport, and then asks for money.</p>
+                        <p><b>Phase Breakdown:</b></p>
+                        <p>• <b>Friendship:</b> Used a fake backstory to make you feel connected.<br>
+                           • <b>Trust:</b> Complimented you to lower your guard.<br>
+                           • <b>Proof:</b> Showed a fake eSewa statement to seem credible.<br>
+                           • <b>Request:</b> Created urgency ("landlord kicking me out").</p>
+                        <p><b>The Truth:</b> The eSewa statement is a simple image edit. The phone number is a burner. Once you send money, "Sita" will disappear and block you.</p>
+                    </div>
+                    <button class="finish-btn" onclick="location.reload()">TRY AGAIN</button>`;
+            } else if (choice === 'verify') {
+                html = `
+                    <span class="result-icon">🔍</span>
+                    <h2 class="result-title" style="color: #ffc107;">SMART DECISION!</h2>
+                    <div class="result-body">
+                        <p><b>Good instinct!</b> Here's what verification would have revealed:</p>
+                        <p><b>🔴 Red Flag 1:</b> "Sita" contacted you first claiming to know you — a classic social engineering opener.</p>
+                        <p><b>🔴 Red Flag 2:</b> The Dashain story is vague enough to match almost anyone — designed so you can't easily disprove it.</p>
+                        <p><b>🔴 Red Flag 3:</b> The eSewa "processing" screenshot is trivially easy to fake with any photo editor.</p>
+                        <p><b>🔴 Red Flag 4:</b> Emotional manipulation — "You're like family to me" after just a few messages.</p>
+                        <p><b>Pro Tip:</b> Always video-call someone before sending money. Scammers will never agree to a face-to-face call.</p>
+                    </div>
+                    <button class="finish-btn" onclick="location.assign('../index.html')">FINISH SIMULATION</button>`;
+            } else {
+                html = `
+                    <span class="result-icon">✅</span>
+                    <h2 class="result-title" style="color: #00c853;">STAYED SAFE!</h2>
+                    <div class="result-body">
+                        <p><b>Perfect response!</b> Ignoring unsolicited money requests from strangers is always the safest option.</p>
+                        <p><b>The 4 Phases of a Trust Scam:</b></p>
+                        <p>1️⃣ <b>Contact:</b> A stranger reaches out claiming a connection.<br>
+                           2️⃣ <b>Bond:</b> They compliment you and create emotional rapport.<br>
+                           3️⃣ <b>Proof:</b> Fake screenshots or documents to build credibility.<br>
+                           4️⃣ <b>Ask:</b> An urgent request for money with a promise to return it.</p>
+                        <p><b>Remember:</b> If someone you barely know asks for money online, it is ALWAYS a scam. No exceptions.</p>
+                    </div>
+                    <button class="finish-btn" onclick="location.assign('../index.html')">FINISH SIMULATION</button>`;
+            }
+
+            resultEl.innerHTML = html;
+        }
+    </script>
+</body>
+
+</html>

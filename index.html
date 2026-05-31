@@ -12,68 +12,466 @@
 </head>
 
 <body>
-
-    <div class="terminal">
-        <!-- Header -->
-        <div class="terminal-header">
-            <span class="dot red"></span>
-            <span class="dot yellow"></span>
-            <span class="dot green"></span>
-            <span class="title">SURAKSHA OS [Version 1.0.4] - CITIZEN SAFETY GATEWAY</span>
+    <div id="smart-banner">
+        <div class="banner-left">
+            <span class="banner-logo">Suraksha OS</span>
+            <span class="banner-text">Nepal's Digital Safety System | Built for Citizen Protection</span>
         </div>
-
-        <!-- Main Content Area -->
-        <div class="terminal-body" id="output">
-            <div class="intro-guidance">
-                <p><b>This helps Nepali citizens stay safe online.</b></p>
-                <p>Suraksha OS is your personal guide to navigating the digital world in Nepal.
-                    Addressing real cyber threats affecting our citizens, we'll build your "Digital Shield" together.
-                </p>
-                <p class="success" style="opacity: 0.8; font-size: 0.9rem;">Complete modules below to strengthen your
-                    Digital Shield.</p>
-                <p><i>Type commands below OR click the buttons to begin your journey.</i></p>
-            </div>
-
-            <div id="boot-sequence">
-                <p>Initializing Nepal Citizen Protection Protocol...</p>
-                <p>Loading Educational Journey [ETA Act Compliance]...</p>
-                <p class="success">System Ready. You are currently in the safety gateway.</p>
-            </div>
-
-            <br>
-            <p>Welcome back, Citizen.</p>
-            <p>Your Current Safety Shield: <span class="danger" id="safetyLevel">UNVERIFIED (No safety modules completed
-                    yet)</span></p>
-            <br>
-            <p>Explore the modules below to strengthen your shield. If you ever feel unsafe, use the **Emergency Help**
-                button.</p>
+        <div class="banner-right">
+            <button class="banner-btn" onclick="this.parentElement.parentElement.style.display='none'">SECURE</button>
         </div>
+    </div>
 
-        <!-- Hybrid UI: Simple Mode Navigation -->
-        <div class="terminal-input-container">
-            <div class="command-chips">
-                <button class="chip success-stroke" onclick="executeChip('learn')"
-                    style="background: rgba(63, 185, 80, 0.1); color: var(--success-color);">Learn Safety</button>
-                <button class="chip success-stroke" onclick="executeChip('scan')"
-                    style="background: rgba(63, 185, 80, 0.1); color: var(--success-color);">Check Scam</button>
-                <button class="chip success-stroke" onclick="executeChip('protect')"
-                    style="background: rgba(63, 185, 80, 0.1); color: var(--success-color);">Password Tool</button>
-                <button class="chip success-stroke" onclick="executeChip('rights')"
-                    style="background: rgba(63, 185, 80, 0.1); color: var(--success-color);">Your Rights</button>
-                <button class="chip success-stroke" onclick="executeChip('quiz')"
-                    style="background: rgba(63, 185, 80, 0.1); color: var(--success-color);">Quiz</button>
-                <button class="chip success-stroke" onclick="executeChip('help')"
-                    style="background: rgba(63, 185, 80, 0.1); color: var(--success-color);">All Commands</button>
-                <button class="chip"
-                    style="color: #ff5f56; border: 1px solid rgba(255,95,86,0.5); background: rgba(255,95,86,0.1); box-shadow: 0 0 10px rgba(255,95,86,0.2);"
-                    onclick="executeChip('panic')">Emergency Help</button>
+    <div id="boot-screen">
+        <div class="boot-content">
+            <h1 class="boot-title">Initializing Suraksha OS...</h1>
+            <div class="progress-container">
+                <div class="progress-bar" id="boot-progress-bar"></div>
             </div>
-
-            <div class="terminal-input">
-                <span class="prompt">citizen@suraksha:~$</span>
-                <input type="text" id="commandInput" autofocus autocomplete="off" spellcheck="false">
+            <div class="boot-status">
+                <span id="boot-percentage">0%</span>
+                <span id="boot-message">Loading Citizen Protection Protocol...</span>
             </div>
         </div>
+    </div>
+
+    <div id="terminal-container" style="display: none;">
+        <div class="terminal">
+            <!-- Header -->
+            <div class="terminal-header">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+                <span class="title">SURAKSHA OS [Version 1.0.4] - CITIZEN SAFETY GATEWAY</span>
+                <button class="gui-toggle-btn success-stroke" onclick="switchInterface('gui')"
+                    style="margin-left: auto; background: rgba(0, 255, 156, 0.1); border: 1px solid rgba(0, 255, 156, 0.3); color: var(--accent-color); padding: 4px 10px; border-radius: 4px; font-size: 0.75rem; cursor: pointer; font-family: monospace;">🌐
+                    GUI Mode</button>
+            </div>
+
+            <!-- Main Content Area -->
+            <div class="terminal-body" id="output">
+                <div class="intro-guidance">
+                    <p><b>This helps Nepali citizens stay safe online.</b></p>
+                    <p>Suraksha OS is your personal guide to navigating the digital world in Nepal.
+                        Addressing real cyber threats affecting our citizens, we'll build your "Digital Shield"
+                        togeth er.
+                    </p>
+                    <p class="success" style="opacity: 0.8; font-size: 0.9rem;">Complete modules below to strengthen
+
+                        your
+                        Digital Shield.</p>
+                    <p><i>Type commands below OR click the buttons to begin your journey.</i></p>
+                </div>
+
+                <div id="boot-sequence">
+                    <p>Initializing Nepal Citizen Protection Protocol...</p>
+                    <p>Loading Educational Journey [ETA Act Compliance]...</p>
+                    <p class="success">System Ready. You are currently in the safety gateway.</p>
+                </div>
+
+                <br>
+                <p>Welcome back, Citizen.</p>
+                <p>Your Current Safety Shield: <span class="danger" id="safetyLevel">UNVERIFIED (No safety modules
+                        completed
+                        yet)</span></p>
+                <br>
+                <p>Explore the modules below to strengthen your shield. If you ever feel unsafe, use the **Emergency
+                    Help** button.</p>
+                <p>Type <b>'help'</b> to navigate through the command line.</p>
+            </div>
+
+            <!-- Hybrid UI: Simple Mode Navigation -->
+            <div class="terminal-input-container">
+                <div class="command-chips">
+                    <button class="chip success-stroke" onclick="executeChip('learn')"
+                        style="background: rgba(63, 185, 80, 0.1); color: var(--success-color);">Learn Safety</button>
+                    <button class="chip success-stroke" onclick="executeChip('scan')"
+                        style="background: rgba(63, 185, 80, 0.1); color: var(--success-color);">Check Scam</button>
+                    <button class="chip success-stroke" onclick="executeChip('protect')"
+                        style="background: rgba(63, 185, 80, 0.1); color: var(--success-color);">Password Tool</button>
+                    <button class="chip success-stroke" onclick="executeChip('rights')"
+                        style="background: rgba(63, 185, 80, 0.1); color: var(--success-color);">Your Rights</button>
+                    <button class="chip success-stroke" onclick="executeChip('quiz')"
+                        style="background: rgba(63, 185, 80, 0.1); color: var(--success-color);">Quiz</button>
+                    <button class="chip success-stroke" onclick="executeChip('social')"
+                        style="background: rgba(63, 185, 80, 0.1); color: var(--success-color);">Social Media
+                        Simulation</button>
+                    <button class="chip success-stroke" onclick="executeChip('ads')"
+                        style="background: rgba(63, 185, 80, 0.1); color: var(--success-color);">Ads Detector</button>
+                    <button class="chip success-stroke" onclick="executeChip('feed')"
+                        style="background: rgba(63, 185, 80, 0.1); color: var(--success-color);">Ads Feed</button>
+                    <button class="chip success-stroke" onclick="executeChip('whatsapp')"
+                        style="background: rgba(63, 185, 80, 0.1); color: var(--success-color);">WhatsApp Scam</button>
+                    <button class="chip success-stroke" onclick="executeChip('telegram')"
+                        style="background: rgba(63, 185, 80, 0.1); color: var(--success-color);">Telegram Scam</button>
+                    <button class="chip success-stroke" onclick="executeChip('chatscam')"
+                        style="background: rgba(63, 185, 80, 0.1); color: var(--success-color);">Chat Scam</button>
+                    <button class="chip" onclick="executeChip('mission')"
+                        style="background: rgba(233, 69, 96, 0.15); color: #e94560; border: 1px solid rgba(233,69,96,0.3);">🎯
+                        Mission Mode</button>
+                    <button class="chip" onclick="executeChip('help')"
+                        style="background: rgba(139, 148, 158, 0.1); color: #8b949e;">All Commands</button>
+                    <button class="chip"
+                        style="color: #ff5f56; border: 1px solid rgba(255,95,86,0.5); background: rgba(255,95,86,0.1); box-shadow: 0 0 10px rgba(255,95,86,0.2);"
+                        onclick="executeChip('panic')">Emergency Help</button>
+                </div>
+
+                <div class="terminal-suggestions" id="terminalSuggestions"
+                    style="padding: 4px 16px; font-size: 0.8rem; color: var(--text-color); opacity: 0.7; font-family: monospace; display: flex; gap: 8px; flex-wrap: wrap;">
+                </div>
+                <div class="terminal-input">
+                    <span class="prompt">citizen@suraksha:~$</span>
+                    <input type="text" id="commandInput" autofocus autocomplete="off" spellcheck="false">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modern GUI Mode Dashboard -->
+    <div id="gui-container" style="display: none;">
+        <div class="gui-dashboard">
+            <!-- Header -->
+            <div class="gui-header">
+                <div class="gui-logo-area">
+                    <span class="gui-logo">🛡️ SURAKSHA OS</span>
+                    <span class="gui-subtitle">Citizen Digital Protection Portal</span>
+                </div>
+                <div class="gui-controls">
+                    <button class="gui-btn success-stroke" onclick="switchInterface('terminal')">💻 Terminal
+                        Mode</button>
+                </div>
+            </div>
+
+            <div class="gui-body">
+                <!-- Left: Shield Progress -->
+                <div class="gui-sidebar-card">
+                    <h3>Your Digital Shield</h3>
+                    <div class="progress-circle-wrap">
+                        <div class="progress-pct-text" id="guiProgressPct">0%</div>
+                        <svg class="progress-ring-svg" viewBox="0 0 100 100">
+                            <circle class="ring-bg" cx="50" cy="50" r="42" />
+                            <circle class="ring-bar" id="guiProgressRing" cx="50" cy="50" r="42" />
+                        </svg>
+                    </div>
+                    <div class="safety-level-label" id="guiSafetyLevel">UNVERIFIED</div>
+                    <p class="safety-level-sub">Complete challenges to fortify your shield against Nepalese digital
+                        threats.</p>
+
+                    <div class="badges-showcase">
+                        <h4>Unlocked Badges</h4>
+                        <div class="badges-list" id="unlockedBadges">
+                            <span class="no-badges">No badges earned yet.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Roadmap & Challenge Cards -->
+                <div class="gui-main-content">
+                    <h2 class="roadmap-heading">Safety Roadmap</h2>
+
+                    <!-- Level 1 -->
+                    <div class="roadmap-level-group">
+                        <div class="level-badge-title">LEVEL 1: CYBER BASICS</div>
+                        <div class="cards-grid">
+                            <div class="module-card" id="card-learn" onclick="launchModule('learn')">
+                                <div class="card-icon">📚</div>
+                                <h4>Learn Safety</h4>
+                                <p>Essential digital safety guidelines for Nepal.</p>
+                                <span class="card-status-pill" id="status-learn">Not Started</span>
+                            </div>
+                            <div class="module-card" id="card-rights" onclick="launchModule('rights')">
+                                <div class="card-icon">⚖️</div>
+                                <h4>Your Digital Rights</h4>
+                                <p>Your rights under Nepal's Cyber Law (ETA 2063).</p>
+                                <span class="card-status-pill" id="status-rights">Not Started</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Level 2 -->
+                    <div class="roadmap-level-group">
+                        <div class="level-badge-title">LEVEL 2: VULNERABILITY CHECKERS</div>
+                        <div class="cards-grid">
+                            <div class="module-card" id="card-protect" onclick="launchModule('protect')">
+                                <div class="card-icon">🔑</div>
+                                <h4>Password Shield</h4>
+                                <p>Check strength and estimate crack times locally.</p>
+                                <span class="card-status-pill" id="status-protect">Not Started</span>
+                            </div>
+                            <div class="module-card" id="card-scan" onclick="launchModule('scan')">
+                                <div class="card-icon">🔍</div>
+                                <h4>System Scanner</h4>
+                                <p>Detect local device and browser vulnerabilities.</p>
+                                <span class="card-status-pill" id="status-scan">Not Started</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Level 3 -->
+                    <div class="roadmap-level-group">
+                        <div class="level-badge-title">LEVEL 3: SCAM SIMULATORS</div>
+                        <div class="cards-grid">
+                            <div class="module-card" id="card-social" onclick="launchModule('social')">
+                                <div class="card-icon">📷</div>
+                                <h4>Social Phishing</h4>
+                                <p>Avoid credential stealing on fake login forms.</p>
+                                <span class="card-status-pill" id="status-social">Not Started</span>
+                            </div>
+                            <div class="module-card" id="card-whatsapp" onclick="launchModule('whatsapp')">
+                                <div class="card-icon">💬</div>
+                                <h4>WhatsApp OTP Scam</h4>
+                                <p>Detect code forwarding and validation scams.</p>
+                                <span class="card-status-pill" id="status-whatsapp">Not Started</span>
+                            </div>
+                            <div class="module-card" id="card-telegram" onclick="launchModule('telegram')">
+                                <div class="card-icon">✈️</div>
+                                <h4>Telegram Fraud</h4>
+                                <p>Identify fake profits and cryptocurrency schemes.</p>
+                                <span class="card-status-pill" id="status-telegram">Not Started</span>
+                            </div>
+                            <div class="module-card" id="card-chatscam" onclick="launchModule('chatscam')">
+                                <div class="card-icon">💬</div>
+                                <h4>Trust Building Scam</h4>
+                                <p>See how scammers build chat rapport before stealing.</p>
+                                <span class="card-status-pill" id="status-chatscam">Not Started</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Level 4 -->
+                    <div class="roadmap-level-group">
+                        <div class="level-badge-title">LEVEL 4: ACTIVE DEFENSE</div>
+                        <div class="cards-grid">
+                            <div class="module-card" id="card-ads" onclick="launchModule('ads')">
+                                <div class="card-icon">📢</div>
+                                <h4>Malicious Ads Detector</h4>
+                                <p>Unmask fake ads designed to exploit trust.</p>
+                                <span class="card-status-pill" id="status-ads">Not Started</span>
+                            </div>
+                            <div class="module-card" id="card-feed" onclick="launchModule('feed')">
+                                <div class="card-icon">📰</div>
+                                <h4>Scam Ad Feed</h4>
+                                <p>Browse Facebook-style clone and spot bait posts.</p>
+                                <span class="card-status-pill" id="status-feed">Not Started</span>
+                            </div>
+                            <div class="module-card highlight-mission" id="card-mission"
+                                onclick="launchModule('mission')">
+                                <div class="card-icon">🎯</div>
+                                <h4>Mission Mode</h4>
+                                <p>Complete the full connected multi-scam attack chain.</p>
+                                <span class="card-status-pill" id="status-mission">Not Started</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GUI Emergency Action Bar -->
+            <div class="gui-footer-bar">
+                <span>Emergency Cyber Incident? Hotline 1144 Toll-Free (Nepal Police)</span>
+                <button class="panic-btn" onclick="executeChip('panic')">🚨 EMERGENCY HELP</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Accessibility Floating Control -->
+    <div id="a11y-trigger" class="floating-a11y-icon" title="Accessibility Panel"
+        aria-label="Accessibility panel toggle" role="button" tabindex="0">
+        ♿
+    </div>
+
+    <!-- Accessibility Drawer Panel -->
+    <div id="a11y-panel" class="a11y-panel" style="display: none;">
+        <div class="a11y-header">
+            <h3>♿ Accessibility Options</h3>
+            <button class="a11y-close-btn" onclick="toggleA11yPanel()">×</button>
+        </div>
+        <div class="a11y-body">
+            <div class="a11y-section">
+                <label>Text Size</label>
+                <div class="a11y-buttons">
+                    <button class="a11y-btn" onclick="setA11yTextSize('normal')">A</button>
+                    <button class="a11y-btn" onclick="setA11yTextSize('medium')">A+</button>
+                    <button class="a11y-btn" onclick="setA11yTextSize('large')">A++</button>
+                </div>
+            </div>
+            <div class="a11y-section">
+                <label>Theme & Contrast</label>
+                <div class="a11y-buttons">
+                    <button class="a11y-btn" onclick="setA11yTheme('dark')">Cyber Dark</button>
+                    <button class="a11y-btn" onclick="setA11yTheme('high-contrast-dark')">HC Dark</button>
+                    <button class="a11y-btn" onclick="setA11yTheme('high-contrast-light')">HC Light</button>
+                </div>
+            </div>
+            <div class="a11y-section">
+                <label>Terminal Color Theme</label>
+                <div class="a11y-buttons" style="display: block; width: 100%;">
+                    <select id="guiThemeSelector" class="a11y-select" onchange="ThemeManager.apply(this.value)"
+                        style="width: 100%; background: #161b22; border: 1px solid rgba(0, 255, 156, 0.3); color: var(--accent-color); padding: 8px; border-radius: 6px; font-family: monospace; outline: none; font-size: 0.9rem; cursor: pointer; transition: border-color 0.2s;">
+                        <option value="green">Default Green</option>
+                        <option value="matrix">Matrix</option>
+                        <option value="kali">Kali Linux</option>
+                        <option value="ubuntu">Ubuntu</option>
+                        <option value="cyber">Cyberpunk</option>
+                        <option value="light">Light Mode</option>
+                        <option value="alert">Red Alert</option>
+                        <option value="nepal">Nepal Theme</option>
+                        <option value="retro">Retro DOS</option>
+                        <option value="accessible">Accessible High-Contrast</option>
+                    </select>
+                </div>
+            </div>
+            <div class="a11y-section">
+                <label>Dyslexia-Friendly Font</label>
+                <div class="a11y-buttons">
+                    <button class="a11y-btn" id="btn-dyslexia-toggle" onclick="toggleA11yDyslexia()">Turn On</button>
+                </div>
+            </div>
+            <div class="a11y-section">
+                <label>Motion & Animations</label>
+                <div class="a11y-buttons">
+                    <button class="a11y-btn" id="btn-animations-toggle" onclick="toggleA11yAnimations()">Normal
+                        Motion</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Guided Onboarding Modal -->
+    <div id="onboarding-modal" class="onboarding-modal" style="display: none;">
+        <div class="onboarding-content">
+            <div class="onboarding-header">
+                <h2>Welcome to Suraksha OS 🛡️</h2>
+                <button class="onboarding-close" onclick="closeOnboarding()">×</button>
+            </div>
+            <div class="onboarding-body" id="onboardingBody">
+                <!-- Slides will be handled via JS dynamically -->
+            </div>
+            <div class="onboarding-footer">
+                <button class="onboarding-btn prev-btn" id="onboardPrev" onclick="onboardPrev()">Back</button>
+                <div class="onboarding-dots" id="onboardDots"></div>
+                <button class="onboarding-btn next-btn" id="onboardNext" onclick="onboardNext()">Next</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Security Guide Chat Interface -->
+    <div id="ai-chat-window" class="ai-chat-window" style="display: none;">
+        <div class="ai-chat-container">
+            <!-- Chat Header -->
+            <div class="ai-chat-header">
+                <div class="ai-chat-title">
+                    <svg class="ai-chat-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L3 7V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V7L12 2Z"
+                            stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        <path d="M8 14C8 14 9.5 16 12 16S16 14 16 14" stroke="currentColor" stroke-width="1.5"
+                            stroke-linecap="round" />
+                        <circle cx="9" cy="10" r="1" fill="currentColor" />
+                        <circle cx="15" cy="10" r="1" fill="currentColor" />
+                    </svg>
+                    <span>AI Security Guide</span>
+                    <div class="ai-status">
+                        <div class="status-dot"></div>
+                        <span>Online</span>
+                    </div>
+                </div>
+                <div class="ai-chat-controls">
+                    <button class="ai-chat-btn minimize-btn" title="Minimize" aria-label="Minimize chat">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M6 12H18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                    </button>
+                    <button class="ai-chat-btn close-btn" title="Close" aria-label="Close chat">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Chat Messages Area -->
+            <div class="ai-chat-messages" id="ai-chat-messages">
+                <div class="ai-welcome-message">
+                    <div class="ai-message">
+                        <div class="ai-avatar">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2L3 7V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V7L12 2Z"
+                                    stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                        <div class="ai-message-content">
+                            <div class="ai-message-text">
+                                <p>🛡️ <strong>Welcome to your AI Security Guide!</strong></p>
+                                <p>I'm here to help you learn about <strong>Two-Factor Authentication (2FA)</strong> and
+                                    how to protect your accounts from cyber threats.</p>
+                                <p>Try asking me:</p>
+                                <div class="quick-questions">
+                                    <button class="quick-question-btn" data-question="What is 2FA?">What is
+                                        2FA?</button>
+                                    <button class="quick-question-btn" data-question="How to enable 2FA?">How to enable
+                                        2FA?</button>
+                                    <button class="quick-question-btn"
+                                        data-question="How to use Authenticator apps?">How to use Authenticator
+                                        apps?</button>
+                                </div>
+                            </div>
+                            <div class="ai-message-time">Just now</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Demo Simulation Area (Initially Hidden) -->
+            <div class="ai-demo-area" id="ai-demo-area" style="display: none;">
+                <div class="demo-header">
+                    <h3>Interactive 2FA Setup Demo</h3>
+                    <button class="demo-close-btn" title="Exit Demo">×</button>
+                </div>
+                <div class="demo-content" id="demo-content">
+                    <!-- Demo content will be dynamically inserted here -->
+                </div>
+                <div class="demo-controls">
+                    <button class="demo-btn demo-prev-btn" disabled>Previous</button>
+                    <span class="demo-progress">Step 1 of 5</span>
+                    <button class="demo-btn demo-next-btn">Next</button>
+                </div>
+            </div>
+
+            <!-- Chat Input Area -->
+            <div class="ai-chat-input-container">
+                <div class="ai-chat-input-wrapper">
+                    <input type="text" id="ai-chat-input" class="ai-chat-input"
+                        placeholder="Ask me about 2FA, account security, or type 'help'..." autocomplete="off"
+                        maxlength="500">
+                    <button class="ai-chat-send-btn" id="ai-chat-send-btn" title="Send message"
+                        aria-label="Send message">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M22 2L11 13M22 2L15 22L11 13M22 2L2 9L11 13" stroke="currentColor" stroke-width="2"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="ai-chat-footer">
+                    <span class="ai-chat-hint">Press Enter to send • Powered by Suraksha OS</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Security Guide Floating Chat Icon -->
+    <div id="ai-chat-icon" class="floating-chat-icon" title="AI Security Guide - Ask about 2FA and account protection">
+        <svg class="chat-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Security Shield -->
+            <path d="M12 2L3 7V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V7L12 2Z" stroke="currentColor"
+                stroke-width="2" stroke-linejoin="round" />
+            <!-- Chat Bubble -->
+            <path d="M8 14C8 14 9.5 16 12 16S16 14 16 14" stroke="currentColor" stroke-width="1.5"
+                stroke-linecap="round" />
+            <circle cx="9" cy="10" r="1" fill="currentColor" />
+            <circle cx="15" cy="10" r="1" fill="currentColor" />
+        </svg>
+        <div class="pulse-ring"></div>
     </div>
 
     <script src="assets/js/terminal.js"></script>
