@@ -16,7 +16,7 @@ let progress = JSON.parse(localStorage.getItem("suraksha_progress")) || [];
 // Valid command names for autocomplete and suggestions
 const VALID_COMMANDS = [
     "help", "learn", "scan", "protect", "rights", "quiz", "social", "snapchat", "ads", "feed",
-    "instagram", "twitter", "whatsapp", "telegram", "chatscam", "mission", "panic", "clear", "exit",
+    "facebook", "instagram", "twitter", "whatsapp", "telegram", "chatscam", "mission", "panic", "clear", "exit",
     "theme", "themes", "preview", "apply", "cancel", "fontsize"
 ];
 
@@ -463,9 +463,9 @@ function processCommand(command) {
                 <p><span class="command">social</span>   → Simulation: Instagram Phishing Simulator</p>
                 <p><span class="command">snapchat</span> → Simulation: Snapchat Phishing Simulator (Suspicious Alert)</p>
                 <p><span class="command">ads</span>      → Tool: Malicious Ads Detector</p>
-                <p><span class="command">feed</span>     → Simulation: Facebook Scam Ad Feed</p>
+                <p><span class="command">facebook</span> → Simulation: Facebook Scam Ad Feed</p>
                 <p><span class="command">instagram</span> → Simulation: Instagram Scam Feed (MrBeast, Celebrity Impersonation)</p>
-                <p><span class="command">twitter</span>   → Simulation: Twitter/X Scam Feed (Elon Musk Crypto Giveaway)</p>
+                <p><span class="command">twitter</span>  → Simulation: Twitter/X Scam Feed (Elon Musk Crypto Giveaway)</p>
                 <p><span class="command">whatsapp</span> → Simulation: WhatsApp OTP Scam Simulator</p>
                 <p><span class="command">telegram</span> → Simulation: Telegram Investment Fraud Simulator</p>
                 <p><span class="command">chatscam</span> → Simulation: Chat Trust Building Simulator</p>
@@ -565,6 +565,12 @@ function processCommand(command) {
         case "mission":
             output.innerHTML += `<p>Initializing ${actualCmd.toUpperCase()} module. Stay focused, Citizen. Your safety is our priority.</p>`;
             setTimeout(() => goTo(actualCmd === 'feed' ? 'fb-ads' : actualCmd === 'chatscam' ? 'chat-scam' : actualCmd), 600);
+            break;
+
+        case "facebook":
+            output.innerHTML += `<p>Initializing <span class="warning">FACEBOOK SCAM FEED</span> module. Spot fake marketplace listings and sponsored ad scams.</p>`;
+            localStorage.setItem('sim_platform', 'facebook');
+            setTimeout(() => goTo('fb-ads'), 600);
             break;
 
         case "instagram":

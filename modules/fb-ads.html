@@ -1886,6 +1886,113 @@
             margin-left: 4px;
             vertical-align: middle;
         }
+        body.platform-twitter .verified-badge-inline {
+            background: #1d9bf0;
+        }
+
+        /* ── Platform-specific Mobile Bottom Nav ────────────── */
+        .plat-mobile-nav {
+            display: none;
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 3050;
+            box-sizing: border-box;
+            border-top: 1px solid rgba(255,255,255,0.12);
+        }
+        body.mobile-view.platform-facebook .plat-mobile-nav.fb-nav { display: flex !important; background: #18191a; border-top-color: #2f3031; }
+        body.mobile-view.platform-instagram .plat-mobile-nav.ig-nav { display: flex !important; background: #000; border-top-color: #262626; }
+        body.mobile-view.platform-twitter .plat-mobile-nav.tw-nav  { display: flex !important; background: #000; border-top-color: #2f3336; }
+
+        .plat-nav-btn {
+            background: transparent;
+            border: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+            cursor: default;
+            padding: 4px 8px;
+            flex: 1;
+            font-family: inherit;
+        }
+        .plat-nav-btn svg { width: 24px; height: 24px; }
+        .plat-nav-btn span { font-size: 9px; opacity: 0.7; }
+        .plat-nav-btn.active svg { stroke-width: 2.5; }
+        body.mobile-view.platform-instagram .plat-nav-btn { color: #fff; }
+        body.mobile-view.platform-twitter   .plat-nav-btn { color: #e7e9ea; }
+        body.mobile-view.platform-facebook  .plat-nav-btn { color: #b0b3b8; }
+        body.mobile-view.platform-facebook  .plat-nav-btn.active { color: #1877f2; }
+        body.mobile-view.platform-instagram .plat-nav-btn.active { color: #fff; }
+        body.mobile-view.platform-twitter   .plat-nav-btn.active { color: #fff; }
+
+        /* ── Instagram Stories Row ──────────────────────────── */
+        .ig-stories-bar {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding: 10px 12px;
+            scrollbar-width: none;
+            border-bottom: 1px solid #262626;
+        }
+        .ig-stories-bar::-webkit-scrollbar { display: none; }
+        .ig-story {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            min-width: 60px;
+            cursor: pointer;
+        }
+        .ig-story-ring {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            padding: 2px;
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+        }
+        .ig-story-ring.seen { background: #3a3a3a; }
+        .ig-story-ring.your-story { background: #262626; border: 2px dashed #555; }
+        .ig-story-avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: #1c1c1e;
+            border: 2px solid #000;
+            display: grid;
+            place-items: center;
+            font-size: 20px;
+            font-weight: 700;
+            color: #fff;
+        }
+        .ig-story-name {
+            font-size: 11px;
+            color: #fff;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 58px;
+        }
+        .ig-story-add-btn {
+            width: 18px;
+            height: 18px;
+            background: #0095f6;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: white;
+            font-weight: bold;
+            margin-top: -18px;
+            margin-left: 36px;
+            border: 2px solid #000;
         }
 
         /* Hide top platform selector bar in mobile view */
@@ -2172,6 +2279,56 @@
             </aside>
 
             <section class="feed-column" aria-label="Simulated feed">
+
+                <!-- Instagram Stories Row (ig-only) -->
+                <div class="ig-only-flex ig-stories-bar">
+                    <!-- Your Story -->
+                    <div class="ig-story">
+                        <div class="ig-story-ring your-story">
+                            <div class="ig-story-avatar" style="font-size:24px;">A</div>
+                        </div>
+                        <div class="ig-story-add-btn">+</div>
+                        <span class="ig-story-name">Your Story</span>
+                    </div>
+                    <!-- Fake scam stories -->
+                    <div class="ig-story" onclick="showWarning(0)">
+                        <div class="ig-story-ring">
+                            <div class="ig-story-avatar" style="font-size:18px;">🐉</div>
+                        </div>
+                        <span class="ig-story-name">mrbeast</span>
+                    </div>
+                    <div class="ig-story" onclick="showWarning(0)">
+                        <div class="ig-story-ring">
+                            <div class="ig-story-avatar" style="font-size:18px;">💎</div>
+                        </div>
+                        <span class="ig-story-name">elonmusk</span>
+                    </div>
+                    <div class="ig-story" onclick="showWarning(0)">
+                        <div class="ig-story-ring">
+                            <div class="ig-story-avatar" style="font-size:18px;">💰</div>
+                        </div>
+                        <span class="ig-story-name">crypto_guru</span>
+                    </div>
+                    <div class="ig-story" onclick="showWarning(0)">
+                        <div class="ig-story-ring">
+                            <div class="ig-story-avatar" style="font-size:18px;">🎁</div>
+                        </div>
+                        <span class="ig-story-name">giveaway_np</span>
+                    </div>
+                    <div class="ig-story" onclick="showWarning(0)">
+                        <div class="ig-story-ring seen">
+                            <div class="ig-story-avatar" style="font-size:18px;">📱</div>
+                        </div>
+                        <span class="ig-story-name">iphone_deal</span>
+                    </div>
+                    <div class="ig-story" onclick="showWarning(0)">
+                        <div class="ig-story-ring seen">
+                            <div class="ig-story-avatar" style="font-size:18px;">🎰</div>
+                        </div>
+                        <span class="ig-story-name">lucky_draw</span>
+                    </div>
+                </div>
+
                 <div class="composer" aria-hidden="true">
                     <div class="composer-input">
                         <div class="mini-avatar">A</div>
@@ -2845,19 +3002,60 @@
         </div>
     </main>
 
-        <!-- Mobile Bottom Tab Bar -->
-        <div class="mobile-tab-bar">
-            <button class="mobile-tab-btn active" id="tab-fb" onclick="switchPlatform('facebook')">
-                <span class="tab-icon">🔵</span>
-                <span class="tab-label">Facebook</span>
+        <!-- Instagram Authentic Bottom Nav -->
+        <div class="plat-mobile-nav ig-nav">
+            <button class="plat-nav-btn active">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
             </button>
-            <button class="mobile-tab-btn" id="tab-ig" onclick="switchPlatform('instagram')">
-                <span class="tab-icon">📸</span>
-                <span class="tab-label">Instagram</span>
+            <button class="plat-nav-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
             </button>
-            <button class="mobile-tab-btn" id="tab-tw" onclick="switchPlatform('twitter')">
-                <span class="tab-icon">𝕏</span>
-                <span class="tab-label">Twitter/X</span>
+            <button class="plat-nav-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+            </button>
+            <button class="plat-nav-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+            </button>
+            <button class="plat-nav-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </button>
+        </div>
+
+        <!-- Facebook Authentic Bottom Nav -->
+        <div class="plat-mobile-nav fb-nav">
+            <button class="plat-nav-btn active">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </button>
+            <button class="plat-nav-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+            </button>
+            <button class="plat-nav-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </button>
+            <button class="plat-nav-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+            </button>
+            <button class="plat-nav-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </button>
+        </div>
+
+        <!-- Twitter/X Authentic Bottom Nav -->
+        <div class="plat-mobile-nav tw-nav">
+            <button class="plat-nav-btn active">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </button>
+            <button class="plat-nav-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </button>
+            <button class="plat-nav-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+            </button>
+            <button class="plat-nav-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </button>
+            <button class="plat-nav-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
             </button>
         </div>
 
