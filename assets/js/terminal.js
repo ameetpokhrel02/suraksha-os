@@ -2818,7 +2818,35 @@ function getSimulatedResponse(message) {
     return enhancedAIResponseEngine.processQuery(message);
 }
 
+function toggleDashboardMobile() {
+    const body = document.body;
+    const termBtn = document.getElementById("dash-mobile-btn-term");
+    const guiBtn = document.getElementById("dash-mobile-btn-gui");
+    
+    if (body.classList.contains("dashboard-mobile-view")) {
+        body.classList.remove("dashboard-mobile-view");
+        if (termBtn) termBtn.innerHTML = "📱 Mobile View";
+        if (guiBtn) guiBtn.innerHTML = "📱 Mobile View";
+        localStorage.setItem("dash_view_mode", "desktop");
+    } else {
+        body.classList.add("dashboard-mobile-view");
+        if (termBtn) termBtn.innerHTML = "🖥️ Desktop View";
+        if (guiBtn) guiBtn.innerHTML = "🖥️ Desktop View";
+        localStorage.setItem("dash_view_mode", "mobile");
+    }
+}
+
 // Initialize AI Chat Icon when page loads
 document.addEventListener('DOMContentLoaded', function () {
     initializeAIChatIcon();
+    
+    // Load stored dashboard view mode
+    const storedDashView = localStorage.getItem("dash_view_mode");
+    if (storedDashView === "mobile") {
+        document.body.classList.add("dashboard-mobile-view");
+        const termBtn = document.getElementById("dash-mobile-btn-term");
+        const guiBtn = document.getElementById("dash-mobile-btn-gui");
+        if (termBtn) termBtn.innerHTML = "🖥️ Desktop View";
+        if (guiBtn) guiBtn.innerHTML = "🖥️ Desktop View";
+    }
 });

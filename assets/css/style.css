@@ -2075,3 +2075,76 @@ body.reduced-motion * {
 .theme-accessible-mode .prompt {
     text-shadow: none !important;
 }
+
+/* ── Forced Mobile View Mode for Gateway/Dashboard ──────────────────── */
+body.dashboard-mobile-view {
+    background: #0b0f17 !important;
+}
+
+body.dashboard-mobile-view #smart-banner {
+    display: none !important;
+}
+
+body.dashboard-mobile-view #terminal-container,
+body.dashboard-mobile-view #gui-container {
+    width: 385px !important;
+    height: 780px !important;
+    margin: 40px auto !important;
+    border: 14px solid #1f2937 !important;
+    border-radius: 40px !important;
+    background: #010409 !important;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 0 4px #4b5563 !important;
+    position: relative !important;
+    overflow: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+body.dashboard-mobile-view #terminal-container {
+    display: flex !important;
+}
+
+body.dashboard-mobile-view #gui-container {
+    display: flex !important;
+}
+
+body.dashboard-mobile-view .terminal,
+body.dashboard-mobile-view .gui-dashboard {
+    width: 100% !important;
+    height: 100% !important;
+    max-height: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+body.dashboard-mobile-view .gui-body {
+    flex-direction: column !important;
+    overflow-y: auto !important;
+}
+
+body.dashboard-mobile-view .gui-sidebar-card {
+    width: 100% !important;
+    border-right: none !important;
+    border-bottom: 1px solid var(--border-color) !important;
+    padding: 16px !important;
+}
+
+body.dashboard-mobile-view .gui-main-content {
+    padding: 16px !important;
+}
+
+body.dashboard-mobile-view .command-chips {
+    max-height: 140px !important;
+    overflow-y: auto !important;
+}
+
+body.dashboard-mobile-view .terminal-body {
+    padding: 14px !important;
+}
+
+/* Custom scrollbar inside mobile dashboard elements */
+body.dashboard-mobile-view #terminal-container::-webkit-scrollbar,
+body.dashboard-mobile-view #gui-container::-webkit-scrollbar {
+    width: 6px !important;
+}
