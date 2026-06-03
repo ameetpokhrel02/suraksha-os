@@ -1154,6 +1154,65 @@
             display: flex !important;
         }
 
+        /* ── Mobile Bottom Tab Bar ──────────────────── */
+        .mobile-tab-bar {
+            display: none;
+            position: absolute;
+            bottom: 20px; /* Positioned right above home indicator bar */
+            left: 0;
+            width: 100%;
+            height: 56px;
+            background: #18191a;
+            border-top: 1px solid #2f3031;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 3050;
+            box-sizing: border-box;
+        }
+
+        body.mobile-view .mobile-tab-bar {
+            display: flex !important;
+        }
+
+        .mobile-tab-btn {
+            background: transparent;
+            border: none;
+            color: #8a8d91;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+            cursor: pointer;
+            padding: 4px;
+            flex: 1;
+            font-family: inherit;
+            transition: color 0.15s ease;
+        }
+
+        .mobile-tab-btn.active {
+            color: #1877f2;
+        }
+
+        body.platform-facebook .mobile-tab-btn.active {
+            color: #1877f2;
+        }
+        body.platform-instagram .mobile-tab-btn.active {
+            color: #e1306c;
+        }
+        body.platform-twitter .mobile-tab-btn.active {
+            color: #1d9bf0;
+        }
+
+        .mobile-tab-btn .tab-icon {
+            font-size: 18px;
+        }
+
+        .mobile-tab-btn .tab-label {
+            font-size: 10px;
+            font-weight: 500;
+        }
+
         /* Style overrides inside forced mobile view */
         body.mobile-view .topbar {
             position: sticky !important;
@@ -1166,7 +1225,7 @@
 
         body.mobile-view .page-shell {
             margin-top: 15px !important;
-            padding-bottom: 40px !important;
+            padding-bottom: 80px !important;
             width: 100% !important;
             box-sizing: border-box !important;
             padding-left: 10px !important;
@@ -2698,6 +2757,22 @@
         </div>
     </main>
 
+        <!-- Mobile Bottom Tab Bar -->
+        <div class="mobile-tab-bar">
+            <button class="mobile-tab-btn active" id="tab-fb" onclick="switchPlatform('facebook')">
+                <span class="tab-icon">🔵</span>
+                <span class="tab-label">Facebook</span>
+            </button>
+            <button class="mobile-tab-btn" id="tab-ig" onclick="switchPlatform('instagram')">
+                <span class="tab-icon">📸</span>
+                <span class="tab-label">Instagram</span>
+            </button>
+            <button class="mobile-tab-btn" id="tab-tw" onclick="switchPlatform('twitter')">
+                <span class="tab-icon">𝕏</span>
+                <span class="tab-label">Twitter/X</span>
+            </button>
+        </div>
+
         <div class="mock-home-indicator">
             <div class="mock-home-bar"></div>
         </div>
@@ -2761,6 +2836,14 @@
             
             // Update platform selector buttons active state
             document.querySelectorAll('.platform-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('onclick').includes(platform)) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // Update mobile tab bar buttons active state
+            document.querySelectorAll('.mobile-tab-btn').forEach(btn => {
                 btn.classList.remove('active');
                 if (btn.getAttribute('onclick').includes(platform)) {
                     btn.classList.add('active');
