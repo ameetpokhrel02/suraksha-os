@@ -900,7 +900,7 @@
             }
 
             .top-tabs {
-                display: none;
+                display: none !important;
             }
 
             .top-actions {
@@ -1611,7 +1611,7 @@
 
     <header class="topbar" aria-label="Simulated social network header">
         <!-- Facebook Header Content -->
-        <div class="topbar-inner fb-only-flex" style="width: 100%; display: grid; grid-template-columns: 310px 1fr 330px; align-items: center; gap: 12px; padding: 0 12px;">
+        <div class="topbar-inner fb-only-flex">
             <div class="brand-search">
                 <div class="fake-logo" aria-label="Fakebook training logo">f</div>
                 <div class="fake-search">Search Fakebook <span>⌕</span></div>
@@ -1632,11 +1632,11 @@
         </div>
 
         <!-- Instagram Header Content -->
-        <div class="topbar-inner ig-only-flex" style="width: 100%; display: grid; grid-template-columns: 310px 1fr 330px; align-items: center; gap: 12px; padding: 0 12px;">
+        <div class="topbar-inner ig-only-flex">
             <div class="brand-search">
-                <div class="fake-logo" aria-label="Instagram logo" style="font-family: 'Georgia', serif; font-style: italic; font-weight: 800; font-size: 18px; width: auto; background: transparent; padding: 0 6px;">Instagram</div>
+                <div class="fake-logo" aria-label="Instagram logo" style="font-family: 'Georgia', serif; font-style: italic; font-weight: 800; font-size: 18px; width: auto; background: transparent; padding: 0 6px; letter-spacing: -0.5px;">Instagram</div>
             </div>
-            <nav class="top-tabs" aria-label="Simulated navigation" style="display: flex; gap: 20px;">
+            <nav class="top-tabs" aria-label="Simulated navigation" style="gap: 20px;">
                 <button class="top-tab active" style="font-size: 14px;">🏠 Home</button>
                 <button class="top-tab" style="font-size: 14px;">✉️ Messages</button>
                 <button class="top-tab" style="font-size: 14px;">🧭 Explore</button>
@@ -1648,7 +1648,7 @@
         </div>
 
         <!-- Twitter/X Header Content -->
-        <div class="topbar-inner tw-only-flex" style="width: 100%; display: grid; grid-template-columns: 310px 1fr 330px; align-items: center; gap: 12px; padding: 0 12px;">
+        <div class="topbar-inner tw-only-flex">
             <div class="brand-search">
                 <div class="fake-logo" aria-label="X logo" style="font-size: 20px; font-weight: 900; background: transparent; color: white;">𝕏</div>
             </div>
