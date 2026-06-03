@@ -2096,16 +2096,17 @@ body.dashboard-mobile-view #gui-container {
     box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 0 4px #4b5563 !important;
     position: relative !important;
     overflow: hidden !important;
-    display: flex !important;
     flex-direction: column !important;
 }
 
-body.dashboard-mobile-view #terminal-container {
+body.dashboard-mobile-view #terminal-container:not([style*="display: none"]),
+body.dashboard-mobile-view #gui-container:not([style*="display: none"]) {
     display: flex !important;
 }
 
-body.dashboard-mobile-view #gui-container {
-    display: flex !important;
+body.dashboard-mobile-view #terminal-container[style*="display: none"],
+body.dashboard-mobile-view #gui-container[style*="display: none"] {
+    display: none !important;
 }
 
 body.dashboard-mobile-view .terminal,
@@ -2147,4 +2148,110 @@ body.dashboard-mobile-view .terminal-body {
 body.dashboard-mobile-view #terminal-container::-webkit-scrollbar,
 body.dashboard-mobile-view #gui-container::-webkit-scrollbar {
     width: 6px !important;
+}
+
+/* ── Virtual Keyboard Styling ──────────────────── */
+.virtual-keyboard {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    background: #0d1117;
+    border-top: 1px solid var(--border-color);
+    padding: 8px 4px;
+    user-select: none;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+body.dashboard-mobile-view #terminal-container .virtual-keyboard {
+    display: flex !important;
+}
+
+.keyboard-header {
+    font-family: monospace;
+    font-size: 11px;
+    color: #8b949e;
+    margin-bottom: 6px;
+    text-align: left;
+    padding-left: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.keyboard-row {
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    width: 100%;
+    margin-bottom: 2px;
+}
+
+.key {
+    flex: 1;
+    height: 38px;
+    background: #161b22;
+    border: 1px solid var(--border-color);
+    color: var(--accent-color);
+    border-radius: 5px;
+    font-size: 14px;
+    font-family: 'JetBrains Mono', monospace;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.1s ease;
+}
+
+.key:active, .key.active {
+    background: var(--accent-color) !important;
+    color: #0d1117 !important;
+}
+
+.key.action {
+    background: #21262d;
+    font-size: 12px;
+}
+
+.key.wide {
+    flex: 3;
+}
+
+.keyboard-shortcuts {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 6px;
+    gap: 4px;
+    padding: 0 4px;
+}
+
+.shortcut-btn {
+    flex: 1;
+    background: rgba(0, 255, 156, 0.05);
+    border: 1px solid rgba(0, 255, 156, 0.2);
+    color: var(--accent-color);
+    font-size: 10px;
+    font-family: monospace;
+    padding: 4px 2px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+    text-align: center;
+}
+
+.shortcut-btn:hover {
+    background: rgba(0, 255, 156, 0.15);
+}
+
+/* Disable phone bezels on actual small phone screens */
+@media (max-width: 600px) {
+    body.dashboard-mobile-view #terminal-container,
+    body.dashboard-mobile-view #gui-container {
+        width: 100% !important;
+        height: 100vh !important;
+        margin: 0 !important;
+        border: none !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+    }
 }

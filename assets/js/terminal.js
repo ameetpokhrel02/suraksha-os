@@ -2850,3 +2850,59 @@ document.addEventListener('DOMContentLoaded', function () {
         if (guiBtn) guiBtn.innerHTML = "🖥️ Desktop View";
     }
 });
+
+let isShiftActive = false;
+
+function pressKey(char) {
+    const inputEl = document.getElementById("commandInput");
+    if (!inputEl) return;
+    
+    if (char === 'Backspace') {
+        inputEl.value = inputEl.value.slice(0, -1);
+    } else if (char === 'Enter') {
+        const val = inputEl.value;
+        if (typeof processCommand === 'function') {
+            processCommand(val);
+        }
+        inputEl.value = "";
+        if (typeof updateSuggestions === 'function') {
+            updateSuggestions("");
+        }
+    } else if (char === 'Shift') {
+        isShiftActive = !isShiftActive;
+        const keys = document.querySelectorAll('.virtual-keyboard .key:not(.action)');
+        keys.forEach(key => {
+            key.textContent = isShiftActive ? key.textContent.toUpperCase() : key.textContent.toLowerCase();
+        });
+        const shiftBtn = document.getElementById('shift-key-btn');
+        if (shiftBtn) {
+            if (isShiftActive) shiftBtn.classList.add('active');
+            else shiftBtn.classList.remove('active');
+        }
+        return;
+    } else if (char === ' ') {
+        inputEl.value += ' ';
+    } else {
+        inputEl.value += isShiftActive ? char.toUpperCase() : char.toLowerCase();
+        // Reset shift key after typing if active
+        if (isShiftActive) {
+            isShiftActive = false;
+            const keys = document.querySelectorAll('.virtual-keyboard .key:not(.action)');
+            keys.forEach(key => {
+                key.textContent = key.textContent.toLowerCase();
+            });
+            const shiftBtn = document.getElementById('shift-key-btn');
+            if (shiftBtn) shiftBtn.classList.remove('active');
+        }
+    }
+    inputEl.focus();
+    // Fire input event to trigger suggestions autocomplete
+    inputEl.dispatchEvent(new Event('input'));
+}
+
+function executeShortcut(cmd) {
+    const inputEl = document.getElementById("commandInput");
+    if (!inputEl) return;
+    inputEl.value = cmd;
+    pressKey('Enter');
+}
