@@ -4,323 +4,887 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fake Ad Detection Feed | Suraksha OS</title>
+    <title>Fake Social Ad Detection Feed | Suraksha OS</title>
     <link rel="stylesheet" href="../assets/css/style.css">
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
         rel="stylesheet">
     <style>
         :root {
-            --fb-bg: #18191a;
-            --fb-card-bg: #242526;
-            --fb-header-bg: #242526;
-            --fb-text: #e4e6eb;
-            --fb-secondary-text: #b0b3b8;
-            --fb-divider: #3e4042;
-            --fb-hover: #3a3b3c;
-            --fb-blue: #2d88ff;
-            --alert-red: #ff4444;
+            --fb-blue: #4267b2;
+            --fb-blue-dark: #365899;
+            --fb-bg: #e9ebee;
+            --fb-panel: #ffffff;
+            --fb-muted-panel: #f5f6f7;
+            --fb-border: #dfe3e8;
+            --fb-line: #e5e7eb;
+            --fb-text: #1c1e21;
+            --fb-muted: #606770;
+            --fb-light-text: #90949c;
+            --fb-green: #42b72a;
+            --sim-red: #d93025;
+            --sim-amber: #fbbc04;
+        }
+
+        * {
+            box-sizing: border-box;
         }
 
         body {
-            background-color: var(--fb-bg);
+            min-height: 100vh;
             margin: 0;
             padding: 0;
-            font-family: 'Inter', -apple-system, sans-serif;
+            display: block;
+            background: var(--fb-bg);
             color: var(--fb-text);
-            padding-top: 80px;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
-        /* Red-Pill Awareness Alert */
-        .awareness-alert-container {
+        button {
+            font: inherit;
+        }
+
+        .training-ribbon {
             position: fixed;
-            top: 15px;
-            width: 100%;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 3000;
+            min-height: 32px;
+            padding: 7px 14px;
             display: flex;
+            align-items: center;
             justify-content: center;
-            z-index: 2000;
-            pointer-events: none;
-        }
-
-        .awareness-pill {
-            background: #0d1117;
-            border: 1px solid var(--alert-red);
-            border-radius: 50px;
-            padding: 8px 24px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            box-shadow: 0 0 20px rgba(255, 68, 68, 0.2);
-            pointer-events: auto;
-            max-width: 90%;
-        }
-
-        .alert-icon {
-            color: #ffcc00;
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-        }
-
-        .alert-text {
-            color: var(--alert-red);
-            font-size: 0.85rem;
-            font-weight: 700;
-            letter-spacing: 0.5px;
+            gap: 8px;
+            background: #111827;
+            border-bottom: 2px solid var(--sim-red);
+            color: #fff;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.3px;
+            text-align: center;
             text-transform: uppercase;
         }
 
-        header {
+        .topbar {
             position: fixed;
-            top: 0;
-            width: 100%;
-            height: 56px;
-            background-color: var(--fb-header-bg);
+            top: 32px;
+            left: 0;
+            right: 0;
+            z-index: 2000;
+            height: 43px;
             display: flex;
-            align-items: center;
-            padding: 0 16px;
-            border-bottom: 1px solid var(--fb-divider);
-            z-index: 1000;
+            justify-content: center;
+            background: var(--fb-blue);
+            border-bottom: 1px solid #29487d;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.18);
         }
 
-        .header-content {
+        .topbar-inner {
+            width: min(1160px, 100%);
+            display: grid;
+            grid-template-columns: 310px 1fr 330px;
+            align-items: center;
+            gap: 12px;
+            padding: 0 12px;
+        }
+
+        .brand-search {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 0;
+        }
+
+        .fake-logo {
+            width: 26px;
+            height: 26px;
+            display: grid;
+            place-items: center;
+            border-radius: 2px;
+            background: #fff;
+            color: var(--fb-blue);
+            font-size: 22px;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .fake-search {
+            width: 236px;
+            height: 25px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            width: 100%;
-            max-width: 600px;
-            margin: 0 auto;
+            padding: 0 8px;
+            background: #fff;
+            border-radius: 2px;
+            color: #69707a;
+            font-size: 12px;
         }
 
-        .header-logo {
-            color: var(--fb-blue);
-            font-size: 1.5rem;
+        .top-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .top-tab {
+            height: 30px;
+            min-width: 78px;
+            padding: 0 12px;
+            border: 0;
+            border-radius: 2px;
+            background: transparent;
+            color: #eef3ff;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .top-tab.active,
+        .top-tab:hover {
+            background: rgba(0, 0, 0, 0.16);
+        }
+
+        .top-actions {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 8px;
+            color: #1d355d;
+        }
+
+        .profile-chip {
+            height: 30px;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 0 9px;
+            border-radius: 2px;
+            color: #fff;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .top-dot,
+        .profile-avatar {
+            width: 24px;
+            height: 24px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.18);
+            color: #fff;
+            font-size: 13px;
+        }
+
+        .page-shell {
+            width: min(1110px, calc(100% - 28px));
+            margin: 75px auto 28px;
+        }
+
+        .gateway-link {
+            width: fit-content;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin: 14px 0 10px;
+            color: #35528f;
+            text-decoration: none;
+            font-size: 13px;
             font-weight: 800;
-            letter-spacing: -1px;
         }
 
-        /* Feed Container */
-        .feed-container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px 10px;
-        }
-
-        /* Post Card */
-        .post-card {
-            background: var(--fb-card-bg);
-            border-radius: 8px;
-            margin-bottom: 16px;
+        .page-cover {
+            height: 210px;
+            position: relative;
+            background:
+                linear-gradient(180deg, rgba(239, 240, 243, 0.1), rgba(0, 0, 0, 0.16)),
+                linear-gradient(135deg, #dfe3eb 0%, #f4f6f9 56%, #cfd6e4 100%);
+            border: 1px solid #cfd5df;
+            border-bottom: 0;
             overflow: hidden;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .cover-image-icon {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 82px;
+            height: 62px;
+            transform: translate(-50%, -34%);
+            border: 5px solid #c8ccd3;
+            border-radius: 6px;
+            opacity: 0.7;
+        }
+
+        .cover-image-icon::before {
+            content: '';
+            position: absolute;
+            left: 11px;
+            top: 12px;
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+            background: #c8ccd3;
+        }
+
+        .cover-image-icon::after {
+            content: '';
+            position: absolute;
+            left: 16px;
+            right: 12px;
+            bottom: 12px;
+            height: 25px;
+            background: linear-gradient(135deg, transparent 33%, #c8ccd3 34% 60%, transparent 61%),
+                linear-gradient(45deg, transparent 22%, #c8ccd3 23% 66%, transparent 67%);
+        }
+
+        .page-avatar {
+            position: absolute;
+            left: 24px;
+            bottom: -28px;
+            width: 156px;
+            height: 156px;
+            display: grid;
+            place-items: center;
+            border: 4px solid #fff;
+            border-radius: 50%;
+            background: #f4e4ff;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+            color: #1877f2;
+            font-size: 72px;
+            font-weight: 800;
+            letter-spacing: -10px;
+        }
+
+        .page-avatar span:last-child {
+            color: #ff8db7;
+        }
+
+        .page-title-row {
+            min-height: 76px;
+            display: grid;
+            grid-template-columns: 200px 1fr auto;
+            align-items: end;
+            gap: 18px;
+            padding: 12px 16px 12px;
+            background: var(--fb-panel);
+            border: 1px solid #cfd5df;
+            border-top: 0;
+        }
+
+        .page-title h1 {
+            margin: 0;
+            font-size: 24px;
+            line-height: 1.1;
+        }
+
+        .page-title p {
+            margin: 5px 0 0;
+            color: var(--fb-muted);
+            font-size: 13px;
+        }
+
+        .page-cta {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .fb-button {
+            min-height: 30px;
+            padding: 0 12px;
+            border: 1px solid #ccd0d5;
+            border-radius: 2px;
+            background: #f5f6f7;
+            color: #4b4f56;
+            font-size: 12px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .fb-button.primary {
+            border-color: var(--fb-blue-dark);
+            background: var(--fb-blue);
+            color: #fff;
+        }
+
+        .page-nav {
+            display: flex;
+            align-items: center;
+            padding-left: 200px;
+            background: var(--fb-panel);
+            border: 1px solid #cfd5df;
+            border-top: 0;
+        }
+
+        .page-nav a {
+            padding: 13px 16px;
+            border-right: 1px solid var(--fb-line);
+            color: #385898;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .page-nav a.active {
+            color: var(--fb-text);
+            border-bottom: 3px solid var(--fb-blue);
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: 180px minmax(360px, 540px) minmax(260px, 320px);
+            gap: 12px;
+            align-items: start;
+            margin-top: 12px;
+        }
+
+        .left-menu,
+        .right-column,
+        .composer,
+        .post-card,
+        .info-card {
+            background: var(--fb-panel);
+            border: 1px solid var(--fb-border);
+            border-radius: 3px;
+        }
+
+        .left-menu {
+            padding: 8px 0;
+            position: sticky;
+            top: 90px;
+        }
+
+        .side-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 11px;
+            color: #1d2129;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .side-link.active {
+            background: #f5f6f7;
+            border-left: 3px solid var(--fb-blue);
+            padding-left: 8px;
+        }
+
+        .create-page {
+            margin: 8px 11px 2px;
+            padding: 7px 8px;
+            border-radius: 3px;
+            background: var(--fb-green);
+            color: #fff;
+            font-size: 12px;
+            font-weight: 800;
+            text-align: center;
+        }
+
+        .composer {
+            margin-bottom: 12px;
+        }
+
+        .composer-input {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--fb-line);
+        }
+
+        .mini-avatar {
+            width: 34px;
+            height: 34px;
+            display: grid;
+            place-items: center;
+            flex: 0 0 auto;
+            border-radius: 50%;
+            background: #dfe3eb;
+            color: #6d7582;
+            font-weight: 800;
+        }
+
+        .fake-input {
+            flex: 1;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            padding: 0 12px;
+            border-radius: 17px;
+            background: #f0f2f5;
+            color: #6b7280;
+            font-size: 13px;
+        }
+
+        .composer-tools {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4px;
+            padding: 8px;
+        }
+
+        .composer-tool {
+            border: 0;
+            border-radius: 4px;
+            background: transparent;
+            color: #4b4f56;
+            padding: 8px 6px;
+            font-size: 12px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .composer-tool:hover {
+            background: #f2f3f5;
+        }
+
+        .post-card {
+            margin-bottom: 12px;
+            overflow: hidden;
         }
 
         .post-header {
-            padding: 12px 16px;
-            display: flex;
+            display: grid;
+            grid-template-columns: 42px 1fr auto;
+            gap: 10px;
             align-items: center;
-            gap: 12px;
+            padding: 12px;
         }
 
-        .avatar {
-            width: 40px;
-            height: 40px;
+        .post-avatar {
+            width: 42px;
+            height: 42px;
+            display: grid;
+            place-items: center;
             border-radius: 50%;
-            background: #3a3b3c;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
+            background: #303236;
+            color: #f7c948;
+            font-size: 22px;
         }
 
-        .user-info {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .user-name {
-            font-weight: 600;
-            font-size: 0.95rem;
-            color: var(--fb-text);
+        .post-name {
+            color: #1d2129;
+            font-size: 14px;
+            font-weight: 800;
         }
 
         .post-meta {
-            font-size: 0.8rem;
-            color: var(--fb-secondary-text);
+            margin-top: 2px;
+            color: var(--fb-muted);
+            font-size: 12px;
+        }
+
+        .more-btn {
+            width: 28px;
+            height: 28px;
+            border: 0;
+            border-radius: 50%;
+            background: transparent;
+            color: var(--fb-muted);
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .more-btn:hover {
+            background: #f2f3f5;
         }
 
         .post-content {
-            padding: 4px 16px 16px;
-            font-size: 0.95rem;
-            line-height: 1.4;
+            padding: 0 12px 12px;
+            color: #1d2129;
+            font-size: 15px;
+            line-height: 1.45;
         }
 
-        .post-visual {
-            width: 100%;
-            aspect-ratio: 1.91 / 1;
-            background: #3a3b3c;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 1.4rem;
+        .ad-creative {
+            min-height: 315px;
+            position: relative;
+            display: grid;
+            place-items: center;
+            padding: 28px;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 82% 18%, rgba(255, 255, 255, 0.28), transparent 28%),
+                linear-gradient(135deg, #1877f2 0%, #0b66d8 42%, #0757b8 100%);
+            color: #fff;
             text-align: center;
-            padding: 30px;
-            box-sizing: border-box;
-            color: white;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .ad-photo {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .ad-creative.photo::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            background:
+                linear-gradient(180deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.64)),
+                radial-gradient(circle at 20% 18%, rgba(255, 255, 255, 0.22), transparent 28%);
+        }
+
+        .ad-creative.red.photo::before {
+            background:
+                linear-gradient(180deg, rgba(0, 0, 0, 0.02), rgba(88, 13, 13, 0.72)),
+                radial-gradient(circle at 82% 18%, rgba(255, 255, 255, 0.24), transparent 25%);
+        }
+
+        .ad-creative-inner {
+            position: relative;
+            z-index: 2;
+            display: grid;
+            gap: 10px;
+            justify-items: center;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.34);
+        }
+
+        .ad-kicker {
+            padding: 5px 9px;
+            border: 2px solid rgba(255, 255, 255, 0.82);
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: 900;
+            letter-spacing: 0.8px;
+        }
+
+        .ad-headline {
+            font-size: clamp(29px, 5vw, 42px);
+            line-height: 1.03;
+            font-weight: 900;
+            letter-spacing: 0;
+        }
+
+        .ad-subline {
+            font-size: clamp(18px, 3vw, 26px);
+            line-height: 1.2;
+            font-weight: 900;
+            letter-spacing: 0;
+        }
+
+        .fake-sticker {
+            position: absolute;
+            right: 14px;
+            top: 14px;
+            z-index: 2;
+            padding: 6px 9px;
+            border-radius: 3px;
+            background: #d93025;
+            color: #fff;
+            font-size: 11px;
+            font-weight: 900;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+        }
+
+        .link-preview {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 10px;
+            align-items: center;
+            padding: 10px 12px;
+            background: #f2f3f5;
+            border-top: 1px solid var(--fb-line);
+        }
+
+        .preview-domain {
+            color: var(--fb-muted);
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .preview-title {
+            margin-top: 3px;
+            color: #1d2129;
+            font-size: 14px;
+            font-weight: 800;
+        }
+
+        .preview-copy {
+            margin-top: 3px;
+            color: var(--fb-muted);
+            font-size: 12px;
         }
 
         .post-stats {
-            padding: 10px 16px;
             display: flex;
             justify-content: space-between;
-            font-size: 0.85rem;
-            color: var(--fb-secondary-text);
-            border-bottom: 1px solid var(--fb-divider);
-            margin: 0 16px;
+            gap: 12px;
+            margin: 0 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--fb-line);
+            color: var(--fb-muted);
+            font-size: 13px;
         }
 
-        /* Post Buttons & Reactions */
-        .post-buttons {
+        .reactions {
             display: flex;
-            padding: 4px 16px;
+            align-items: center;
+            gap: 5px;
+            min-width: 0;
+        }
+
+        .reaction-bubbles {
+            display: flex;
+            align-items: center;
+        }
+
+        .reaction-bubble {
+            width: 18px;
+            height: 18px;
+            display: grid;
+            place-items: center;
+            margin-right: -4px;
+            border: 1px solid #fff;
+            border-radius: 50%;
+            color: #fff;
+            font-size: 10px;
+        }
+
+        .reaction-bubble.like {
+            background: #1877f2;
+        }
+
+        .reaction-bubble.love {
+            background: #f02849;
+        }
+
+        .post-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            padding: 4px 8px;
             position: relative;
         }
 
-        .action-btn-wrapper {
-            flex: 1;
+        .action-wrap {
             position: relative;
         }
 
         .action-btn {
             width: 100%;
+            min-height: 36px;
+            border: 0;
+            border-radius: 3px;
             background: transparent;
-            border: none;
-            padding: 8px;
-            border-radius: 4px;
-            color: var(--fb-secondary-text);
-            font-weight: 600;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
+            color: #606770;
+            font-size: 13px;
+            font-weight: 800;
             cursor: pointer;
-            transition: background 0.2s;
         }
 
         .action-btn:hover {
-            background: var(--fb-hover);
+            background: #f2f3f5;
         }
 
-        /* Reaction Fly-out Bar */
         .reaction-bar {
             position: absolute;
-            bottom: 100%;
-            left: 0;
-            background: var(--fb-card-bg);
-            border: 1px solid var(--fb-divider);
+            left: 2px;
+            bottom: calc(100% + 4px);
             display: flex;
-            padding: 6px;
-            border-radius: 50px;
             gap: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            padding: 7px 9px;
+            border: 1px solid #dadde1;
+            border-radius: 999px;
+            background: #fff;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.22);
             opacity: 0;
             visibility: hidden;
-            transform: translateY(10px) scale(0.8);
-            transition: all 0.2s cubic-bezier(0.18, 0.89, 0.32, 1.28);
-            z-index: 10;
+            transform: translateY(8px) scale(0.9);
+            transition: 160ms ease;
+            z-index: 20;
         }
 
-        .action-btn-wrapper:hover .reaction-bar {
+        .action-wrap:hover .reaction-bar {
             opacity: 1;
             visibility: visible;
-            transform: translateY(-5px) scale(1);
+            transform: translateY(0) scale(1);
         }
 
         .reaction-emoji {
-            font-size: 1.5rem;
+            width: 30px;
+            height: 30px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            font-size: 22px;
             cursor: pointer;
-            transition: transform 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 32px;
-            height: 32px;
+            transition: transform 140ms ease;
         }
 
         .reaction-emoji:hover {
-            transform: scale(1.4) translateY(-5px);
+            transform: translateY(-5px) scale(1.25);
         }
 
-        /* Warning Overlay */
+        .comment-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px 12px;
+            border-top: 1px solid var(--fb-line);
+        }
+
+        .comment-box {
+            flex: 1;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            border-radius: 16px;
+            background: #f0f2f5;
+            color: #7a7f87;
+            font-size: 12px;
+        }
+
+        .right-column {
+            display: grid;
+            gap: 12px;
+            background: transparent;
+            border: 0;
+        }
+
+        .info-card {
+            padding: 12px;
+        }
+
+        .info-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            color: #1d2129;
+            font-size: 13px;
+            font-weight: 900;
+        }
+
+        .info-head a {
+            color: #385898;
+            text-decoration: none;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .info-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 9px 0;
+            color: #4b4f56;
+            font-size: 12px;
+        }
+
+        .skeleton {
+            height: 9px;
+            border-radius: 999px;
+            background: #d9dde4;
+        }
+
+        .skeleton.long {
+            width: 76%;
+        }
+
+        .skeleton.mid {
+            width: 58%;
+        }
+
+        .page-like-row {
+            display: grid;
+            grid-template-columns: 38px 1fr auto;
+            align-items: center;
+            gap: 9px;
+            padding: 8px 0;
+            border-top: 1px solid var(--fb-line);
+        }
+
+        .page-like-row:first-of-type {
+            border-top: 0;
+        }
+
+        .color-avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+        }
+
+        .training-note {
+            border-left: 4px solid var(--sim-red);
+            background: #fff8f8;
+        }
+
+        .training-note .info-head {
+            color: var(--sim-red);
+        }
+
+        .training-note p {
+            margin: 0;
+            color: #4b4f56;
+            font-size: 12px;
+            line-height: 1.45;
+        }
+
         .overlay {
-            display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            z-index: 3000;
+            inset: 0;
+            z-index: 4000;
+            display: none;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 18px;
+            background: rgba(10, 13, 18, 0.72);
             backdrop-filter: blur(4px);
         }
 
         .warning-popup {
-            background: #1c1d1e;
-            border: 1px solid var(--fb-divider);
-            border-radius: 12px;
-            max-width: 450px;
-            width: 100%;
-            padding: 24px;
-            animation: zoomIn 0.3s ease-out;
+            width: min(470px, 100%);
+            padding: 22px;
+            border: 1px solid #f2b8b5;
+            border-radius: 6px;
+            background: #fff;
+            box-shadow: 0 18px 50px rgba(0, 0, 0, 0.34);
+            animation: zoomIn 180ms ease-out;
         }
 
         .warning-header {
-            color: var(--alert-red);
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 16px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
+            margin-bottom: 13px;
+            color: var(--sim-red);
+            font-size: 20px;
+            font-weight: 900;
         }
 
         .warning-text {
-            color: #d1d5db;
-            line-height: 1.6;
-            margin-bottom: 24px;
+            color: #303236;
+            font-size: 14px;
+            line-height: 1.55;
         }
 
         .close-btn {
-            background: var(--fb-blue);
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 6px;
-            font-weight: 700;
             width: 100%;
+            min-height: 40px;
+            margin-top: 20px;
+            border: 0;
+            border-radius: 3px;
+            background: var(--fb-blue);
+            color: #fff;
+            font-weight: 900;
             cursor: pointer;
-        }
-
-        .back-link {
-            text-decoration: none;
-            color: var(--fb-secondary-text);
-            font-size: 0.9rem;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 20px;
         }
 
         @keyframes zoomIn {
             from {
-                transform: scale(0.9);
+                transform: scale(0.96);
                 opacity: 0;
             }
 
@@ -330,193 +894,1615 @@
             }
         }
 
-        @media (max-width: 500px) {
-            body {
-                padding-top: 70px;
+        @media (max-width: 950px) {
+            .topbar-inner {
+                grid-template-columns: 1fr auto;
             }
 
-            header {
-                height: 50px;
+            .top-tabs {
+                display: none;
             }
 
-            .post-visual {
-                aspect-ratio: 16 / 9;
-                font-size: 1.2rem;
+            .top-actions {
+                gap: 5px;
             }
 
-            .awareness-pill {
-                padding: 6px 16px;
-                gap: 8px;
+            .layout {
+                grid-template-columns: minmax(0, 1fr);
             }
 
-            .alert-text {
-                font-size: 0.75rem;
+            .left-menu,
+            .right-column {
+                display: none;
             }
+
+            .page-title-row {
+                grid-template-columns: 128px 1fr;
+            }
+
+            .page-cta {
+                grid-column: 1 / -1;
+                justify-content: flex-end;
+            }
+
+            .page-avatar {
+                width: 112px;
+                height: 112px;
+                font-size: 52px;
+                letter-spacing: -8px;
+            }
+
+            .page-nav {
+                padding-left: 0;
+                overflow-x: auto;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .training-ribbon {
+                min-height: 38px;
+                font-size: 10px;
+                line-height: 1.25;
+            }
+
+            .topbar {
+                top: 38px;
+            }
+
+            .page-shell {
+                width: 100%;
+                margin-top: 81px;
+            }
+
+            .gateway-link {
+                margin-left: 12px;
+            }
+
+            .fake-search {
+                display: none;
+            }
+
+            .profile-chip {
+                display: none;
+            }
+
+            .top-dot {
+                width: 22px;
+                height: 22px;
+                font-size: 12px;
+            }
+
+            .page-cover {
+                height: 150px;
+                border-left: 0;
+                border-right: 0;
+            }
+
+            .page-title-row {
+                grid-template-columns: 102px 1fr;
+                gap: 10px;
+                border-left: 0;
+                border-right: 0;
+            }
+
+            .page-title h1 {
+                font-size: 19px;
+            }
+
+            .page-avatar {
+                left: 14px;
+                bottom: -22px;
+                width: 92px;
+                height: 92px;
+                font-size: 42px;
+                letter-spacing: -7px;
+            }
+
+            .page-cta {
+                justify-content: stretch;
+            }
+
+            .page-cta .fb-button {
+                flex: 1;
+            }
+
+            .layout {
+                margin-top: 8px;
+            }
+
+            .composer,
+            .post-card {
+                border-left: 0;
+                border-right: 0;
+                border-radius: 0;
+            }
+
+            .ad-creative {
+                min-height: 245px;
+                padding: 20px;
+            }
+
+            .post-stats {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 6px;
+            }
+        }
+
+        /* --- MULTI-PLATFORM STYLING ENGINE --- */
+        .platform-bar {
+            position: fixed;
+            top: 32px;
+            left: 0;
+            right: 0;
+            z-index: 2200;
+            height: 48px;
+            background: #0d1117;
+            border-bottom: 1px solid #30363d;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        .platform-bar-inner {
+            width: min(1160px, 100%);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0 12px;
+        }
+        .platform-label {
+            font-size: 13px;
+            font-weight: 800;
+            color: #00ff9c;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .platform-btn {
+            background: rgba(22, 27, 34, 0.8);
+            border: 1px solid #30363d;
+            color: #c9d1d9;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .platform-btn:hover {
+            background: rgba(0, 255, 156, 0.1);
+            border-color: #00ff9c;
+            color: #00ff9c;
+        }
+        .platform-btn.active {
+            background: #00ff9c;
+            border-color: #00ff9c;
+            color: #0d1117;
+            box-shadow: 0 0 12px rgba(0, 255, 156, 0.4);
+        }
+
+        /* Visibility Controls */
+        .fb-only, .ig-only, .tw-only { display: none !important; }
+        
+        body.platform-facebook .fb-only { display: block !important; }
+        body.platform-facebook .fb-only-flex { display: flex !important; }
+        
+        body.platform-instagram .ig-only { display: block !important; }
+        body.platform-instagram .ig-only-flex { display: flex !important; }
+        
+        body.platform-twitter .tw-only { display: block !important; }
+        body.platform-twitter .tw-only-flex { display: flex !important; }
+
+        /* Dynamic Layout Adaptations */
+        body.platform-instagram {
+            background: #000000 !important;
+            color: #ffffff !important;
+        }
+        body.platform-twitter {
+            background: #000000 !important;
+            color: #e7e9ea !important;
+        }
+
+        /* Topbar and Shell Adjustments */
+        .topbar {
+            top: 80px !important;
+            height: 52px !important;
+            transition: background 0.3s ease, border-color 0.3s ease;
+        }
+        .page-shell {
+            margin-top: 146px !important;
+        }
+
+        /* Facebook Accent Customization */
+        body.platform-facebook .topbar {
+            background: var(--fb-blue);
+            border-bottom: 1px solid #29487d;
+        }
+
+        /* Instagram Accent Customization */
+        body.platform-instagram .topbar {
+            background: #000000;
+            border-bottom: 1px solid #262626;
+        }
+        body.platform-instagram .brand-search .fake-logo {
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            color: #fff;
+            font-style: italic;
+            font-family: 'Georgia', serif;
+            font-size: 16px;
+        }
+        body.platform-instagram .top-tab {
+            color: #a8a8a8;
+        }
+        body.platform-instagram .top-tab.active {
+            color: #ffffff;
+            background: rgba(255,255,255,0.1);
+        }
+
+        /* Twitter Accent Customization */
+        body.platform-twitter .topbar {
+            background: #000000;
+            border-bottom: 1px solid #2f3336;
+        }
+        body.platform-twitter .brand-search .fake-logo {
+            background: #000;
+            color: #fff;
+            border: 1px solid #2f3336;
+            font-size: 18px;
+        }
+        body.platform-twitter .top-tab {
+            color: #71767b;
+        }
+        body.platform-twitter .top-tab.active {
+            color: #1d9bf0;
+            border-bottom: 2px solid #1d9bf0;
+            border-radius: 0;
+            background: transparent;
+        }
+
+        /* --- INSTAGRAM PROFILE STYLING --- */
+        .ig-profile-header {
+            max-width: 935px;
+            margin: 0 auto;
+            padding: 30px 20px 0;
+            display: flex;
+            gap: 60px;
+            color: #ffffff;
+            border-bottom: 1px solid #262626;
+            padding-bottom: 24px;
+        }
+        .ig-avatar-container {
+            flex: 0 0 150px;
+            display: flex;
+            justify-content: center;
+        }
+        .ig-avatar-ring {
+            width: 156px;
+            height: 156px;
+            border-radius: 50%;
+            padding: 3px;
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .ig-avatar-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: #111;
+            border: 4px solid #000;
+            display: grid;
+            place-items: center;
+            font-size: 64px;
+            font-weight: 800;
+            color: #ff3f3f;
+        }
+        .ig-profile-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .ig-username-row {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .ig-username-row h2 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 300;
+        }
+        .ig-btn {
+            background: #363636;
+            color: #ffffff;
+            border: 0;
+            padding: 7px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .ig-btn:hover {
+            background: #454545;
+        }
+        .ig-stats-row {
+            display: flex;
+            gap: 40px;
+            font-size: 16px;
+        }
+        .ig-bio {
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .ig-fullname {
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .ig-bio a {
+            color: #e0f1ff;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* --- TWITTER PROFILE STYLING --- */
+        .tw-cover-banner {
+            height: 200px;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border: 1px solid #2f3336;
+            border-bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+        .tw-banner-text {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 24px;
+            font-weight: 800;
+            color: #00ff9c;
+            text-shadow: 0 0 10px rgba(0,255,156,0.3);
+        }
+        .tw-profile-details {
+            padding: 12px 16px 20px;
+            border: 1px solid #2f3336;
+            border-top: 0;
+            background: #000;
+            margin-bottom: 16px;
+        }
+        .tw-avatar-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-top: -65px;
+            margin-bottom: 12px;
+        }
+        .tw-profile-avatar {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            background: #000;
+            border: 4px solid #000;
+            display: grid;
+            place-items: center;
+            font-size: 52px;
+            font-weight: 900;
+            color: #1d9bf0;
+            box-shadow: 0 0 10px rgba(29,155,240,0.1);
+        }
+        .tw-btn {
+            background: #eff3f4;
+            color: #0f1419;
+            border: 0;
+            padding: 8px 16px;
+            border-radius: 9999px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .tw-btn:hover {
+            background: #d7dbdc;
+        }
+        .tw-user-info {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .tw-name-row {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .tw-name-row h2 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 800;
+            color: #e7e9ea;
+        }
+        .tw-handle {
+            color: #71767b;
+            font-size: 15px;
+            margin-top: -8px;
+        }
+        .tw-bio {
+            font-size: 15px;
+            line-height: 1.4;
+            color: #e7e9ea;
+        }
+        .tw-meta-row {
+            display: flex;
+            gap: 20px;
+            color: #71767b;
+            font-size: 14px;
+        }
+        .tw-stats-row {
+            display: flex;
+            gap: 20px;
+            font-size: 14px;
+            color: #71767b;
+        }
+        .tw-stats-row strong {
+            color: #e7e9ea;
+        }
+
+        /* --- CARD STYLE OVERRIDES --- */
+        
+        /* Instagram Feed Post Layout */
+        body.platform-instagram .post-card {
+            background: #000000;
+            border: 1px solid #262626;
+            border-radius: 8px;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+        }
+        body.platform-instagram .post-card .post-header {
+            order: 1;
+            border-bottom: 0;
+        }
+        body.platform-instagram .post-card .post-name {
+            color: #ffffff;
+        }
+        body.platform-instagram .post-card .post-meta {
+            color: #a8a8a8;
+        }
+        body.platform-instagram .post-card .more-btn {
+            color: #ffffff;
+        }
+        body.platform-instagram .post-card .ad-creative {
+            order: 2;
+            border-radius: 0;
+            min-height: 380px;
+        }
+        body.platform-instagram .post-card .post-buttons {
+            order: 3;
+            border-top: 0;
+            display: flex;
+            gap: 16px;
+            padding: 8px 12px;
+        }
+        body.platform-instagram .post-card .post-stats {
+            order: 4;
+            color: #ffffff;
+            padding: 0 12px 6px;
+            font-weight: 700;
+            font-size: 14px;
+        }
+        body.platform-instagram .post-card .post-content {
+            order: 5;
+            color: #f5f5f5;
+            font-size: 14px;
+            line-height: 1.5;
+            padding: 0 12px 12px;
+        }
+        body.platform-instagram .post-card .link-preview {
+            display: none !important; /* Hide link preview inside Instagram feed */
+        }
+        body.platform-instagram .post-card .comment-row {
+            order: 6;
+            border-top: 1px solid #262626;
+            background: transparent;
+        }
+        body.platform-instagram .post-card .comment-box {
+            background: transparent;
+            border: 0;
+            color: #a8a8a8;
+        }
+
+        /* Twitter Feed Post Layout */
+        body.platform-twitter .post-card {
+            background: #000000;
+            border: 1px solid #2f3336;
+            border-radius: 0;
+            color: #e7e9ea;
+            position: relative;
+            padding-left: 72px;
+            padding-top: 12px;
+            padding-right: 16px;
+            padding-bottom: 12px;
+            display: flex;
+            flex-direction: column;
+        }
+        body.platform-twitter .post-card .post-avatar {
+            position: absolute;
+            left: 12px;
+            top: 12px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            z-index: 10;
+        }
+        body.platform-twitter .post-card .post-header {
+            grid-column: 2;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-bottom: 4px;
+        }
+        body.platform-twitter .post-card .post-avatar-placeholder {
+            display: none;
+        }
+        body.platform-twitter .post-card .post-header .post-avatar {
+            display: none;
+        }
+        body.platform-twitter .post-card .post-name {
+            color: #e7e9ea;
+            font-size: 15px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        body.platform-twitter .post-card .post-meta {
+            color: #71767b;
+            font-size: 15px;
+            margin-top: 0;
+        }
+        body.platform-twitter .post-card .more-btn {
+            position: absolute;
+            right: 12px;
+            top: 8px;
+            color: #71767b;
+        }
+        body.platform-twitter .post-card .post-content {
+            color: #e7e9ea;
+            font-size: 15px;
+            line-height: 1.5;
+            padding: 0 0 12px 0;
+        }
+        body.platform-twitter .post-card .ad-creative {
+            border-radius: 16px;
+            border: 1px solid #2f3336;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+        body.platform-twitter .post-card .link-preview {
+            border-radius: 16px;
+            border: 1px solid #2f3336;
+            background: #000;
+            margin-bottom: 12px;
+        }
+        body.platform-twitter .post-card .link-preview .preview-domain {
+            color: #71767b;
+        }
+        body.platform-twitter .post-card .link-preview .preview-title {
+            color: #e7e9ea;
+        }
+        body.platform-twitter .post-card .post-stats {
+            display: none; /* Hide standard FB stats row */
+        }
+        body.platform-twitter .post-card .post-buttons {
+            border-top: 0;
+            display: flex;
+            justify-content: space-between;
+            max-width: 425px;
+            padding: 4px 0 0 0;
+            color: #71767b;
+        }
+        body.platform-twitter .post-card .action-btn {
+            background: transparent;
+            color: #71767b;
+            font-size: 13px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 10px;
+            border-radius: 999px;
+        }
+        body.platform-twitter .post-card .action-btn:hover {
+            background: rgba(29, 155, 240, 0.1);
+            color: #1d9bf0;
+        }
+        body.platform-twitter .post-card .comment-row {
+            display: none !important; /* Hide direct comment box in feed like Twitter */
+        }
+
+        /* Icon styling and buttons */
+        .icon-only {
+            background: transparent;
+            border: 0;
+            font-size: 20px !important;
+            cursor: pointer;
+            padding: 8px !important;
+            color: #fff !important;
+            transition: transform 0.1s ease;
+        }
+        .icon-only:hover {
+            transform: scale(1.15);
+            background: transparent !important;
+        }
+        body.platform-instagram .bookmark-btn {
+            margin-left: auto;
+        }
+        .count {
+            font-size: 12px;
+            color: #71767b;
+        }
+
+        /* Side Menu Updates for IG/Twitter */
+        body.platform-instagram .left-menu,
+        body.platform-twitter .left-menu {
+            background: #000;
+            border-right: 1px solid #262626;
+            padding: 20px 10px;
+        }
+        body.platform-instagram .side-link,
+        body.platform-twitter .side-link {
+            color: #e7e9ea;
+            border-radius: 999px;
+            padding: 12px 16px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+        body.platform-instagram .side-link:hover,
+        body.platform-twitter .side-link:hover {
+            background: rgba(255,255,255,0.1);
+        }
+        body.platform-instagram .create-page,
+        body.platform-twitter .create-page {
+            display: none;
+        }
+
+        /* Inline verified badge */
+        .verified-badge-inline {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 14px;
+            height: 14px;
+            background: #0095f6;
+            color: white;
+            border-radius: 50%;
+            font-size: 8px;
+            font-weight: bold;
+            margin-left: 4px;
+            vertical-align: middle;
+        }
+        body.platform-twitter .verified-badge-inline {
+            background: #1d9bf0;
         }
     </style>
 </head>
 
 <body>
-    <div class="awareness-alert-container">
-        <div class="awareness-pill">
-            <span class="alert-icon">⚠️</span>
-            <span class="alert-text">THIS IS A CYBERSECURITY AWARENESS SIMULATION. NO DATA STORED.</span>
+    <div class="training-ribbon">
+        <span>⚠</span>
+        <span>Training simulator: fictional social network and fake ads. Do not enter real data.</span>
+    </div>
+
+    <!-- Platform Selector Bar -->
+    <div class="platform-bar">
+        <div class="platform-bar-inner">
+            <span class="platform-label">🌐 Social Simulator Feed:</span>
+            <button class="platform-btn active" onclick="switchPlatform('facebook')">🔵 Facebook Mode</button>
+            <button class="platform-btn" onclick="switchPlatform('instagram')">📸 Instagram Mode</button>
+            <button class="platform-btn" onclick="switchPlatform('twitter')">𝕏 Twitter/X Mode</button>
         </div>
     </div>
 
-    <header>
-        <div class="header-content">
-            <div class="header-logo">CitizenConnect</div>
+    <header class="topbar" aria-label="Simulated social network header">
+        <!-- Facebook Header Content -->
+        <div class="topbar-inner fb-only-flex" style="width: 100%; display: grid; grid-template-columns: 310px 1fr 330px; align-items: center; gap: 12px; padding: 0 12px;">
+            <div class="brand-search">
+                <div class="fake-logo" aria-label="Fakebook training logo">f</div>
+                <div class="fake-search">Search Fakebook <span>⌕</span></div>
+            </div>
+            <nav class="top-tabs" aria-label="Simulated navigation">
+                <button class="top-tab active">Home</button>
+                <button class="top-tab">Pages</button>
+                <button class="top-tab">Watch</button>
+                <button class="top-tab">Groups</button>
+            </nav>
+            <div class="top-actions" aria-label="Simulated account actions">
+                <div class="profile-chip"><span class="profile-avatar">A</span> Amit</div>
+                <span class="top-dot">●</span>
+                <span class="top-dot">✉</span>
+                <span class="top-dot">🔔</span>
+                <span class="top-dot">▾</span>
+            </div>
+        </div>
+
+        <!-- Instagram Header Content -->
+        <div class="topbar-inner ig-only-flex" style="width: 100%; display: grid; grid-template-columns: 310px 1fr 330px; align-items: center; gap: 12px; padding: 0 12px;">
+            <div class="brand-search">
+                <div class="fake-logo" aria-label="Instagram logo" style="font-family: 'Georgia', serif; font-style: italic; font-weight: 800; font-size: 18px; width: auto; background: transparent; padding: 0 6px;">Instagram</div>
+            </div>
+            <nav class="top-tabs" aria-label="Simulated navigation" style="display: flex; gap: 20px;">
+                <button class="top-tab active" style="font-size: 14px;">🏠 Home</button>
+                <button class="top-tab" style="font-size: 14px;">✉️ Messages</button>
+                <button class="top-tab" style="font-size: 14px;">🧭 Explore</button>
+                <button class="top-tab" style="font-size: 14px;">🔔 Notifications</button>
+            </nav>
+            <div class="top-actions" aria-label="Simulated account actions">
+                <div class="profile-chip" style="color: #fff;"><span class="profile-avatar" style="background: #262626; color: #fff;">A</span> amit_nepal</div>
+            </div>
+        </div>
+
+        <!-- Twitter/X Header Content -->
+        <div class="topbar-inner tw-only-flex" style="width: 100%; display: grid; grid-template-columns: 310px 1fr 330px; align-items: center; gap: 12px; padding: 0 12px;">
+            <div class="brand-search">
+                <div class="fake-logo" aria-label="X logo" style="font-size: 20px; font-weight: 900; background: transparent; color: white;">𝕏</div>
+            </div>
+            <nav class="top-tabs" aria-label="Simulated navigation">
+                <button class="top-tab active">For You</button>
+                <button class="top-tab">Following</button>
+            </nav>
+            <div class="top-actions" aria-label="Simulated account actions">
+                <div class="profile-chip" style="color: #fff;"><span class="profile-avatar" style="background: #111; color: #1d9bf0;">A</span> @amit_nepal</div>
+            </div>
         </div>
     </header>
 
-    <div class="feed-container">
-        <a href="../index.html" class="back-link">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+    <main class="page-shell">
+        <a href="../index.html" class="gateway-link">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                aria-hidden="true">
                 <path d="M19 12H5M12 19l-7-7 7-7" />
             </svg>
             Back to Gateway
         </a>
 
-        <!-- Post 1: Investment Scam -->
-        <div class="post-card">
-            <div class="post-header">
-                <div class="avatar">💰</div>
-                <div class="user-info">
-                    <div class="user-name">Nepal Wealth Masters</div>
-                    <div class="post-meta">Sponsored</div>
+        <!-- Facebook Profile Header Section -->
+        <div class="fb-only">
+            <section class="page-cover" aria-label="Simulated page cover">
+                <div class="cover-image-icon" aria-hidden="true"></div>
+                <div class="page-avatar" aria-hidden="true"><span>m</span><span>m</span></div>
+            </section>
+
+            <section class="page-title-row" aria-label="Simulated page identity">
+                <div></div>
+                <div class="page-title">
+                    <h1>Marketplace Money Nepal</h1>
+                    <p>Fictional public page · Social ad scam training</p>
                 </div>
-            </div>
-            <div class="post-content">
-                Stop working hard for money! 🚀 We found a secret gap in the market. Turn Rs. 5,000 into Rs. 50,000 by
-                TONIGHT. No skills needed. 1500+ Nepalis already earned. Limited slots! 👇
-            </div>
-            <div class="post-visual" style="background: linear-gradient(135deg, #1877f2, #005cc5);">
-                Rs. 5,000 → Rs. 50,000<br>IN 24 HOURS!<br>100% SECURE
-            </div>
-            <div class="post-stats">
-                <span>1.2K Likes</span>
-                <span>450 Comments · 122 Shares</span>
-            </div>
-            <div class="post-buttons">
-                <div class="action-btn-wrapper">
-                    <div class="reaction-bar">
-                        <span class="reaction-emoji" onclick="showWarning(0)">👍</span>
-                        <span class="reaction-emoji" onclick="showWarning(0)">❤️</span>
-                        <span class="reaction-emoji" onclick="showWarning(0)">🫂</span>
-                        <span class="reaction-emoji" onclick="showWarning(0)">😂</span>
-                        <span class="reaction-emoji" onclick="showWarning(0)">😮</span>
-                        <span class="reaction-emoji" onclick="showWarning(0)">😢</span>
-                        <span class="reaction-emoji" onclick="showWarning(0)">😡</span>
+                <div class="page-cta">
+                    <button class="fb-button primary" onclick="showWarning(0)">Learn More</button>
+                    <button class="fb-button" onclick="showWarning(0)">Send Message</button>
+                </div>
+            </section>
+
+            <nav class="page-nav" aria-label="Simulated page sections">
+                <a href="#" class="active">Home</a>
+                <a href="#">About</a>
+                <a href="#">Photos</a>
+                <a href="#">Reviews</a>
+                <a href="#">Posts</a>
+                <a href="#">Community</a>
+            </nav>
+        </div>
+
+        <!-- Instagram Profile Header Section -->
+        <div class="ig-only">
+            <div class="ig-profile-header">
+                <div class="ig-avatar-container">
+                    <div class="ig-avatar-ring">
+                        <div class="ig-avatar-img">M</div>
                     </div>
-                    <button class="action-btn">👍 Like</button>
                 </div>
-                <button class="action-btn" onclick="showWarning(0)">💬 Comment</button>
-                <button class="action-btn" onclick="showWarning(0)">↗️ Share</button>
+                <div class="ig-profile-info">
+                    <div class="ig-username-row">
+                        <h2>marketplace_money_nepal</h2>
+                        <span class="verified-badge-inline" style="background: #0095f6; width: 16px; height: 16px; font-size: 9px; vertical-align: middle;">✔</span>
+                        <button class="ig-btn" onclick="showWarning(0)">Follow</button>
+                        <button class="ig-btn" onclick="showWarning(0)">Message</button>
+                    </div>
+                    <div class="ig-stats-row">
+                        <span><strong>10</strong> posts</span>
+                        <span><strong>48.5K</strong> followers</span>
+                        <span><strong>180</strong> following</span>
+                    </div>
+                    <div class="ig-bio">
+                        <div class="ig-fullname">Marketplace Money Nepal</div>
+                        <p>🛡️ Educational Cybersecurity Ad Simulator<br>
+                        🚨 Spot MrBeast, Elon Musk, and other trending giveaway scams!<br>
+                        ⚠️ Learn digital safety for Nepalese citizens.<br>
+                        <a href="#" onclick="showWarning(0)">linkin.bio/suraksha_os</a></p>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- Post 2: Rental Scam -->
-        <div class="post-card">
-            <div class="post-header">
-                <div class="avatar">🏠</div>
-                <div class="user-info">
-                    <div class="user-name">Kathmandu Luxury Living</div>
-                    <div class="post-meta">Public · 2h ago</div>
+        <!-- Twitter/X Profile Header Section -->
+        <div class="tw-only">
+            <div class="tw-cover-banner">
+                <div class="tw-banner-text">🛡️ SURAKSHA OS AD SIMULATOR 𝕏</div>
+            </div>
+            <div class="tw-profile-details">
+                <div class="tw-avatar-row">
+                    <div class="tw-profile-avatar">𝕏</div>
+                    <button class="tw-btn" onclick="showWarning(0)">Follow</button>
                 </div>
-            </div>
-            <div class="post-content">
-                URGENT! Move-in ready 2BHK in Baluwatar. Fully furnished, AC, 24hr water. Rent only Rs. 8,000! Owner
-                moving to Australia tomorrow. Need tenant today. First come first served. WhatsApp me ASAP!
-            </div>
-            <div class="post-visual" style="background: linear-gradient(45deg, #45bd62, #238636);">
-                LUXURY APARTMENT<br>ONLY Rs. 8,000<br>MOVE IN TODAY
-            </div>
-            <div class="post-stats">
-                <span>85 Likes</span>
-                <span>21 Comments · 5 Shares</span>
-            </div>
-            <div class="post-buttons">
-                <div class="action-btn-wrapper">
-                    <div class="reaction-bar">
-                        <span class="reaction-emoji" onclick="showWarning(1)">👍</span>
-                        <span class="reaction-emoji" onclick="showWarning(1)">❤️</span>
-                        <span class="reaction-emoji" onclick="showWarning(1)">🫂</span>
-                        <span class="reaction-emoji" onclick="showWarning(1)">😂</span>
-                        <span class="reaction-emoji" onclick="showWarning(1)">😮</span>
-                        <span class="reaction-emoji" onclick="showWarning(1)">😢</span>
-                        <span class="reaction-emoji" onclick="showWarning(1)">😡</span>
+                <div class="tw-user-info">
+                    <div class="tw-name-row">
+                        <h2>Marketplace Money Nepal</h2>
+                        <span class="verified-badge-inline" style="background: #1d9bf0; width: 16px; height: 16px; font-size: 9px; vertical-align: middle;">✔</span>
                     </div>
-                    <button class="action-btn">👍 Like</button>
+                    <div class="tw-handle">@SurakshaAds</div>
+                    <div class="tw-bio">
+                        Simulating trending social media scam ads (Elon Musk cryptocurrency giveaways, MrBeast cash surveys, fake iPhone deals) to keep Nepalese citizens safe.
+                    </div>
+                    <div class="tw-meta-row">
+                        <span>📍 Kathmandu, Nepal</span>
+                        <span>📅 Joined June 2026</span>
+                    </div>
+                    <div class="tw-stats-row">
+                        <span><strong>124</strong> Following</span>
+                        <span><strong>15.6K</strong> Followers</span>
+                    </div>
                 </div>
-                <button class="action-btn" onclick="showWarning(1)">💬 Comment</button>
-                <button class="action-btn" onclick="showWarning(1)">↗️ Share</button>
             </div>
         </div>
 
-        <!-- Post 3: Giveaway Scam -->
-        <div class="post-card">
-            <div class="post-header">
-                <div class="avatar">🎁</div>
-                <div class="user-info">
-                    <div class="user-name">Mega Prize Hub Nepal</div>
-                    <div class="post-meta">Sponsored</div>
+        <div class="layout">
+            <aside class="left-menu" aria-label="Simulated page sidebar">
+                <!-- Facebook Sidebar links -->
+                <div class="fb-only">
+                    <a href="#" class="side-link active">⌂ Home</a>
+                    <a href="#" class="side-link">▣ About</a>
+                    <a href="#" class="side-link">▧ Photos</a>
+                    <a href="#" class="side-link">★ Reviews</a>
+                    <a href="#" class="side-link">☷ Events</a>
+                    <a href="#" class="side-link">● Posts</a>
+                    <a href="#" class="side-link">☰ Community</a>
+                    <div class="create-page">Create a Page</div>
                 </div>
-            </div>
-            <div class="post-content">
-                CONGRATULATIONS! 🎊 You have been selected as our 50,000th visitor! You won a brand new iPhone 15 Pro
-                Max. 📱 Claim your prize now before the timer runs out! Just pay Rs. 199 for shipping.
-            </div>
-            <div class="post-visual" style="background: linear-gradient(135deg, #f02849, #a01d32);">
-                YOU WON!<br>iPhone 15 Pro Max<br>CLAIM NOW!
-            </div>
-            <div class="post-stats">
-                <span>3.5K Likes</span>
-                <span>2.1K Comments · 850 Shares</span>
-            </div>
-            <div class="post-buttons">
-                <div class="action-btn-wrapper">
-                    <div class="reaction-bar">
-                        <span class="reaction-emoji" onclick="showWarning(2)">👍</span>
-                        <span class="reaction-emoji" onclick="showWarning(2)">❤️</span>
-                        <span class="reaction-emoji" onclick="showWarning(2)">🫂</span>
-                        <span class="reaction-emoji" onclick="showWarning(2)">😂</span>
-                        <span class="reaction-emoji" onclick="showWarning(2)">😮</span>
-                        <span class="reaction-emoji" onclick="showWarning(2)">😢</span>
-                        <span class="reaction-emoji" onclick="showWarning(2)">😡</span>
-                    </div>
-                    <button class="action-btn">👍 Like</button>
-                </div>
-                <button class="action-btn" onclick="showWarning(2)">💬 Comment</button>
-                <button class="action-btn" onclick="showWarning(2)">↗️ Share</button>
-            </div>
-        </div>
-    </div>
 
-    <!-- Warning Overlay -->
-    <div id="overlay" class="overlay">
+                <!-- Instagram Sidebar links -->
+                <div class="ig-only">
+                    <a href="#" class="side-link active">🏠 Home</a>
+                    <a href="#" class="side-link">🔍 Search</a>
+                    <a href="#" class="side-link">🧭 Explore</a>
+                    <a href="#" class="side-link">🎬 Reels</a>
+                    <a href="#" class="side-link">✉️ Messages</a>
+                    <a href="#" class="side-link">🔔 Notifications</a>
+                    <a href="#" class="side-link">➕ Create</a>
+                    <a href="#" class="side-link">👤 Profile</a>
+                </div>
+
+                <!-- Twitter/X Sidebar links -->
+                <div class="tw-only">
+                    <a href="#" class="side-link active">🏠 Home</a>
+                    <a href="#" class="side-link">🔍 Explore</a>
+                    <a href="#" class="side-link">🔔 Notifications</a>
+                    <a href="#" class="side-link">✉️ Messages</a>
+                    <a href="#" class="side-link">𝌆 Bookmarks</a>
+                    <a href="#" class="side-link">👤 Profile</a>
+                    <a href="#" class="side-link">⋯ More</a>
+                    <button class="tw-btn" style="background: #1d9bf0; color: #fff; width: 100%; font-weight: 700; margin-top: 15px; border-radius: 9999px; padding: 12px;" onclick="showWarning(7)">Post</button>
+                </div>
+            </aside>
+
+            <section class="feed-column" aria-label="Simulated feed">
+                <div class="composer" aria-hidden="true">
+                    <div class="composer-input">
+                        <div class="mini-avatar">A</div>
+                        <div class="fake-input">Write a post...</div>
+                    </div>
+                    <div class="composer-tools">
+                        <button class="composer-tool">▣ Photo/Video</button>
+                        <button class="composer-tool">☺ Tag Friends</button>
+                        <button class="composer-tool">● Check In</button>
+                    </div>
+                </div>
+
+                <!-- iPhone Marketplace Scam Simulation -->
+                <article class="post-card">
+                    <div class="fake-sticker">SCAM</div>
+                    <div class="post-header">
+                        <div class="post-avatar" style="background: linear-gradient(135deg, #ff6b6b, #ee5a24); color: white;">📱</div>
+                        <div>
+                            <div class="post-name">iPhone Store Nepal 🇳🇵</div>
+                            <div class="post-meta">Sponsored · Marketplace scam simulation · 🌐</div>
+                        </div>
+                        <button class="more-btn" onclick="showWarning(3)" aria-label="Post options">...</button>
+                    </div>
+                    <div class="post-content">
+                        🔥 URGENT SALE! iPhone 15 Pro Max - Only Rs. 25,000! 
+                        <br><br>
+                        ✅ Brand new, sealed box
+                        ✅ 1TB storage 
+                        ✅ All colors available
+                        ✅ Cash on delivery
+                        ✅ Limited time offer!
+                        <br><br>
+                        Contact immediately: 98XXXXXXXX
+                        First come, first served! 📲
+                    </div>
+                    <div class="ad-creative photo red">
+                        <img class="ad-photo" 
+                             src="../assets/images/image.png"
+                             alt="Fake iPhone advertisement showing unrealistic pricing"
+                             onclick="showWarning(3)">
+                        <div class="ad-creative-inner">
+                            <div class="ad-kicker">FLASH SALE</div>
+                            <div class="ad-headline">iPhone 15 Pro Max</div>
+                            <div class="ad-subline">90% OFF - Rs. 25,000 Only!</div>
+                        </div>
+                    </div>
+                    <div class="link-preview" onclick="showWarning(3)">
+                        <div>
+                            <div class="preview-domain">IPHONE-NEPAL-STORE.COM</div>
+                            <div class="preview-title">Brand New iPhone 15 Pro Max - Huge Discount</div>
+                            <div class="preview-copy">Get genuine Apple iPhone with warranty. Limited stock available. Order now!</div>
+                        </div>
+                    </div>
+                    <div class="post-stats">
+                        <div class="reactions">
+                            <div class="reaction-bubbles">
+                                <div class="reaction-bubble like">👍</div>
+                                <div class="reaction-bubble love">❤️</div>
+                            </div>
+                            <span>2.4K people reacted</span>
+                        </div>
+                        <div>847 comments · 1.2K shares</div>
+                    </div>
+                    <div class="post-buttons">
+                        <div class="action-wrap">
+                            <button class="action-btn" onclick="showWarning(3)">👍 Like</button>
+                            <div class="reaction-bar">
+                                <div class="reaction-emoji">👍</div>
+                                <div class="reaction-emoji">❤️</div>
+                                <div class="reaction-emoji">😢</div>
+                                <div class="reaction-emoji">😡</div>
+                            </div>
+                        </div>
+                        <button class="action-btn" onclick="showWarning(3)">💬 Comment</button>
+                        <button class="action-btn" onclick="showWarning(3)">↗ Share</button>
+                    </div>
+                    <div class="comment-row">
+                        <div class="mini-avatar">A</div>
+                        <div class="comment-box">Write a comment...</div>
+                    </div>
+                </article>
+
+                <!-- Original Nepal Wealth Masters Post -->
+                <article class="post-card">
+                    <div class="post-header">
+                        <div class="post-avatar">💰</div>
+                        <div>
+                            <div class="post-name">Nepal Wealth Masters</div>
+                            <div class="post-meta">Sponsored · Paid ad simulation · 🌐</div>
+                        </div>
+                        <button class="more-btn" onclick="showWarning(0)" aria-label="Post options">...</button>
+                    </div>
+                    <div class="post-content">
+                        Stop working hard for money! We found a secret gap in the market. Turn Rs. 5,000 into Rs.
+                        50,000 by TONIGHT. No skills needed. 1500+ Nepalis already earned. Limited slots.
+                    </div>
+                    <div class="ad-creative" role="img"
+                        aria-label="Blue fake investment ad claiming Rs. 5,000 becomes Rs. 50,000 in 24 hours">
+                        <div class="ad-creative-inner">
+                            <div class="ad-kicker">100% SECURE</div>
+                            <div class="ad-headline">Rs. 5,000 → Rs. 50,000</div>
+                            <div class="ad-subline">IN 24 HOURS</div>
+                        </div>
+                    </div>
+                    <div class="link-preview">
+                        <div>
+                            <div class="preview-domain">wealth-master-training.example</div>
+                            <div class="preview-title">Claim Your Secret Market Slot Today</div>
+                            <div class="preview-copy">Training preview: suspicious promises, pressure, and fake proof.</div>
+                        </div>
+                        <button class="fb-button primary" onclick="showWarning(0)">Learn More</button>
+                    </div>
+                    <div class="post-stats">
+                        <div class="reactions">
+                            <span class="reaction-bubbles">
+                                <span class="reaction-bubble like">f</span>
+                                <span class="reaction-bubble love">♥</span>
+                            </span>
+                            <span>1.2K</span>
+                        </div>
+                        <span>450 Comments · 122 Shares</span>
+                    </div>
+                    <div class="post-buttons">
+                        <div class="action-wrap">
+                            <div class="reaction-bar">
+                                <span class="reaction-emoji" onclick="showWarning(0)">👍</span>
+                                <span class="reaction-emoji" onclick="showWarning(0)">❤️</span>
+                                <span class="reaction-emoji" onclick="showWarning(0)">😮</span>
+                                <span class="reaction-emoji" onclick="showWarning(0)">😢</span>
+                                <span class="reaction-emoji" onclick="showWarning(0)">😡</span>
+                            </div>
+                            <button class="action-btn" onclick="showWarning(0)">👍 Like</button>
+                        </div>
+                        <button class="action-btn" onclick="showWarning(0)">💬 Comment</button>
+                        <button class="action-btn" onclick="showWarning(0)">↗ Share</button>
+                    </div>
+                    <div class="comment-row">
+                        <div class="mini-avatar">A</div>
+                        <div class="comment-box">Write a comment...</div>
+                    </div>
+                </article>
+
+                <article class="post-card">
+                    <div class="post-header">
+                        <div class="post-avatar">🏠</div>
+                        <div>
+                            <div class="post-name">Kathmandu Luxury Living</div>
+                            <div class="post-meta">Public · 2h · 🌐</div>
+                        </div>
+                        <button class="more-btn" onclick="showWarning(1)" aria-label="Post options">...</button>
+                    </div>
+                    <div class="post-content">
+                        URGENT! Move-in ready 2BHK in Baluwatar. Fully furnished, 24hr water. Rent only Rs. 8,000!
+                        Owner moving abroad tomorrow. Need tenant today.
+                    </div>
+                    <div class="ad-creative green" role="img"
+                        aria-label="Green fake rental ad claiming luxury apartment only Rs. 8,000">
+                        <div class="ad-creative-inner">
+                            <div class="ad-kicker">MOVE IN TODAY</div>
+                            <div class="ad-headline">Luxury 2BHK</div>
+                            <div class="ad-subline">Only Rs. 8,000</div>
+                        </div>
+                    </div>
+                    <div class="post-stats">
+                        <div class="reactions">
+                            <span class="reaction-bubbles">
+                                <span class="reaction-bubble like">f</span>
+                            </span>
+                            <span>85</span>
+                        </div>
+                        <span>21 Comments · 5 Shares</span>
+                    </div>
+                    <div class="post-buttons">
+                        <div class="action-wrap">
+                            <div class="reaction-bar">
+                                <span class="reaction-emoji" onclick="showWarning(1)">👍</span>
+                                <span class="reaction-emoji" onclick="showWarning(1)">❤️</span>
+                                <span class="reaction-emoji" onclick="showWarning(1)">😮</span>
+                                <span class="reaction-emoji" onclick="showWarning(1)">😡</span>
+                            </div>
+                            <button class="action-btn" onclick="showWarning(1)">👍 Like</button>
+                        </div>
+                        <button class="action-btn" onclick="showWarning(1)">💬 Comment</button>
+                        <button class="action-btn" onclick="showWarning(1)">↗ Share</button>
+                    </div>
+                </article>
+
+                <article class="post-card">
+                    <div class="post-header">
+                        <div class="post-avatar">🎁</div>
+                        <div>
+                            <div class="post-name">Mega Prize Hub Nepal</div>
+                            <div class="post-meta">Sponsored · Paid ad simulation · 🌐</div>
+                        </div>
+                        <button class="more-btn" onclick="showWarning(2)" aria-label="Post options">...</button>
+                    </div>
+                    <div class="post-content">
+                        CONGRATULATIONS! You have been selected as our 50,000th visitor. You won a brand new iPhone 15
+                        Pro Max. Claim now before the timer runs out. Just pay Rs. 199 shipping.
+                    </div>
+                    <div class="ad-creative red" role="img"
+                        aria-label="Red fake giveaway ad claiming free iPhone prize">
+                        <div class="ad-creative-inner">
+                            <div class="ad-kicker">WINNER SELECTED</div>
+                            <div class="ad-headline">iPhone 15 Pro Max</div>
+                            <div class="ad-subline">Pay Rs. 199 Shipping</div>
+                        </div>
+                    </div>
+                    <div class="post-stats">
+                        <div class="reactions">
+                            <span class="reaction-bubbles">
+                                <span class="reaction-bubble like">f</span>
+                                <span class="reaction-bubble love">♥</span>
+                            </span>
+                            <span>3.5K</span>
+                        </div>
+                        <span>2.1K Comments · 850 Shares</span>
+                    </div>
+                    <div class="post-buttons">
+                        <div class="action-wrap">
+                            <div class="reaction-bar">
+                                <span class="reaction-emoji" onclick="showWarning(2)">👍</span>
+                                <span class="reaction-emoji" onclick="showWarning(2)">❤️</span>
+                                <span class="reaction-emoji" onclick="showWarning(2)">😮</span>
+                                <span class="reaction-emoji" onclick="showWarning(2)">😡</span>
+                            </div>
+                            <button class="action-btn" onclick="showWarning(2)">👍 Like</button>
+                        </div>
+                        <button class="action-btn" onclick="showWarning(2)">💬 Comment</button>
+                        <button class="action-btn" onclick="showWarning(2)">↗ Share</button>
+                    </div>
+                </article>
+
+                <!-- iPhone Marketplace Scam -->
+                <article class="post-card">
+                    <div class="fake-sticker">SCAM</div>
+                    <div class="post-header">
+                        <div class="post-avatar" style="background: linear-gradient(135deg, #ff6b6b, #ee5a24); color: white;">📱</div>
+                        <div>
+                            <div class="post-name">iPhone Store Nepal 🇳🇵</div>
+                            <div class="post-meta">Sponsored · Marketplace scam simulation · 🌐</div>
+                        </div>
+                        <button class="more-btn" onclick="showWarning(3)" aria-label="Post options">...</button>
+                    </div>
+                    <div class="post-content">
+                        🔥 URGENT SALE! iPhone 15 Pro Max - Only Rs. 25,000! 
+                        <br><br>
+                        ✅ Brand new, sealed box
+                        ✅ 1TB storage 
+                        ✅ All colors available
+                        ✅ Cash on delivery
+                        ✅ Limited time offer!
+                        <br><br>
+                        Contact immediately: 98XXXXXXXX
+                        First come, first served! 📲
+                    </div>
+                    <div class="ad-creative photo red">
+                        <img class="ad-photo" 
+                             src="../assets/images/image copy.png"
+                             alt="iPhone 15 Pro Max - Used in educational scam detection simulation"
+                             onclick="showWarning(3)"
+                             onerror="this.style.display='none';"
+                             style="object-fit: cover; width: 100%; height: 100%;">
+                        <div class="ad-creative-inner">
+                            <div class="ad-kicker">FLASH SALE</div>
+                            <div class="ad-headline">iPhone 15 Pro Max</div>
+                            <div class="ad-subline">90% OFF - Rs. 25,000 Only!</div>
+                        </div>
+                    </div>
+                    <div class="link-preview" onclick="showWarning(3)">
+                        <div>
+                            <div class="preview-domain">IPHONE-NEPAL-STORE.COM</div>
+                            <div class="preview-title">Brand New iPhone 15 Pro Max - Huge Discount</div>
+                            <div class="preview-copy">Get genuine Apple iPhone with warranty. Limited stock available. Order now!</div>
+                        </div>
+                    </div>
+                    <div class="post-stats">
+                        <div class="reactions">
+                            <span class="reaction-bubbles">
+                                <span class="reaction-bubble like">f</span>
+                                <span class="reaction-bubble love">♥</span>
+                            </span>
+                            <span>2.4K</span>
+                        </div>
+                        <span>847 Comments · 1.2K Shares</span>
+                    </div>
+                    <div class="post-buttons">
+                        <div class="action-wrap">
+                            <div class="reaction-bar">
+                                <span class="reaction-emoji" onclick="showWarning(3)">👍</span>
+                                <span class="reaction-emoji" onclick="showWarning(3)">❤️</span>
+                                <span class="reaction-emoji" onclick="showWarning(3)">😮</span>
+                                <span class="reaction-emoji" onclick="showWarning(3)">😡</span>
+                            </div>
+                            <button class="action-btn" onclick="showWarning(3)">👍 Like</button>
+                        </div>
+                        <button class="action-btn" onclick="showWarning(3)">💬 Comment</button>
+                        <button class="action-btn" onclick="showWarning(3)">↗ Share</button>
+                    </div>
+                </article>
+
+                <!-- Crypto Investment Scam -->
+                <article class="post-card">
+                    <div class="fake-sticker">SCAM</div>
+                    <div class="post-header">
+                        <div class="post-avatar" style="background: linear-gradient(135deg, #f093fb, #f5576c); color: white;">₿</div>
+                        <div>
+                            <div class="post-name">Nepal Crypto Investment</div>
+                            <div class="post-meta">Sponsored · Investment scam simulation · 🌐</div>
+                        </div>
+                        <button class="more-btn" onclick="showWarning(4)" aria-label="Post options">...</button>
+                    </div>
+                    <div class="post-content">
+                        💎 MAKE Rs. 50,000 DAILY WITH CRYPTO! 💎
+                        <br><br>
+                        ✅ Government approved platform
+                        ✅ Minimum investment Rs. 5,000
+                        ✅ 500% returns guaranteed 
+                        ✅ Join 10,000+ Nepali investors
+                        <br><br>
+                        🎯 Special bonus for first 100 members
+                        🎯 Free training included
+                        <br><br>
+                        Register now: crypto-nepal.com
+                        WhatsApp: +977-98XXXXXXXX
+                    </div>
+                    <div class="ad-creative photo" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <img class="ad-photo" 
+                             src="../assets/images/image copy 2.png"
+                             alt="Bitcoin cryptocurrency - Used in educational investment scam detection"
+                             onclick="showWarning(4)"
+                             onerror="this.style.display='none';"
+                             style="object-fit: cover; width: 100%; height: 100%; opacity: 0.8;">
+                        <div class="ad-creative-inner">
+                            <div class="ad-kicker">GOVERNMENT APPROVED</div>
+                            <div class="ad-headline">Crypto Investment</div>
+                            <div class="ad-subline">500% Returns Guaranteed</div>
+                        </div>
+                    </div>
+                    <div class="post-stats">
+                        <div class="reactions">
+                            <span class="reaction-bubbles">
+                                <span class="reaction-bubble like">f</span>
+                                <span class="reaction-bubble love">♥</span>
+                            </span>
+                            <span>3.2K</span>
+                        </div>
+                        <span>1.1K Comments · 2.3K Shares</span>
+                    </div>
+                    <div class="post-buttons">
+                        <div class="action-wrap">
+                            <div class="reaction-bar">
+                                <span class="reaction-emoji" onclick="showWarning(4)">👍</span>
+                                <span class="reaction-emoji" onclick="showWarning(4)">❤️</span>
+                                <span class="reaction-emoji" onclick="showWarning(4)">😮</span>
+                                <span class="reaction-emoji" onclick="showWarning(4)">😡</span>
+                            </div>
+                            <button class="action-btn" onclick="showWarning(4)">👍 Like</button>
+                        </div>
+                        <button class="action-btn" onclick="showWarning(4)">💬 Comment</button>
+                        <button class="action-btn" onclick="showWarning(4)">↗ Share</button>
+                    </div>
+                </article>
+
+                <!-- Work From Home Job Scam -->
+                <article class="post-card">
+                    <div class="fake-sticker">SCAM</div>
+                    <div class="post-header">
+                        <div class="post-avatar" style="background: linear-gradient(135deg, #4facfe, #00f2fe); color: white;">💼</div>
+                        <div>
+                            <div class="post-name">Work From Home Nepal</div>
+                            <div class="post-meta">Sponsored · Employment scam simulation · 🌐</div>
+                        </div>
+                        <button class="more-btn" onclick="showWarning(5)" aria-label="Post options">...</button>
+                    </div>
+                    <div class="post-content">
+                        💼 URGENT HIRING - WORK FROM HOME 💼
+                        <br><br>
+                        📱 Data entry jobs available
+                        💰 Earn Rs. 25,000-50,000/month
+                        ⏰ Work only 2-3 hours daily
+                        🏠 100% work from home
+                        <br><br>
+                        Requirements:
+                        ✅ Basic computer knowledge
+                        ✅ Android/iPhone
+                        ✅ Registration fee: Rs. 2,500 only
+                        <br><br>
+                        Limited positions available!
+                        Apply now: 98XXXXXXXX
+                    </div>
+                    <div class="ad-creative photo" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <img class="ad-photo" 
+                             src="../assets/images/image copy 3.png"
+                             alt="Work from home setup - Used in educational employment scam detection"
+                             onclick="showWarning(5)"
+                             onerror="this.style.display='none';"
+                             style="object-fit: cover; width: 100%; height: 100%; opacity: 0.7;">
+                        <div class="ad-creative-inner">
+                            <div class="ad-kicker">URGENT HIRING</div>
+                            <div class="ad-headline">Work From Home</div>
+                            <div class="ad-subline">Rs. 50,000/month</div>
+                        </div>
+                    </div>
+                    <div class="post-stats">
+                        <div class="reactions">
+                            <span class="reaction-bubbles">
+                                <span class="reaction-bubble like">f</span>
+                                <span class="reaction-bubble love">♥</span>
+                            </span>
+                            <span>4.1K</span>
+                        </div>
+                        <span>2.8K Comments · 3.5K Shares</span>
+                    </div>
+                    <div class="post-buttons">
+                        <div class="action-wrap">
+                            <div class="reaction-bar">
+                                <span class="reaction-emoji" onclick="showWarning(5)">👍</span>
+                                <span class="reaction-emoji" onclick="showWarning(5)">❤️</span>
+                                <span class="reaction-emoji" onclick="showWarning(5)">😮</span>
+                                <span class="reaction-emoji" onclick="showWarning(5)">😡</span>
+                            </div>
+                            <button class="action-btn" onclick="showWarning(5)">👍 Like</button>
+                        </div>
+                        <button class="action-btn" onclick="showWarning(5)">💬 Comment</button>
+                        <button class="action-btn" onclick="showWarning(5)">↗ Share</button>
+                    </div>
+                </article>
+
+                <!-- Hotel Booking Scam -->
+                <article class="post-card">
+                    <div class="fake-sticker">SCAM</div>
+                    <div class="post-header">
+                        <div class="post-avatar" style="background: linear-gradient(135deg, #43cea2, #185a9d); color: white;">🏨</div>
+                        <div>
+                            <div class="post-name">Nepal Luxury Hotels</div>
+                            <div class="post-meta">Sponsored · Travel scam simulation · 🌐</div>
+                        </div>
+                        <button class="more-btn" onclick="showWarning(6)" aria-label="Post options">...</button>
+                    </div>
+                    <div class="post-content">
+                        🏨 5-STAR HOTEL KATHMANDU - 90% OFF! 🏨
+                        <br><br>
+                        ✅ Luxury suite only Rs. 1,500/night
+                        ✅ Normally Rs. 15,000/night
+                        ✅ All meals included
+                        ✅ Airport pickup free
+                        ✅ Book now - pay later
+                        <br><br>
+                        Limited rooms! Book immediately!
+                        WhatsApp: +977-98XXXXXXXX
+                        Advance booking: Rs. 500 only
+                    </div>
+                    <div class="ad-creative photo" style="background: linear-gradient(135deg, #43cea2 0%, #185a9d 100%);">
+                        <img class="ad-photo" 
+                             src="../assets/images/image copy 4.png"
+                             alt="Luxury hotel - Used in educational booking scam detection simulation"
+                             onclick="showWarning(6)"
+                             onerror="this.style.display='none';"
+                             style="object-fit: cover; width: 100%; height: 100%; opacity: 0.8;">
+                        <div class="ad-creative-inner">
+                            <div class="ad-kicker">FLASH BOOKING</div>
+                            <div class="ad-headline">5-Star Luxury Hotel</div>
+                            <div class="ad-subline">90% OFF - Rs. 1,500/night</div>
+                        </div>
+                    </div>
+                    <div class="link-preview" onclick="showWarning(6)">
+                        <div>
+                            <div class="preview-domain">NEPAL-LUXURY-HOTELS.COM</div>
+                            <div class="preview-title">Book 5-Star Hotels in Kathmandu - Huge Discount</div>
+                            <div class="preview-copy">Luxury accommodations at unbeatable prices. Book now before rooms sell out!</div>
+                        </div>
+                    </div>
+                    <div class="post-stats">
+                        <div class="reactions">
+                            <span class="reaction-bubbles">
+                                <span class="reaction-bubble like">f</span>
+                                <span class="reaction-bubble love">♥</span>
+                            </span>
+                            <span>1.9K</span>
+                        </div>
+                        <span>456 Comments · 892 Shares</span>
+                    </div>
+                    <div class="post-buttons">
+                        <div class="action-wrap">
+                            <div class="reaction-bar">
+                                <span class="reaction-emoji" onclick="showWarning(6)">👍</span>
+                                <span class="reaction-emoji" onclick="showWarning(6)">❤️</span>
+                                <span class="reaction-emoji" onclick="showWarning(6)">😮</span>
+                                <span class="reaction-emoji" onclick="showWarning(6)">😡</span>
+                            </div>
+                            <button class="action-btn" onclick="showWarning(6)">👍 Like</button>
+                        </div>
+                        <button class="action-btn" onclick="showWarning(6)">💬 Comment</button>
+                        <button class="action-btn" onclick="showWarning(6)">↗ Share</button>
+                    </div>
+                </article>
+
+                <!-- MrBeast Instagram Cash Giveaway Scam (Card 9) -->
+                <article class="post-card">
+                    <div class="fake-sticker">SCAM</div>
+                    <div class="post-header">
+                        <div class="post-avatar" style="background: linear-gradient(135deg, #00f2fe, #4facfe); color: white; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: bold; overflow: hidden; border: 2px solid #fff;">
+                            <span style="font-family: sans-serif;">🦁</span>
+                        </div>
+                        <div>
+                            <div class="post-name">mrbeast <span class="verified-badge-inline">✅</span></div>
+                            <div class="post-meta">Sponsored · Celebrity Impersonation · 🌐</div>
+                        </div>
+                        <button class="more-btn" onclick="showWarning(8)" aria-label="Post options">...</button>
+                    </div>
+                    <div class="post-content">
+                        🎁 I'm GIVING AWAY $1,000 CASH 💵 to the first 5,000 followers who register right now!
+                        No catch, just want to give back to the best community ever! ❤️
+                        <br><br>
+                        ✅ Verified MrBeast giveaway portal
+                        ✅ 100% Free to enter (No deposit)
+                        ✅ Instant transfer to your wallet or banking card
+                        <br><br>
+                        👇 Click "Claim Now" below to register and get your cash immediately! 👇
+                    </div>
+                    <div class="ad-creative photo">
+                        <img class="ad-photo" 
+                             src="../assets/images/mrbeast_scam.png"
+                             alt="MrBeast Cash Giveaway Scam - Simulated Ad"
+                             onclick="showWarning(8)"
+                             onerror="this.src='../assets/images/image.png';"
+                             style="object-fit: cover; width: 100%; height: 100%;">
+                        <div class="ad-creative-inner">
+                            <div class="ad-kicker">LIMITED SLOTS</div>
+                            <div class="ad-headline">$1,000 Giveaway</div>
+                            <div class="ad-subline">Claim Your Cash Now</div>
+                        </div>
+                    </div>
+                    <div class="link-preview" onclick="showWarning(8)">
+                        <div>
+                            <div class="preview-domain">MRBEAST-PROMO.COM</div>
+                            <div class="preview-title">MrBeast $1,000 Direct Cash Giveaway - Register Here</div>
+                            <div class="preview-copy">Click here to claim your $1,000 cash. Limited slots left. Verified safe portal.</div>
+                        </div>
+                    </div>
+                    <div class="post-stats">
+                        <div class="reactions">
+                            <div class="reaction-bubbles">
+                                <div class="reaction-bubble like">👍</div>
+                                <div class="reaction-bubble love">❤️</div>
+                            </div>
+                            <span>1.2M people reacted</span>
+                        </div>
+                        <div>256K comments · 128K shares</div>
+                    </div>
+                    <div class="post-buttons">
+                        <div class="action-wrap">
+                            <button class="action-btn" onclick="showWarning(8)">👍 Like</button>
+                        </div>
+                        <button class="action-btn" onclick="showWarning(8)">💬 Comment</button>
+                        <button class="action-btn" onclick="showWarning(8)">↗ Share</button>
+                    </div>
+                    <div class="comment-row">
+                        <div class="mini-avatar">A</div>
+                        <div class="comment-box">Write a comment...</div>
+                    </div>
+                </article>
+
+                <!-- Elon Musk X / Twitter Crypto Giveaway Scam (Card 10) -->
+                <article class="post-card">
+                    <div class="fake-sticker">SCAM</div>
+                    <div class="post-header">
+                        <div class="post-avatar" style="background: #000; color: white; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: bold; border: 1px solid #2f3336;">
+                            <span>🚀</span>
+                        </div>
+                        <div>
+                            <div class="post-name">Elon Musk <span class="verified-badge-inline">✅</span></div>
+                            <div class="post-meta">Sponsored · Crypto Scam · 🌐</div>
+                        </div>
+                        <button class="more-btn" onclick="showWarning(7)" aria-label="Post options">...</button>
+                    </div>
+                    <div class="post-content">
+                        🚀 Double Your Crypto! 
+                        To celebrate SpaceX's successful launch, I am giving away 10,000 BTC and 50,000,000 DOGE.
+                        <br><br>
+                        Send any amount of BTC or DOGE to the official wallet address below, and we will send DOUBLE the amount back instantly!
+                        <br><br>
+                        🔒 Safe & Verified. Act fast - promo ends in 1 hour!
+                    </div>
+                    <div class="ad-creative photo">
+                        <img class="ad-photo" 
+                             src="../assets/images/elon_musk_scam.png"
+                             alt="Elon Musk Crypto Giveaway Scam - Simulated Ad"
+                             onclick="showWarning(7)"
+                             onerror="this.src='../assets/images/image.png';"
+                             style="object-fit: cover; width: 100%; height: 100%;">
+                        <div class="ad-creative-inner">
+                            <div class="ad-kicker">SPACEX & TESLA</div>
+                            <div class="ad-headline">Double Your Crypto</div>
+                            <div class="ad-subline">10,000 BTC & DOGE Giveaway</div>
+                        </div>
+                    </div>
+                    <div class="link-preview" onclick="showWarning(7)">
+                        <div>
+                            <div class="preview-domain">TESLA-DOUBLE-GIFT.ORG</div>
+                            <div class="preview-title">SpaceX & Tesla Official Cryptocurrency Event Portal</div>
+                            <div class="preview-copy">Send crypto and get 2x back. Check real-time transactions. Over $50M distributed.</div>
+                        </div>
+                    </div>
+                    <div class="post-stats">
+                        <div class="reactions">
+                            <div class="reaction-bubbles">
+                                <div class="reaction-bubble like">👍</div>
+                                <div class="reaction-bubble love">❤️</div>
+                            </div>
+                            <span>842K people reacted</span>
+                        </div>
+                        <div>14K comments · 4.2K retweets</div>
+                    </div>
+                    <div class="post-buttons">
+                        <div class="action-wrap">
+                            <button class="action-btn" onclick="showWarning(7)">👍 Like</button>
+                        </div>
+                        <button class="action-btn" onclick="showWarning(7)">💬 Comment</button>
+                        <button class="action-btn" onclick="showWarning(7)">↗ Share</button>
+                    </div>
+                    <div class="comment-row">
+                        <div class="mini-avatar">A</div>
+                        <div class="comment-box">Write a comment...</div>
+                    </div>
+                </article>
+            </section>
+
+            <aside class="right-column" aria-label="Simulated page details">
+                <section class="info-card training-note">
+                    <div class="info-head">Simulation Notice</div>
+                    <p>This screen imitates familiar social media patterns for safety training. Every ad, page, name,
+                        statistic, and link is fictional.</p>
+                </section>
+
+                <section class="info-card">
+                    <div class="info-head">Community <a href="#">See All</a></div>
+                    <div class="info-row">👥 <span class="skeleton long"></span></div>
+                    <div class="info-row">👍 <span class="skeleton mid"></span></div>
+                    <div class="info-row">💬 <span class="skeleton long"></span></div>
+                    <div class="info-row">↗ <span class="skeleton mid"></span></div>
+                </section>
+
+                <section class="info-card">
+                    <div class="info-head">About <a href="#">See All</a></div>
+                    <div class="info-row">ⓘ Fictional awareness page</div>
+                    <div class="info-row">⌂ Kathmandu, Nepal training demo</div>
+                    <div class="info-row">🔒 No login, no storage, no real ads</div>
+                </section>
+
+                <section class="info-card">
+                    <div class="info-head">Pages liked by this page</div>
+                    <div class="page-like-row">
+                        <span class="color-avatar" style="background:#ff9ec4;"></span>
+                        <span class="skeleton long"></span>
+                        <button class="fb-button">Liked ▾</button>
+                    </div>
+                    <div class="page-like-row">
+                        <span class="color-avatar" style="background:#9be7f0;"></span>
+                        <span class="skeleton mid"></span>
+                        <button class="fb-button">Liked ▾</button>
+                    </div>
+                    <div class="page-like-row">
+                        <span class="color-avatar" style="background:#ffe681;"></span>
+                        <span class="skeleton mid"></span>
+                        <button class="fb-button">Liked ▾</button>
+                    </div>
+                </section>
+            </aside>
+        </div>
+    </main>
+
+    <div id="overlay" class="overlay" role="dialog" aria-modal="true" aria-labelledby="warning-title">
         <div class="warning-popup">
-            <div class="warning-header">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <div class="warning-header" id="warning-title">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    aria-hidden="true">
                     <path
                         d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
                     <line x1="12" y1="9" x2="12" y2="13" />
                     <line x1="12" y1="17" x2="12.01" y2="17" />
                 </svg>
-                This is a Simulated Scam Post!
+                Simulated Scam Signal
             </div>
-            <div class="warning-text" id="warning-text">
-                <!-- Dynamic Text -->
-            </div>
+            <div class="warning-text" id="warning-text"></div>
             <button class="close-btn" onclick="closeWarning()">I Understand</button>
         </div>
     </div>
 
     <script>
         const warnings = [
-            "This is an <b>Investment Scam</b>. <br><br><b>Red Flags:</b><br>• Guaranteed high returns (10x in 24hrs) are impossible.<br>• Claims of a 'secret gap' or 'no skill' are bait.<br>• Emotional pressure ('Limited slots') is used to stop you from thinking clearly.",
-            "This is a <b>Rental Scam</b>. <br><br><b>Red Flags:</b><br>• The price is too good to be true for that location.<br>• Fake urgency ('Moving tomorrow') is used to pressure you into paying a deposit without seeing the place.<br>• Never pay anything until you've physically toured the apartment.",
-            "This is a <b>Giveaway Scam</b>. <br><br><b>Red Flags:</b><br>• You cannot win a prize for a contest you didn't enter.<br>• Asking for 'shipping fees' is a trick to get your bank/card details.<br>• Brand new expensive electronics are never given away for free to random visitors."
+            "This is an <b>Investment Scam</b>.<br><br><b>Red flags:</b><br>• Guaranteed 10x returns in 24 hours are not realistic.<br>• Words like 'secret gap' and 'no skills needed' are bait.<br>• Limited slots and big social proof push you to act before checking.",
+            "This is a <b>Rental Scam</b>.<br><br><b>Red flags:</b><br>• The price is far below normal for the location.<br>• Fake urgency pressures you into paying before a visit.<br>• Never send a deposit until you verify the property and owner.",
+            "This is a <b>Giveaway Scam</b>.<br><br><b>Red flags:</b><br>• You cannot win a prize for a contest you did not enter.<br>• Small shipping fees often lead to card or wallet theft.<br>• Scammers use timers and expensive prizes to override caution.",
+            "This is a <b>Marketplace Scam</b>.<br><br><b>Red flags:</b><br>• iPhone 15 Pro Max for Rs. 25,000 is 90% below market price (real price: Rs. 200,000+).<br>• 'Cash on delivery' claims but asks for advance payment.<br>• No verified seller profile or customer reviews.<br>• Genuine Apple products in Nepal cannot be sold at such low prices.",
+            "This is a <b>Cryptocurrency Investment Scam</b>.<br><br><b>Red flags:</b><br>• 500% guaranteed returns are impossible in legitimate investments.<br>• Claims 'government approval' - crypto trading is restricted in Nepal by NRB.<br>• Pressure to invest quickly with fake testimonials.<br>• Nepal Rastra Bank prohibits cryptocurrency transactions for citizens.",
+            "This is an <b>Employment Scam</b>.<br><br><b>Red flags:</b><br>• Rs. 50,000/month for 2-3 hours work is unrealistic (normal data entry: Rs. 15,000-25,000 full-time).<br>• Asks for Rs. 2,500 'registration fee' upfront.<br>• Vague job description with no legitimate company details.<br>• Real employers in Nepal never charge application or registration fees.",
+            "This is a <b>Hotel Booking Scam</b>.<br><br><b>Red flags:</b><br>• 90% discount (Rs. 1,500 for 5-star hotel) is unrealistic - normal 5-star rates: Rs. 12,000-20,000/night.<br>• Asks for advance payment through WhatsApp/unofficial channels.<br>• No verifiable hotel name or legitimate booking platform.<br>• Real hotels use established booking systems, not social media WhatsApp numbers.",
+            "This is an <b>Elon Musk Crypto Giveaway Scam</b>.<br><br><b>Red flags:</b><br>• Elon Musk, Tesla, or SpaceX will never run a 'double your crypto' giveaway.<br>• Compromised verified accounts (with blue badges) are used to publish these ads.<br>• The website URL is fake and tries to mimic official SpaceX/Tesla pages.<br>• Transactions on the blockchain are irreversible - once sent, your cryptocurrency is gone forever.",
+            "This is a <b>MrBeast Cash Giveaway Scam</b>.<br><br><b>Red flags:</b><br>• Famous creators do not give away $1,000 to random social media users who click an ad.<br>• The ad uses manipulated video/audio (deepfakes) to make it look like he is endorsing it.<br>• Asking to perform tasks (surveys, installing apps, or entering credit card details) to 'claim' the money.<br>• Real giveaways never charge upfront shipping or verification fees."
         ];
 
         function showWarning(id) {
@@ -529,13 +2515,86 @@
             document.getElementById('overlay').style.display = 'none';
         }
 
-        // Close overlay when clicking outside the popup
-        window.onclick = function (event) {
+        window.addEventListener('click', function (event) {
             const overlay = document.getElementById('overlay');
-            if (event.target == overlay) {
-                closeWarning();
-            }
+            if (event.target === overlay) closeWarning();
+        });
+
+        window.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape') closeWarning();
+        });
+
+        // Dynamic Multi-Platform Switcher Logic
+        function switchPlatform(platform) {
+            // Remove all platform classes from body
+            document.body.classList.remove('platform-facebook', 'platform-instagram', 'platform-twitter');
+            // Add selected platform class
+            document.body.classList.add('platform-' + platform);
+            
+            // Update platform selector buttons active state
+            document.querySelectorAll('.platform-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('onclick').includes(platform)) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // Update the buttons text/icons inside post cards
+            updatePostButtons(platform);
+            
+            // Set localStorage so it persists
+            localStorage.setItem('sim_platform', platform);
         }
+
+        function updatePostButtons(platform) {
+            document.querySelectorAll('.post-card').forEach(card => {
+                // Find warning ID from onclick attribute of the more-btn or other elements
+                const moreBtn = card.querySelector('.more-btn');
+                if (!moreBtn) return;
+                const match = moreBtn.getAttribute('onclick').match(/\d+/);
+                if (!match) return;
+                const warningId = match[0];
+                
+                const buttonsContainer = card.querySelector('.post-buttons');
+                if (!buttonsContainer) return;
+
+                if (platform === 'facebook') {
+                    buttonsContainer.innerHTML = `
+                        <div class="action-wrap">
+                            <div class="reaction-bar">
+                                <span class="reaction-emoji" onclick="showWarning(${warningId})">👍</span>
+                                <span class="reaction-emoji" onclick="showWarning(${warningId})">❤️</span>
+                                <span class="reaction-emoji" onclick="showWarning(${warningId})">😮</span>
+                                <span class="reaction-emoji" onclick="showWarning(${warningId})">😡</span>
+                            </div>
+                            <button class="action-btn" onclick="showWarning(${warningId})">👍 Like</button>
+                        </div>
+                        <button class="action-btn" onclick="showWarning(${warningId})">💬 Comment</button>
+                        <button class="action-btn" onclick="showWarning(${warningId})">↗ Share</button>
+                    `;
+                } else if (platform === 'instagram') {
+                    buttonsContainer.innerHTML = `
+                        <button class="icon-only" onclick="showWarning(${warningId})">❤️</button>
+                        <button class="icon-only" onclick="showWarning(${warningId})">💬</button>
+                        <button class="icon-only" onclick="showWarning(${warningId})">✈️</button>
+                        <button class="icon-only bookmark-btn" onclick="showWarning(${warningId})">📥</button>
+                    `;
+                } else if (platform === 'twitter') {
+                    buttonsContainer.innerHTML = `
+                        <button class="action-btn" onclick="showWarning(${warningId})">💬 <span class="count">24</span></button>
+                        <button class="action-btn" onclick="showWarning(${warningId})">🔁 <span class="count">12</span></button>
+                        <button class="action-btn" onclick="showWarning(${warningId})">❤️ <span class="count">88</span></button>
+                        <button class="action-btn" onclick="showWarning(${warningId})">📊 <span class="count">1.2K</span></button>
+                    `;
+                }
+            });
+        }
+        
+        // Load stored platform or default to facebook
+        document.addEventListener('DOMContentLoaded', () => {
+            const stored = localStorage.getItem('sim_platform') || 'facebook';
+            switchPlatform(stored);
+        });
     </script>
 </body>
 

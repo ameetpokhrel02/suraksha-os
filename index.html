@@ -106,6 +106,15 @@
                         style="background: rgba(63, 185, 80, 0.1); color: var(--success-color);">Telegram Scam</button>
                     <button class="chip success-stroke" onclick="executeChip('chatscam')"
                         style="background: rgba(63, 185, 80, 0.1); color: var(--success-color);">Chat Scam</button>
+                    <button class="chip success-stroke" onclick="executeChip('instagram')"
+                        style="background: rgba(225, 48, 108, 0.15); color: #e1306c; border: 1px solid rgba(225,48,108,0.3);">📸
+                        Instagram Scam</button>
+                    <button class="chip success-stroke" onclick="executeChip('twitter')"
+                        style="background: rgba(29, 155, 240, 0.15); color: #1d9bf0; border: 1px solid rgba(29,155,240,0.3);">𝕏
+                        Twitter/X Scam</button>
+                    <button class="chip success-stroke" onclick="executeChip('snapchat')"
+                        style="background: rgba(255, 252, 0, 0.15); color: #e6c300; border: 1px solid rgba(255,252,0,0.3);">👻
+                        Snapchat Phish</button>
                     <button class="chip" onclick="executeChip('mission')"
                         style="background: rgba(233, 69, 96, 0.15); color: #e94560; border: 1px solid rgba(233,69,96,0.3);">🎯
                         Mission Mode</button>
@@ -234,6 +243,24 @@
                                 <h4>Trust Building Scam</h4>
                                 <p>See how scammers build chat rapport before stealing.</p>
                                 <span class="card-status-pill" id="status-chatscam">Not Started</span>
+                            </div>
+                            <div class="module-card" id="card-instagram" onclick="launchModule('instagram')" style="border-left: 2px solid #e1306c;">
+                                <div class="card-icon">📸</div>
+                                <h4>Instagram Scam Feed</h4>
+                                <p>Spot MrBeast giveaways and celebrity impersonation scams.</p>
+                                <span class="card-status-pill" id="status-instagram">Not Started</span>
+                            </div>
+                            <div class="module-card" id="card-twitter" onclick="launchModule('twitter')" style="border-left: 2px solid #1d9bf0;">
+                                <div class="card-icon">𝕏</div>
+                                <h4>Twitter/X Scam Feed</h4>
+                                <p>Detect Elon Musk crypto giveaway and verified-badge scams.</p>
+                                <span class="card-status-pill" id="status-twitter">Not Started</span>
+                            </div>
+                            <div class="module-card" id="card-snapchat" onclick="launchModule('snapchat')" style="border-left: 2px solid #e6c300;">
+                                <div class="card-icon">👻</div>
+                                <h4>Snapchat Phish Sim</h4>
+                                <p>Learn to identify urgent security alerts and credential phishing.</p>
+                                <span class="card-status-pill" id="status-snapchat">Not Started</span>
                             </div>
                         </div>
                     </div>
@@ -457,21 +484,6 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    <!-- AI Security Guide Floating Chat Icon -->
-    <div id="ai-chat-icon" class="floating-chat-icon" title="AI Security Guide - Ask about 2FA and account protection">
-        <svg class="chat-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <!-- Security Shield -->
-            <path d="M12 2L3 7V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V7L12 2Z" stroke="currentColor"
-                stroke-width="2" stroke-linejoin="round" />
-            <!-- Chat Bubble -->
-            <path d="M8 14C8 14 9.5 16 12 16S16 14 16 14" stroke="currentColor" stroke-width="1.5"
-                stroke-linecap="round" />
-            <circle cx="9" cy="10" r="1" fill="currentColor" />
-            <circle cx="15" cy="10" r="1" fill="currentColor" />
-        </svg>
-        <div class="pulse-ring"></div>
     </div>
 
     <script src="assets/js/terminal.js"></script>

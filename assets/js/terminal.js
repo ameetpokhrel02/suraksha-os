@@ -10,13 +10,13 @@ const output = document.getElementById("output");
 const terminalSuggestions = document.getElementById("terminalSuggestions");
 
 // Expanded modules array to include all simulation/learning units
-const modules = ["learn", "scan", "protect", "rights", "quiz", "social", "ads", "feed", "whatsapp", "telegram", "chatscam", "mission"];
+const modules = ["learn", "scan", "protect", "rights", "quiz", "social", "snapchat", "ads", "feed", "instagram", "twitter", "whatsapp", "telegram", "chatscam", "mission"];
 let progress = JSON.parse(localStorage.getItem("suraksha_progress")) || [];
 
 // Valid command names for autocomplete and suggestions
 const VALID_COMMANDS = [
-    "help", "learn", "scan", "protect", "rights", "quiz", "social", "ads", "feed",
-    "whatsapp", "telegram", "chatscam", "mission", "panic", "clear", "exit",
+    "help", "learn", "scan", "protect", "rights", "quiz", "social", "snapchat", "ads", "feed",
+    "instagram", "twitter", "whatsapp", "telegram", "chatscam", "mission", "panic", "clear", "exit",
     "theme", "themes", "preview", "apply", "cancel", "fontsize"
 ];
 
@@ -461,8 +461,11 @@ function processCommand(command) {
                 <p><span class="command">quiz</span>     → Training: Knowledge Verification</p>
                 <br>
                 <p><span class="command">social</span>   → Simulation: Instagram Phishing Simulator</p>
+                <p><span class="command">snapchat</span> → Simulation: Snapchat Phishing Simulator (Suspicious Alert)</p>
                 <p><span class="command">ads</span>      → Tool: Malicious Ads Detector</p>
                 <p><span class="command">feed</span>     → Simulation: Facebook Scam Ad Feed</p>
+                <p><span class="command">instagram</span> → Simulation: Instagram Scam Feed (MrBeast, Celebrity Impersonation)</p>
+                <p><span class="command">twitter</span>   → Simulation: Twitter/X Scam Feed (Elon Musk Crypto Giveaway)</p>
                 <p><span class="command">whatsapp</span> → Simulation: WhatsApp OTP Scam Simulator</p>
                 <p><span class="command">telegram</span> → Simulation: Telegram Investment Fraud Simulator</p>
                 <p><span class="command">chatscam</span> → Simulation: Chat Trust Building Simulator</p>
@@ -564,8 +567,26 @@ function processCommand(command) {
             setTimeout(() => goTo(actualCmd === 'feed' ? 'fb-ads' : actualCmd === 'chatscam' ? 'chat-scam' : actualCmd), 600);
             break;
 
+        case "instagram":
+            output.innerHTML += `<p>Initializing <span class="warning">INSTAGRAM SCAM FEED</span> module. Spot celebrity impersonation and giveaway scams.</p>`;
+            localStorage.setItem('sim_platform', 'instagram');
+            setTimeout(() => goTo('fb-ads'), 600);
+            break;
+
+        case "twitter":
+            output.innerHTML += `<p>Initializing <span class="warning">TWITTER/X SCAM FEED</span> module. Detect crypto giveaway and verified-badge scams.</p>`;
+            localStorage.setItem('sim_platform', 'twitter');
+            setTimeout(() => goTo('fb-ads'), 600);
+            break;
+
         case "social":
             output.innerHTML += `<p>Initializing SOCIAL (Instagram Phishing) module. Stay focused, Citizen.</p>`;
+            setTimeout(() => goTo("social"), 600);
+            break;
+
+        case "snapchat":
+            output.innerHTML += `<p>Initializing <span class="warning">SNAPCHAT PHISHING SCENARIO</span>. Stay focused, Citizen.</p>`;
+            localStorage.setItem('social_scenario', 'snapchat');
             setTimeout(() => goTo("social"), 600);
             break;
 
@@ -777,6 +798,15 @@ function launchModule(moduleName) {
         goTo("fb-ads");
     } else if (moduleName === "chatscam") {
         goTo("chat-scam");
+    } else if (moduleName === "instagram") {
+        localStorage.setItem('sim_platform', 'instagram');
+        goTo("fb-ads");
+    } else if (moduleName === "twitter") {
+        localStorage.setItem('sim_platform', 'twitter');
+        goTo("fb-ads");
+    } else if (moduleName === "snapchat") {
+        localStorage.setItem('social_scenario', 'snapchat');
+        goTo("social");
     } else {
         goTo(moduleName);
     }
@@ -832,6 +862,7 @@ function updateGuiDashboard() {
                 else if (m === "rights") badgeEmoji = "⚖️";
                 else if (m === "quiz") badgeEmoji = "🎓";
                 else if (m === "social") badgeEmoji = "📷";
+                else if (m === "snapchat") badgeEmoji = "👻";
                 else if (m === "ads") badgeEmoji = "📢";
                 else if (m === "feed") badgeEmoji = "📰";
                 else if (m === "whatsapp") badgeEmoji = "💬";

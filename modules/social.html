@@ -417,27 +417,164 @@
             }
         }
 
-        /* Mobile specific adjustments */
-        @media (max-width: 450px) {
+        /* ── Snapchat Phishing Simulation Theme ─────────────────────── */
+        .snap-card {
+            background: #ffffff;
+            border: 1px solid #e8e8e8;
+            border-radius: 16px;
+            padding: 40px 30px;
+            width: 100%;
+            max-width: 380px;
+            color: #1d1d1d;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.10);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 auto;
+        }
 
+        .snap-logo-container {
+            width: 72px;
+            height: 72px;
+            background: #FFFC00;
+            border-radius: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 22px;
+            box-shadow: 0 4px 14px rgba(255, 252, 0, 0.35);
+        }
+
+        .snap-logo-ghost { font-size: 2.4rem; }
+
+        .snap-title {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: #000000;
+            margin: 0 0 8px 0;
+            text-align: center;
+            letter-spacing: -0.3px;
+        }
+
+        .snap-desc {
+            font-size: 0.88rem;
+            color: #606770;
+            text-align: center;
+            margin-bottom: 28px;
+            line-height: 1.5;
+        }
+
+        .snap-domain-bar {
+            width: 100%;
+            background: #f0f2f5;
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 0.75rem;
+            color: #888;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-family: monospace;
+        }
+
+        .snap-input {
+            width: 100%;
+            background: #f0f2f5;
+            border: 1.5px solid transparent;
+            padding: 13px 16px;
+            border-radius: 10px;
+            font-size: 0.92rem;
+            outline: none;
+            box-sizing: border-box;
+            transition: all 0.2s ease;
+            margin-bottom: 12px;
+            color: #1d1d1d;
+            font-family: inherit;
+        }
+
+        .snap-input:focus {
+            background: #fff;
+            border-color: #FFFC00;
+            box-shadow: 0 0 0 3px rgba(255,252,0,0.2);
+        }
+
+        .snap-btn {
+            background: #000000;
+            color: #ffffff;
+            border: none;
+            border-radius: 50px;
+            padding: 13px 16px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 6px;
+            transition: transform 0.15s ease, opacity 0.15s ease;
+            letter-spacing: 0.2px;
+        }
+
+        .snap-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+        .snap-btn:active { transform: scale(0.98); }
+
+        .snap-separator {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 18px 0 14px;
+            color: #aaa;
+            font-size: 0.8rem;
+        }
+        .snap-separator::before,
+        .snap-separator::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #e0e0e0;
+        }
+
+        .snap-forgot {
+            font-size: 0.82rem;
+            color: #0064d1;
+            text-align: center;
+            cursor: pointer;
+            margin-top: 14px;
+            text-decoration: none;
+        }
+
+        /* Snapchat card dark-mode awareness */
+        body[class*="theme-"] .snap-card {
+            background: var(--panel-color, #1a1f2e);
+            border-color: var(--border-color, #2d3748);
+            color: var(--text-color, #e2e8f0);
+        }
+        body[class*="theme-"] .snap-title { color: var(--text-color, #fff); }
+        body[class*="theme-"] .snap-desc  { color: var(--muted-color, #94a3b8); }
+        body[class*="theme-"] .snap-input {
+            background: rgba(255,255,255,0.07);
+            color: var(--text-color, #fff);
+            border-color: var(--border-color, #2d3748);
+        }
+        body[class*="theme-"] .snap-input:focus {
+            background: rgba(255,255,255,0.11);
+            border-color: #FFFC00;
+        }
+        body[class*="theme-"] .snap-domain-bar {
+            background: rgba(255,255,255,0.06);
+            color: #94a3b8;
+        }
+
+        /* Mobile specific adjustments */
+        @media (max-width: 500px) {
             .insta-card,
             .signup-card {
                 background: transparent;
                 border: none;
             }
-
-            body {
-                background-color: white;
-            }
-
-            .insta-card {
-                padding: 40px 15px;
-            }
-
-            /* When revealing, switch back to dark theme look */
-            .step-reveal body {
-                background-color: var(--bg-color) !important;
-            }
+            body { background-color: white; }
+            .insta-card { padding: 40px 15px; }
+            .snap-card { padding: 30px 18px; border-radius: 12px; }
         }
     </style>
 </head>
@@ -449,6 +586,53 @@
 
     <div class="main-wrapper">
         <div class="simulation-flow" id="flow-container">
+            <!-- Scenario 2: Snapchat Fake Login Page -->
+            <div id="step-snap-login" class="step-content">
+                <div class="snap-card">
+                    <div class="snap-logo-container">
+                        <span class="snap-logo-ghost">👻</span>
+                    </div>
+                    <h2 class="snap-title">Snapchat Security Team</h2>
+                    <p class="snap-desc">We detected suspicious activity on your account.<br>Log in to verify your identity and restore access.</p>
+
+                    <div class="snap-domain-bar">
+                        🔒 snapchat-secure-verify.net/login
+                    </div>
+
+                    <div style="width: 100%;">
+                        <input type="text" class="snap-input" id="snap-username" placeholder="Username or Email" autocomplete="off" required>
+                        <input type="password" class="snap-input" id="snap-password" placeholder="Password" autocomplete="off" required>
+                        <button class="snap-btn" onclick="handleSnapLogin()">Log In</button>
+                    </div>
+
+                    <div class="snap-separator">or</div>
+                    <a href="#" class="snap-forgot" onclick="handleSnapLogin(); return false;">Forgot password?</a>
+                </div>
+            </div>
+
+            <!-- Scenario 2 Reveal: Warning -->
+            <div id="step-snap-reveal" class="step-content">
+                <div class="reveal-card" style="border-color: var(--danger-color);">
+                    <div class="safety-header">
+                        <div class="status-dot" style="background: var(--danger-color); box-shadow: 0 0 10px var(--danger-color);"></div>
+                        <div class="safety-title" style="color: var(--danger-color);">Simulation Alert</div>
+                    </div>
+                    <p class="danger" style="font-weight: bold; font-size: 1.25rem; margin-bottom: 15px;">⚠️ Warning: Phishing Attack Detected!</p>
+                    <p>This is a simulated credential-harvesting phishing attack.</p>
+                    
+                    <div style="background: rgba(248, 81, 73, 0.1); border-left: 4px solid var(--danger-color); padding: 12px; margin: 15px 0; border-radius: 4px;">
+                        <h4 style="margin: 0 0 8px 0; color: var(--danger-color);">Red Flags Identified:</h4>
+                        <ul style="margin: 0; padding-left: 20px; font-size: 0.9rem; line-height: 1.5; color: var(--text-color);">
+                            <li><b>Fake Domain:</b> Check the address bar. Real services host their login pages on official subdomains (e.g. <code>accounts.snapchat.com</code>), not third-party training URLs.</li>
+                            <li><b>Urgent / Restrictive Language:</b> Prompting immediate action due to "suspicious activity" is a classic social engineering trick to create panic.</li>
+                            <li><b>Credential Request:</b> Avoid entering credentials on pages reached via links in unsolicited messages or alerts.</li>
+                        </ul>
+                    </div>
+                    
+                    <a href="../index.html?achieved=snapchat" class="back-link" style="width: 100%; text-align: center; box-sizing: border-box; margin-top: 15px;">Complete & Return to Gateway</a>
+                </div>
+            </div>
+
             <!-- Step 0: Registration (Signup) -->
             <div id="step-0" class="step-content active">
                 <div class="insta-card">
@@ -1055,6 +1239,49 @@
                 alert("Passwords do not match.");
             }
         }
+
+        function handleSnapLogin() {
+            const user = document.getElementById('snap-username').value;
+            const pass = document.getElementById('snap-password').value;
+            if (!user || !pass) {
+                alert("Please enter both username and password to proceed.");
+                return;
+            }
+            // Transition to Snapchat warning reveal
+            document.querySelectorAll('.step-content').forEach(s => s.classList.remove('active'));
+            document.getElementById('step-snap-reveal').classList.add('active');
+            
+            // Post message to parent if inside iframe
+            if (window.parent !== window) {
+                window.parent.postMessage({ module: 'snapchat', action: 'complete' }, '*');
+            }
+            // Add achievement
+            if (window.markComplete) {
+                window.markComplete('snapchat');
+            }
+        }
+
+        // Initialize Scenario
+        window.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const scenario = urlParams.get('scenario') || localStorage.getItem('social_scenario');
+            
+            if (scenario === 'snapchat') {
+                // Clear state
+                localStorage.removeItem('social_scenario');
+                // Hide all steps, show Snapchat login
+                document.querySelectorAll('.step-content').forEach(s => s.classList.remove('active'));
+                document.getElementById('step-snap-login').classList.add('active');
+                
+                // Set page background to dark mode/light mode based on local theme
+                const localTheme = localStorage.getItem('suraksha_theme') || 'green';
+                if (localTheme !== 'light') {
+                    document.getElementById('body-context').style.backgroundColor = 'var(--bg-color)';
+                } else {
+                    document.getElementById('body-context').style.backgroundColor = '#f0f2f5';
+                }
+            }
+        });
     </script>
 </body>
 
