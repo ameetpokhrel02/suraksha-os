@@ -1100,10 +1100,51 @@
             }
             body.mobile-view .topbar {
                 position: fixed !important;
-                top: 80px !important;
+                top: 38px !important;
             }
             body.mobile-view .page-shell {
-                margin-top: 132px !important;
+                margin-top: 90px !important;
+            }
+            .platform-bar {
+                display: none !important;
+            }
+            .ig-profile-header {
+                flex-direction: row !important;
+                gap: 16px !important;
+                padding: 16px 10px 24px !important;
+                align-items: center !important;
+            }
+            .ig-avatar-container {
+                flex: 0 0 80px !important;
+            }
+            .ig-avatar-ring {
+                width: 76px !important;
+                height: 76px !important;
+                padding: 2px !important;
+            }
+            .ig-avatar-img {
+                font-size: 32px !important;
+                border-width: 2px !important;
+            }
+            .ig-profile-info {
+                gap: 8px !important;
+            }
+            .ig-username-row {
+                gap: 8px !important;
+            }
+            .ig-username-row h2 {
+                font-size: 16px !important;
+                word-break: break-all !important;
+                max-width: 140px !important;
+            }
+            .ig-btn {
+                padding: 4px 10px !important;
+                font-size: 12px !important;
+                border-radius: 4px !important;
+            }
+            .ig-stats-row {
+                font-size: 12px !important;
+                gap: 10px !important;
             }
         }
 
@@ -1297,18 +1338,7 @@
 
         /* --- MULTI-PLATFORM STYLING ENGINE --- */
         .platform-bar {
-            position: fixed;
-            top: 32px;
-            left: 0;
-            right: 0;
-            z-index: 2200;
-            height: 48px;
-            background: #0d1117;
-            border-bottom: 1px solid #30363d;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            display: none !important;
         }
         .platform-bar-inner {
             width: min(1160px, 100%);
@@ -1351,7 +1381,10 @@
         }
 
         /* Visibility Controls */
-        .fb-only, .ig-only, .tw-only { display: none !important; }
+        .fb-only, .ig-only, .tw-only,
+        .fb-only-flex, .ig-only-flex, .tw-only-flex {
+            display: none !important;
+        }
         
         body.platform-facebook .fb-only { display: block !important; }
         body.platform-facebook .fb-only-flex { display: flex !important; }
@@ -1374,12 +1407,12 @@
 
         /* Topbar and Shell Adjustments */
         .topbar {
-            top: 80px !important;
+            top: 38px !important;
             height: 52px !important;
             transition: background 0.3s ease, border-color 0.3s ease;
         }
         .page-shell {
-            margin-top: 146px !important;
+            margin-top: 90px !important;
         }
 
         /* Facebook Accent Customization */
@@ -1853,8 +1886,51 @@
             margin-left: 4px;
             vertical-align: middle;
         }
-        body.platform-twitter .verified-badge-inline {
-            background: #1d9bf0;
+        }
+
+        /* Hide top platform selector bar in mobile view */
+        body.mobile-view .platform-bar {
+            display: none !important;
+        }
+
+        /* Instagram Profile Mobile Adaptations */
+        body.mobile-view .ig-profile-header {
+            flex-direction: row !important;
+            gap: 16px !important;
+            padding: 16px 10px 24px !important;
+            align-items: center !important;
+        }
+        body.mobile-view .ig-avatar-container {
+            flex: 0 0 80px !important;
+        }
+        body.mobile-view .ig-avatar-ring {
+            width: 76px !important;
+            height: 76px !important;
+            padding: 2px !important;
+        }
+        body.mobile-view .ig-avatar-img {
+            font-size: 32px !important;
+            border-width: 2px !important;
+        }
+        body.mobile-view .ig-profile-info {
+            gap: 8px !important;
+        }
+        body.mobile-view .ig-username-row {
+            gap: 8px !important;
+        }
+        body.mobile-view .ig-username-row h2 {
+            font-size: 16px !important;
+            word-break: break-all !important;
+            max-width: 140px !important;
+        }
+        body.mobile-view .ig-btn {
+            padding: 4px 10px !important;
+            font-size: 12px !important;
+            border-radius: 4px !important;
+        }
+        body.mobile-view .ig-stats-row {
+            font-size: 12px !important;
+            gap: 10px !important;
         }
     </style>
 </head>
@@ -2009,6 +2085,18 @@
                         ⚠️ Learn digital safety for Nepalese citizens.<br>
                         <a href="#" onclick="showWarning(0)">linkin.bio/suraksha_os</a></p>
                     </div>
+                </div>
+            </div>
+            <!-- Instagram Fake Tabs -->
+            <div class="ig-profile-tabs" style="display: flex; justify-content: center; border-top: 1px solid #262626; gap: 40px; margin-top: 10px;">
+                <div class="ig-profile-tab active" style="display: flex; align-items: center; gap: 6px; padding: 12px 0; border-top: 1px solid #fff; font-size: 12px; font-weight: 600; letter-spacing: 1px; color: #fff; cursor: pointer; text-transform: uppercase;">
+                    <span>▦</span> Posts
+                </div>
+                <div class="ig-profile-tab" style="display: flex; align-items: center; gap: 6px; padding: 12px 0; border-top: 1px solid transparent; font-size: 12px; font-weight: 600; letter-spacing: 1px; color: #8e8e8e; cursor: pointer; text-transform: uppercase;">
+                    <span>🎬</span> Reels
+                </div>
+                <div class="ig-profile-tab" style="display: flex; align-items: center; gap: 6px; padding: 12px 0; border-top: 1px solid transparent; font-size: 12px; font-weight: 600; letter-spacing: 1px; color: #8e8e8e; cursor: pointer; text-transform: uppercase;">
+                    <span>🪪</span> Tagged
                 </div>
             </div>
         </div>
