@@ -1045,7 +1045,8 @@
             position: relative !important;
             width: 385px !important;
             height: 780px !important;
-            margin: 100px auto 40px !important; /* Offset for top selectors */
+            margin: 100px auto 40px !important;
+            /* Offset for top selectors */
             border: 14px solid #1f2937 !important;
             border-radius: 40px !important;
             background: #ffffff !important;
@@ -1068,21 +1069,25 @@
         body.mobile-view #device-wrapper::-webkit-scrollbar {
             width: 6px !important;
         }
+
         body.mobile-view #device-wrapper::-webkit-scrollbar-track {
-            background: rgba(0,0,0,0.05) !important;
+            background: rgba(0, 0, 0, 0.05) !important;
             border-radius: 20px !important;
         }
+
         body.mobile-view #device-wrapper::-webkit-scrollbar-thumb {
-            background: rgba(0,0,0,0.2) !important;
+            background: rgba(0, 0, 0, 0.2) !important;
             border-radius: 20px !important;
         }
+
         body.theme-high-contrast-dark.mobile-view #device-wrapper::-webkit-scrollbar-track,
         body.theme-accessible-mode.mobile-view #device-wrapper::-webkit-scrollbar-track {
-            background: rgba(255,255,255,0.05) !important;
+            background: rgba(255, 255, 255, 0.05) !important;
         }
+
         body.theme-high-contrast-dark.mobile-view #device-wrapper::-webkit-scrollbar-thumb,
         body.theme-accessible-mode.mobile-view #device-wrapper::-webkit-scrollbar-thumb {
-            background: rgba(255,255,255,0.2) !important;
+            background: rgba(255, 255, 255, 0.2) !important;
         }
 
         /* Reset phone bezels on actual small phone viewports */
@@ -1095,53 +1100,67 @@
                 border-radius: 0 !important;
                 box-shadow: none !important;
             }
-            .mock-status-bar, .mock-home-indicator {
+
+            .mock-status-bar,
+            .mock-home-indicator {
                 display: none !important;
             }
+
             body.mobile-view .topbar {
                 position: fixed !important;
                 top: 38px !important;
             }
+
             body.mobile-view .page-shell {
                 margin-top: 90px !important;
             }
+
             .platform-bar {
                 display: none !important;
             }
+
             .ig-profile-header {
                 flex-direction: row !important;
                 gap: 16px !important;
                 padding: 16px 10px 24px !important;
                 align-items: center !important;
             }
+
             .ig-avatar-container {
                 flex: 0 0 80px !important;
             }
+
             .ig-avatar-ring {
                 width: 76px !important;
                 height: 76px !important;
                 padding: 2px !important;
             }
+
             .ig-avatar-img {
                 font-size: 32px !important;
                 border-width: 2px !important;
             }
+
             .ig-profile-info {
                 gap: 8px !important;
             }
+
             .ig-username-row {
                 gap: 8px !important;
             }
+
             .ig-username-row h2 {
                 font-size: 16px !important;
                 word-break: break-all !important;
                 max-width: 140px !important;
             }
+
             .ig-btn {
                 padding: 4px 10px !important;
                 font-size: 12px !important;
                 border-radius: 4px !important;
             }
+
             .ig-stats-row {
                 font-size: 12px !important;
                 gap: 10px !important;
@@ -1199,7 +1218,8 @@
         .mobile-tab-bar {
             display: none;
             position: absolute;
-            bottom: 20px; /* Positioned right above home indicator bar */
+            bottom: 20px;
+            /* Positioned right above home indicator bar */
             left: 0;
             width: 100%;
             height: 56px;
@@ -1238,9 +1258,11 @@
         body.platform-facebook .mobile-tab-btn.active {
             color: #1877f2;
         }
+
         body.platform-instagram .mobile-tab-btn.active {
             color: #e1306c;
         }
+
         body.platform-twitter .mobile-tab-btn.active {
             color: #1d9bf0;
         }
@@ -1257,7 +1279,8 @@
         /* Style overrides inside forced mobile view */
         body.mobile-view .topbar {
             position: sticky !important;
-            top: 24px !important; /* Stack below status bar */
+            top: 24px !important;
+            /* Stack below status bar */
             left: 0 !important;
             right: 0 !important;
             width: 100% !important;
@@ -1340,6 +1363,7 @@
         .platform-bar {
             display: none !important;
         }
+
         .platform-bar-inner {
             width: min(1160px, 100%);
             display: flex;
@@ -1347,6 +1371,7 @@
             gap: 12px;
             padding: 0 12px;
         }
+
         .platform-label {
             font-size: 13px;
             font-weight: 800;
@@ -1354,6 +1379,7 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
+
         .platform-btn {
             background: rgba(22, 27, 34, 0.8);
             border: 1px solid #30363d;
@@ -1368,11 +1394,13 @@
             align-items: center;
             gap: 6px;
         }
+
         .platform-btn:hover {
             background: rgba(0, 255, 156, 0.1);
             border-color: #00ff9c;
             color: #00ff9c;
         }
+
         .platform-btn.active {
             background: #00ff9c;
             border-color: #00ff9c;
@@ -1381,25 +1409,45 @@
         }
 
         /* Visibility Controls */
-        .fb-only, .ig-only, .tw-only,
-        .fb-only-flex, .ig-only-flex, .tw-only-flex {
+        .fb-only,
+        .ig-only,
+        .tw-only,
+        .fb-only-flex,
+        .ig-only-flex,
+        .tw-only-flex {
             display: none !important;
         }
-        
-        body.platform-facebook .fb-only { display: block !important; }
-        body.platform-facebook .fb-only-flex { display: flex !important; }
-        
-        body.platform-instagram .ig-only { display: block !important; }
-        body.platform-instagram .ig-only-flex { display: flex !important; }
-        
-        body.platform-twitter .tw-only { display: block !important; }
-        body.platform-twitter .tw-only-flex { display: flex !important; }
+
+        body.platform-facebook .fb-only {
+            display: block !important;
+        }
+
+        body.platform-facebook .fb-only-flex {
+            display: flex !important;
+        }
+
+        body.platform-instagram .ig-only {
+            display: block !important;
+        }
+
+        body.platform-instagram .ig-only-flex {
+            display: flex !important;
+        }
+
+        body.platform-twitter .tw-only {
+            display: block !important;
+        }
+
+        body.platform-twitter .tw-only-flex {
+            display: flex !important;
+        }
 
         /* Dynamic Layout Adaptations */
         body.platform-instagram {
             background: #000000 !important;
             color: #ffffff !important;
         }
+
         body.platform-twitter {
             background: #000000 !important;
             color: #e7e9ea !important;
@@ -1411,6 +1459,7 @@
             height: 52px !important;
             transition: background 0.3s ease, border-color 0.3s ease;
         }
+
         .page-shell {
             margin-top: 90px !important;
         }
@@ -1426,6 +1475,7 @@
             background: #000000;
             border-bottom: 1px solid #262626;
         }
+
         body.platform-instagram .brand-search .fake-logo {
             background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
             color: #fff;
@@ -1433,12 +1483,14 @@
             font-family: 'Georgia', serif;
             font-size: 16px;
         }
+
         body.platform-instagram .top-tab {
             color: #a8a8a8;
         }
+
         body.platform-instagram .top-tab.active {
             color: #ffffff;
-            background: rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.1);
         }
 
         /* Twitter Accent Customization */
@@ -1446,15 +1498,18 @@
             background: #000000;
             border-bottom: 1px solid #2f3336;
         }
+
         body.platform-twitter .brand-search .fake-logo {
             background: #000;
             color: #fff;
             border: 1px solid #2f3336;
             font-size: 18px;
         }
+
         body.platform-twitter .top-tab {
             color: #71767b;
         }
+
         body.platform-twitter .top-tab.active {
             color: #1d9bf0;
             border-bottom: 2px solid #1d9bf0;
@@ -1473,11 +1528,13 @@
             border-bottom: 1px solid #262626;
             padding-bottom: 24px;
         }
+
         .ig-avatar-container {
             flex: 0 0 150px;
             display: flex;
             justify-content: center;
         }
+
         .ig-avatar-ring {
             width: 156px;
             height: 156px;
@@ -1488,6 +1545,7 @@
             align-items: center;
             justify-content: center;
         }
+
         .ig-avatar-img {
             width: 100%;
             height: 100%;
@@ -1500,23 +1558,27 @@
             font-weight: 800;
             color: #ff3f3f;
         }
+
         .ig-profile-info {
             flex: 1;
             display: flex;
             flex-direction: column;
             gap: 16px;
         }
+
         .ig-username-row {
             display: flex;
             align-items: center;
             gap: 20px;
             flex-wrap: wrap;
         }
+
         .ig-username-row h2 {
             margin: 0;
             font-size: 20px;
             font-weight: 300;
         }
+
         .ig-btn {
             background: #363636;
             color: #ffffff;
@@ -1527,22 +1589,27 @@
             font-weight: 600;
             cursor: pointer;
         }
+
         .ig-btn:hover {
             background: #454545;
         }
+
         .ig-stats-row {
             display: flex;
             gap: 40px;
             font-size: 16px;
         }
+
         .ig-bio {
             font-size: 14px;
             line-height: 1.5;
         }
+
         .ig-fullname {
             font-weight: 700;
             margin-bottom: 4px;
         }
+
         .ig-bio a {
             color: #e0f1ff;
             text-decoration: none;
@@ -1561,13 +1628,15 @@
             overflow: hidden;
             position: relative;
         }
+
         .tw-banner-text {
             font-family: 'JetBrains Mono', monospace;
             font-size: 24px;
             font-weight: 800;
             color: #00ff9c;
-            text-shadow: 0 0 10px rgba(0,255,156,0.3);
+            text-shadow: 0 0 10px rgba(0, 255, 156, 0.3);
         }
+
         .tw-profile-details {
             padding: 12px 16px 20px;
             border: 1px solid #2f3336;
@@ -1575,6 +1644,7 @@
             background: #000;
             margin-bottom: 16px;
         }
+
         .tw-avatar-row {
             display: flex;
             justify-content: space-between;
@@ -1582,6 +1652,7 @@
             margin-top: -65px;
             margin-bottom: 12px;
         }
+
         .tw-profile-avatar {
             width: 110px;
             height: 110px;
@@ -1593,8 +1664,9 @@
             font-size: 52px;
             font-weight: 900;
             color: #1d9bf0;
-            box-shadow: 0 0 10px rgba(29,155,240,0.1);
+            box-shadow: 0 0 10px rgba(29, 155, 240, 0.1);
         }
+
         .tw-btn {
             background: #eff3f4;
             color: #0f1419;
@@ -1605,53 +1677,62 @@
             font-weight: 700;
             cursor: pointer;
         }
+
         .tw-btn:hover {
             background: #d7dbdc;
         }
+
         .tw-user-info {
             display: flex;
             flex-direction: column;
             gap: 12px;
         }
+
         .tw-name-row {
             display: flex;
             align-items: center;
             gap: 4px;
         }
+
         .tw-name-row h2 {
             margin: 0;
             font-size: 20px;
             font-weight: 800;
             color: #e7e9ea;
         }
+
         .tw-handle {
             color: #71767b;
             font-size: 15px;
             margin-top: -8px;
         }
+
         .tw-bio {
             font-size: 15px;
             line-height: 1.4;
             color: #e7e9ea;
         }
+
         .tw-meta-row {
             display: flex;
             gap: 20px;
             color: #71767b;
             font-size: 14px;
         }
+
         .tw-stats-row {
             display: flex;
             gap: 20px;
             font-size: 14px;
             color: #71767b;
         }
+
         .tw-stats-row strong {
             color: #e7e9ea;
         }
 
         /* --- CARD STYLE OVERRIDES --- */
-        
+
         /* Instagram Feed Post Layout */
         body.platform-instagram .post-card {
             background: #000000;
@@ -1661,24 +1742,30 @@
             display: flex;
             flex-direction: column;
         }
+
         body.platform-instagram .post-card .post-header {
             order: 1;
             border-bottom: 0;
         }
+
         body.platform-instagram .post-card .post-name {
             color: #ffffff;
         }
+
         body.platform-instagram .post-card .post-meta {
             color: #a8a8a8;
         }
+
         body.platform-instagram .post-card .more-btn {
             color: #ffffff;
         }
+
         body.platform-instagram .post-card .ad-creative {
             order: 2;
             border-radius: 0;
             min-height: 380px;
         }
+
         body.platform-instagram .post-card .post-buttons {
             order: 3;
             border-top: 0;
@@ -1686,6 +1773,7 @@
             gap: 16px;
             padding: 8px 12px;
         }
+
         body.platform-instagram .post-card .post-stats {
             order: 4;
             color: #ffffff;
@@ -1693,6 +1781,7 @@
             font-weight: 700;
             font-size: 14px;
         }
+
         body.platform-instagram .post-card .post-content {
             order: 5;
             color: #f5f5f5;
@@ -1700,14 +1789,18 @@
             line-height: 1.5;
             padding: 0 12px 12px;
         }
+
         body.platform-instagram .post-card .link-preview {
-            display: none !important; /* Hide link preview inside Instagram feed */
+            display: none !important;
+            /* Hide link preview inside Instagram feed */
         }
+
         body.platform-instagram .post-card .comment-row {
             order: 6;
             border-top: 1px solid #262626;
             background: transparent;
         }
+
         body.platform-instagram .post-card .comment-box {
             background: transparent;
             border: 0;
@@ -1728,6 +1821,7 @@
             display: flex;
             flex-direction: column;
         }
+
         body.platform-twitter .post-card .post-avatar {
             position: absolute;
             left: 12px;
@@ -1737,6 +1831,7 @@
             border-radius: 50%;
             z-index: 10;
         }
+
         body.platform-twitter .post-card .post-header {
             grid-column: 2;
             padding: 0;
@@ -1745,12 +1840,15 @@
             gap: 4px;
             margin-bottom: 4px;
         }
+
         body.platform-twitter .post-card .post-avatar-placeholder {
             display: none;
         }
+
         body.platform-twitter .post-card .post-header .post-avatar {
             display: none;
         }
+
         body.platform-twitter .post-card .post-name {
             color: #e7e9ea;
             font-size: 15px;
@@ -1759,44 +1857,54 @@
             align-items: center;
             gap: 4px;
         }
+
         body.platform-twitter .post-card .post-meta {
             color: #71767b;
             font-size: 15px;
             margin-top: 0;
         }
+
         body.platform-twitter .post-card .more-btn {
             position: absolute;
             right: 12px;
             top: 8px;
             color: #71767b;
         }
+
         body.platform-twitter .post-card .post-content {
             color: #e7e9ea;
             font-size: 15px;
             line-height: 1.5;
             padding: 0 0 12px 0;
         }
+
         body.platform-twitter .post-card .ad-creative {
             border-radius: 16px;
             border: 1px solid #2f3336;
             overflow: hidden;
             margin-bottom: 12px;
         }
+
         body.platform-twitter .post-card .link-preview {
             border-radius: 16px;
             border: 1px solid #2f3336;
             background: #000;
             margin-bottom: 12px;
         }
+
         body.platform-twitter .post-card .link-preview .preview-domain {
             color: #71767b;
         }
+
         body.platform-twitter .post-card .link-preview .preview-title {
             color: #e7e9ea;
         }
+
         body.platform-twitter .post-card .post-stats {
-            display: none; /* Hide standard FB stats row */
+            display: none;
+            /* Hide standard FB stats row */
         }
+
         body.platform-twitter .post-card .post-buttons {
             border-top: 0;
             display: flex;
@@ -1805,6 +1913,7 @@
             padding: 4px 0 0 0;
             color: #71767b;
         }
+
         body.platform-twitter .post-card .action-btn {
             background: transparent;
             color: #71767b;
@@ -1816,12 +1925,15 @@
             padding: 6px 10px;
             border-radius: 999px;
         }
+
         body.platform-twitter .post-card .action-btn:hover {
             background: rgba(29, 155, 240, 0.1);
             color: #1d9bf0;
         }
+
         body.platform-twitter .post-card .comment-row {
-            display: none !important; /* Hide direct comment box in feed like Twitter */
+            display: none !important;
+            /* Hide direct comment box in feed like Twitter */
         }
 
         /* Icon styling and buttons */
@@ -1834,13 +1946,16 @@
             color: #fff !important;
             transition: transform 0.1s ease;
         }
+
         .icon-only:hover {
             transform: scale(1.15);
             background: transparent !important;
         }
+
         body.platform-instagram .bookmark-btn {
             margin-left: auto;
         }
+
         .count {
             font-size: 12px;
             color: #71767b;
@@ -1853,6 +1968,7 @@
             border-right: 1px solid #262626;
             padding: 20px 10px;
         }
+
         body.platform-instagram .side-link,
         body.platform-twitter .side-link {
             color: #e7e9ea;
@@ -1862,10 +1978,12 @@
             margin-bottom: 8px;
             font-size: 15px;
         }
+
         body.platform-instagram .side-link:hover,
         body.platform-twitter .side-link:hover {
-            background: rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.1);
         }
+
         body.platform-instagram .create-page,
         body.platform-twitter .create-page {
             display: none;
@@ -1886,6 +2004,7 @@
             margin-left: 4px;
             vertical-align: middle;
         }
+
         body.platform-twitter .verified-badge-inline {
             background: #1d9bf0;
         }
@@ -1902,11 +2021,26 @@
             align-items: center;
             z-index: 3050;
             box-sizing: border-box;
-            border-top: 1px solid rgba(255,255,255,0.12);
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
         }
-        body.mobile-view.platform-facebook .plat-mobile-nav.fb-nav { display: flex !important; background: #18191a; border-top-color: #2f3031; }
-        body.mobile-view.platform-instagram .plat-mobile-nav.ig-nav { display: flex !important; background: #000; border-top-color: #262626; }
-        body.mobile-view.platform-twitter .plat-mobile-nav.tw-nav  { display: flex !important; background: #000; border-top-color: #2f3336; }
+
+        body.mobile-view.platform-facebook .plat-mobile-nav.fb-nav {
+            display: flex !important;
+            background: #18191a;
+            border-top-color: #2f3031;
+        }
+
+        body.mobile-view.platform-instagram .plat-mobile-nav.ig-nav {
+            display: flex !important;
+            background: #000;
+            border-top-color: #262626;
+        }
+
+        body.mobile-view.platform-twitter .plat-mobile-nav.tw-nav {
+            display: flex !important;
+            background: #000;
+            border-top-color: #2f3336;
+        }
 
         .plat-nav-btn {
             background: transparent;
@@ -1921,15 +2055,44 @@
             flex: 1;
             font-family: inherit;
         }
-        .plat-nav-btn svg { width: 24px; height: 24px; }
-        .plat-nav-btn span { font-size: 9px; opacity: 0.7; }
-        .plat-nav-btn.active svg { stroke-width: 2.5; }
-        body.mobile-view.platform-instagram .plat-nav-btn { color: #fff; }
-        body.mobile-view.platform-twitter   .plat-nav-btn { color: #e7e9ea; }
-        body.mobile-view.platform-facebook  .plat-nav-btn { color: #b0b3b8; }
-        body.mobile-view.platform-facebook  .plat-nav-btn.active { color: #1877f2; }
-        body.mobile-view.platform-instagram .plat-nav-btn.active { color: #fff; }
-        body.mobile-view.platform-twitter   .plat-nav-btn.active { color: #fff; }
+
+        .plat-nav-btn svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .plat-nav-btn span {
+            font-size: 9px;
+            opacity: 0.7;
+        }
+
+        .plat-nav-btn.active svg {
+            stroke-width: 2.5;
+        }
+
+        body.mobile-view.platform-instagram .plat-nav-btn {
+            color: #fff;
+        }
+
+        body.mobile-view.platform-twitter .plat-nav-btn {
+            color: #e7e9ea;
+        }
+
+        body.mobile-view.platform-facebook .plat-nav-btn {
+            color: #b0b3b8;
+        }
+
+        body.mobile-view.platform-facebook .plat-nav-btn.active {
+            color: #1877f2;
+        }
+
+        body.mobile-view.platform-instagram .plat-nav-btn.active {
+            color: #fff;
+        }
+
+        body.mobile-view.platform-twitter .plat-nav-btn.active {
+            color: #fff;
+        }
 
         /* ── Instagram Stories Row ──────────────────────────── */
         .ig-stories-bar {
@@ -1940,7 +2103,11 @@
             scrollbar-width: none;
             border-bottom: 1px solid #262626;
         }
-        .ig-stories-bar::-webkit-scrollbar { display: none; }
+
+        .ig-stories-bar::-webkit-scrollbar {
+            display: none;
+        }
+
         .ig-story {
             display: flex;
             flex-direction: column;
@@ -1949,6 +2116,7 @@
             min-width: 60px;
             cursor: pointer;
         }
+
         .ig-story-ring {
             width: 56px;
             height: 56px;
@@ -1956,8 +2124,16 @@
             padding: 2px;
             background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
         }
-        .ig-story-ring.seen { background: #3a3a3a; }
-        .ig-story-ring.your-story { background: #262626; border: 2px dashed #555; }
+
+        .ig-story-ring.seen {
+            background: #3a3a3a;
+        }
+
+        .ig-story-ring.your-story {
+            background: #262626;
+            border: 2px dashed #555;
+        }
+
         .ig-story-avatar {
             width: 100%;
             height: 100%;
@@ -1970,6 +2146,7 @@
             font-weight: 700;
             color: #fff;
         }
+
         .ig-story-name {
             font-size: 11px;
             color: #fff;
@@ -1979,6 +2156,7 @@
             text-overflow: ellipsis;
             max-width: 58px;
         }
+
         .ig-story-add-btn {
             width: 18px;
             height: 18px;
@@ -2007,34 +2185,42 @@
             padding: 16px 10px 24px !important;
             align-items: center !important;
         }
+
         body.mobile-view .ig-avatar-container {
             flex: 0 0 80px !important;
         }
+
         body.mobile-view .ig-avatar-ring {
             width: 76px !important;
             height: 76px !important;
             padding: 2px !important;
         }
+
         body.mobile-view .ig-avatar-img {
             font-size: 32px !important;
             border-width: 2px !important;
         }
+
         body.mobile-view .ig-profile-info {
             gap: 8px !important;
         }
+
         body.mobile-view .ig-username-row {
             gap: 8px !important;
         }
+
         body.mobile-view .ig-username-row h2 {
             font-size: 16px !important;
             word-break: break-all !important;
             max-width: 140px !important;
         }
+
         body.mobile-view .ig-btn {
             padding: 4px 10px !important;
             font-size: 12px !important;
             border-radius: 4px !important;
         }
+
         body.mobile-view .ig-stats-row {
             font-size: 12px !important;
             gap: 10px !important;
@@ -2058,8 +2244,10 @@
                 <button class="platform-btn" onclick="switchPlatform('twitter')">𝕏 Twitter/X Mode</button>
             </div>
             <div class="view-toggle-group" style="display: flex; gap: 8px;">
-                <button class="platform-btn active" id="view-desktop-btn" onclick="setViewMode('desktop')">🖥️ Desktop View</button>
-                <button class="platform-btn" id="view-mobile-btn" onclick="setViewMode('mobile')">📱 Mobile View</button>
+                <button class="platform-btn active" id="view-desktop-btn" onclick="setViewMode('desktop')">🖥️ Desktop
+                    View</button>
+                <button class="platform-btn" id="view-mobile-btn" onclick="setViewMode('mobile')">📱 Mobile
+                    View</button>
             </div>
         </div>
     </div>
@@ -2075,987 +2263,1069 @@
         </div>
 
         <header class="topbar" aria-label="Simulated social network header">
-        <!-- Facebook Header Content -->
-        <div class="topbar-inner fb-only-flex">
-            <div class="brand-search">
-                <div class="fake-logo" aria-label="Fakebook training logo">f</div>
-                <div class="fake-search">Search Fakebook <span>⌕</span></div>
-            </div>
-            <nav class="top-tabs" aria-label="Simulated navigation">
-                <button class="top-tab active">Home</button>
-                <button class="top-tab">Pages</button>
-                <button class="top-tab">Watch</button>
-                <button class="top-tab">Groups</button>
-            </nav>
-            <div class="top-actions" aria-label="Simulated account actions">
-                <div class="profile-chip"><span class="profile-avatar">A</span> Amit</div>
-                <span class="top-dot">●</span>
-                <span class="top-dot">✉</span>
-                <span class="top-dot">🔔</span>
-                <span class="top-dot">▾</span>
-            </div>
-        </div>
-
-        <!-- Instagram Header Content -->
-        <div class="topbar-inner ig-only-flex">
-            <div class="brand-search">
-                <div class="fake-logo" aria-label="Instagram logo" style="font-family: 'Georgia', serif; font-style: italic; font-weight: 800; font-size: 18px; width: auto; background: transparent; padding: 0 6px; letter-spacing: -0.5px;">Instagram</div>
-            </div>
-            <nav class="top-tabs" aria-label="Simulated navigation" style="gap: 20px;">
-                <button class="top-tab active" style="font-size: 14px;">🏠 Home</button>
-                <button class="top-tab" style="font-size: 14px;">✉️ Messages</button>
-                <button class="top-tab" style="font-size: 14px;">🧭 Explore</button>
-                <button class="top-tab" style="font-size: 14px;">🔔 Notifications</button>
-            </nav>
-            <div class="top-actions" aria-label="Simulated account actions">
-                <div class="profile-chip" style="color: #fff;"><span class="profile-avatar" style="background: #262626; color: #fff;">A</span> amit_nepal</div>
-            </div>
-        </div>
-
-        <!-- Twitter/X Header Content -->
-        <div class="topbar-inner tw-only-flex">
-            <div class="brand-search">
-                <div class="fake-logo" aria-label="X logo" style="font-size: 20px; font-weight: 900; background: transparent; color: white;">𝕏</div>
-            </div>
-            <nav class="top-tabs" aria-label="Simulated navigation">
-                <button class="top-tab active">For You</button>
-                <button class="top-tab">Following</button>
-            </nav>
-            <div class="top-actions" aria-label="Simulated account actions">
-                <div class="profile-chip" style="color: #fff;"><span class="profile-avatar" style="background: #111; color: #1d9bf0;">A</span> @amit_nepal</div>
-            </div>
-        </div>
-    </header>
-
-    <main class="page-shell">
-        <a href="../index.html" class="gateway-link">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                aria-hidden="true">
-                <path d="M19 12H5M12 19l-7-7 7-7" />
-            </svg>
-            Back to Gateway
-        </a>
-
-        <!-- Facebook Profile Header Section -->
-        <div class="fb-only">
-            <section class="page-cover" aria-label="Simulated page cover">
-                <div class="cover-image-icon" aria-hidden="true"></div>
-                <div class="page-avatar" aria-hidden="true"><span>m</span><span>m</span></div>
-            </section>
-
-            <section class="page-title-row" aria-label="Simulated page identity">
-                <div></div>
-                <div class="page-title">
-                    <h1>Marketplace Money Nepal</h1>
-                    <p>Fictional public page · Social ad scam training</p>
+            <!-- Facebook Header Content -->
+            <div class="topbar-inner fb-only-flex">
+                <div class="brand-search">
+                    <div class="fake-logo" aria-label="Fakebook training logo">f</div>
+                    <div class="fake-search">Search Fakebook <span>⌕</span></div>
                 </div>
-                <div class="page-cta">
-                    <button class="fb-button primary" onclick="showWarning(0)">Learn More</button>
-                    <button class="fb-button" onclick="showWarning(0)">Send Message</button>
-                </div>
-            </section>
-
-            <nav class="page-nav" aria-label="Simulated page sections">
-                <a href="#" class="active">Home</a>
-                <a href="#">About</a>
-                <a href="#">Photos</a>
-                <a href="#">Reviews</a>
-                <a href="#">Posts</a>
-                <a href="#">Community</a>
-            </nav>
-        </div>
-
-        <!-- Instagram Profile Header Section -->
-        <div class="ig-only">
-            <div class="ig-profile-header">
-                <div class="ig-avatar-container">
-                    <div class="ig-avatar-ring">
-                        <div class="ig-avatar-img">M</div>
-                    </div>
-                </div>
-                <div class="ig-profile-info">
-                    <div class="ig-username-row">
-                        <h2>marketplace_money_nepal</h2>
-                        <span class="verified-badge-inline" style="background: #0095f6; width: 16px; height: 16px; font-size: 9px; vertical-align: middle;">✔</span>
-                        <button class="ig-btn" onclick="showWarning(0)">Follow</button>
-                        <button class="ig-btn" onclick="showWarning(0)">Message</button>
-                    </div>
-                    <div class="ig-stats-row">
-                        <span><strong>10</strong> posts</span>
-                        <span><strong>48.5K</strong> followers</span>
-                        <span><strong>180</strong> following</span>
-                    </div>
-                    <div class="ig-bio">
-                        <div class="ig-fullname">Marketplace Money Nepal</div>
-                        <p>🛡️ Educational Cybersecurity Ad Simulator<br>
-                        🚨 Spot MrBeast, Elon Musk, and other trending giveaway scams!<br>
-                        ⚠️ Learn digital safety for Nepalese citizens.<br>
-                        <a href="#" onclick="showWarning(0)">linkin.bio/suraksha_os</a></p>
-                    </div>
+                <nav class="top-tabs" aria-label="Simulated navigation">
+                    <button class="top-tab active">Home</button>
+                    <button class="top-tab">Pages</button>
+                    <button class="top-tab">Watch</button>
+                    <button class="top-tab">Groups</button>
+                </nav>
+                <div class="top-actions" aria-label="Simulated account actions">
+                    <div class="profile-chip"><span class="profile-avatar">A</span> Amit</div>
+                    <span class="top-dot">●</span>
+                    <span class="top-dot">✉</span>
+                    <span class="top-dot">🔔</span>
+                    <span class="top-dot">▾</span>
                 </div>
             </div>
-            <!-- Instagram Fake Tabs -->
-            <div class="ig-profile-tabs" style="display: flex; justify-content: center; border-top: 1px solid #262626; gap: 40px; margin-top: 10px;">
-                <div class="ig-profile-tab active" style="display: flex; align-items: center; gap: 6px; padding: 12px 0; border-top: 1px solid #fff; font-size: 12px; font-weight: 600; letter-spacing: 1px; color: #fff; cursor: pointer; text-transform: uppercase;">
-                    <span>▦</span> Posts
+
+            <!-- Instagram Header Content -->
+            <div class="topbar-inner ig-only-flex">
+                <div class="brand-search">
+                    <div class="fake-logo" aria-label="Instagram logo"
+                        style="font-family: 'Georgia', serif; font-style: italic; font-weight: 800; font-size: 18px; width: auto; background: transparent; padding: 0 6px; letter-spacing: -0.5px;">
+                        Instagram</div>
                 </div>
-                <div class="ig-profile-tab" style="display: flex; align-items: center; gap: 6px; padding: 12px 0; border-top: 1px solid transparent; font-size: 12px; font-weight: 600; letter-spacing: 1px; color: #8e8e8e; cursor: pointer; text-transform: uppercase;">
-                    <span>🎬</span> Reels
-                </div>
-                <div class="ig-profile-tab" style="display: flex; align-items: center; gap: 6px; padding: 12px 0; border-top: 1px solid transparent; font-size: 12px; font-weight: 600; letter-spacing: 1px; color: #8e8e8e; cursor: pointer; text-transform: uppercase;">
-                    <span>🪪</span> Tagged
+                <nav class="top-tabs" aria-label="Simulated navigation" style="gap: 20px;">
+                    <button class="top-tab active" style="font-size: 14px;">🏠 Home</button>
+                    <button class="top-tab" style="font-size: 14px;">✉️ Messages</button>
+                    <button class="top-tab" style="font-size: 14px;">🧭 Explore</button>
+                    <button class="top-tab" style="font-size: 14px;">🔔 Notifications</button>
+                </nav>
+                <div class="top-actions" aria-label="Simulated account actions">
+                    <div class="profile-chip" style="color: #fff;"><span class="profile-avatar"
+                            style="background: #262626; color: #fff;">A</span> amit_nepal</div>
                 </div>
             </div>
-        </div>
 
-        <!-- Twitter/X Profile Header Section -->
-        <div class="tw-only">
-            <div class="tw-cover-banner">
-                <div class="tw-banner-text">🛡️ SURAKSHA OS AD SIMULATOR 𝕏</div>
-            </div>
-            <div class="tw-profile-details">
-                <div class="tw-avatar-row">
-                    <div class="tw-profile-avatar">𝕏</div>
-                    <button class="tw-btn" onclick="showWarning(0)">Follow</button>
+            <!-- Twitter/X Header Content -->
+            <div class="topbar-inner tw-only-flex">
+                <div class="brand-search">
+                    <div class="fake-logo" aria-label="X logo"
+                        style="font-size: 20px; font-weight: 900; background: transparent; color: white;">𝕏</div>
                 </div>
-                <div class="tw-user-info">
-                    <div class="tw-name-row">
-                        <h2>Marketplace Money Nepal</h2>
-                        <span class="verified-badge-inline" style="background: #1d9bf0; width: 16px; height: 16px; font-size: 9px; vertical-align: middle;">✔</span>
-                    </div>
-                    <div class="tw-handle">@SurakshaAds</div>
-                    <div class="tw-bio">
-                        Simulating trending social media scam ads (Elon Musk cryptocurrency giveaways, MrBeast cash surveys, fake iPhone deals) to keep Nepalese citizens safe.
-                    </div>
-                    <div class="tw-meta-row">
-                        <span>📍 Kathmandu, Nepal</span>
-                        <span>📅 Joined June 2026</span>
-                    </div>
-                    <div class="tw-stats-row">
-                        <span><strong>124</strong> Following</span>
-                        <span><strong>15.6K</strong> Followers</span>
-                    </div>
+                <nav class="top-tabs" aria-label="Simulated navigation">
+                    <button class="top-tab active">For You</button>
+                    <button class="top-tab">Following</button>
+                </nav>
+                <div class="top-actions" aria-label="Simulated account actions">
+                    <div class="profile-chip" style="color: #fff;"><span class="profile-avatar"
+                            style="background: #111; color: #1d9bf0;">A</span> @amit_nepal</div>
                 </div>
             </div>
-        </div>
+        </header>
 
-        <div class="layout">
-            <aside class="left-menu" aria-label="Simulated page sidebar">
-                <!-- Facebook Sidebar links -->
-                <div class="fb-only">
-                    <a href="#" class="side-link active">⌂ Home</a>
-                    <a href="#" class="side-link">▣ About</a>
-                    <a href="#" class="side-link">▧ Photos</a>
-                    <a href="#" class="side-link">★ Reviews</a>
-                    <a href="#" class="side-link">☷ Events</a>
-                    <a href="#" class="side-link">● Posts</a>
-                    <a href="#" class="side-link">☰ Community</a>
-                    <div class="create-page">Create a Page</div>
-                </div>
+        <main class="page-shell">
+            <a href="../index.html" class="gateway-link">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    aria-hidden="true">
+                    <path d="M19 12H5M12 19l-7-7 7-7" />
+                </svg>
+                Back to Gateway
+            </a>
 
-                <!-- Instagram Sidebar links -->
-                <div class="ig-only">
-                    <a href="#" class="side-link active">🏠 Home</a>
-                    <a href="#" class="side-link">🔍 Search</a>
-                    <a href="#" class="side-link">🧭 Explore</a>
-                    <a href="#" class="side-link">🎬 Reels</a>
-                    <a href="#" class="side-link">✉️ Messages</a>
-                    <a href="#" class="side-link">🔔 Notifications</a>
-                    <a href="#" class="side-link">➕ Create</a>
-                    <a href="#" class="side-link">👤 Profile</a>
-                </div>
+            <!-- Facebook Profile Header Section -->
+            <div class="fb-only">
+                <section class="page-cover" aria-label="Simulated page cover">
+                    <div class="cover-image-icon" aria-hidden="true"></div>
+                    <div class="page-avatar" aria-hidden="true"><span>m</span><span>m</span></div>
+                </section>
 
-                <!-- Twitter/X Sidebar links -->
-                <div class="tw-only">
-                    <a href="#" class="side-link active">🏠 Home</a>
-                    <a href="#" class="side-link">🔍 Explore</a>
-                    <a href="#" class="side-link">🔔 Notifications</a>
-                    <a href="#" class="side-link">✉️ Messages</a>
-                    <a href="#" class="side-link">𝌆 Bookmarks</a>
-                    <a href="#" class="side-link">👤 Profile</a>
-                    <a href="#" class="side-link">⋯ More</a>
-                    <button class="tw-btn" style="background: #1d9bf0; color: #fff; width: 100%; font-weight: 700; margin-top: 15px; border-radius: 9999px; padding: 12px;" onclick="showWarning(7)">Post</button>
-                </div>
-            </aside>
-
-            <section class="feed-column" aria-label="Simulated feed">
-
-                <!-- Instagram Stories Row (ig-only) -->
-                <div class="ig-only-flex ig-stories-bar">
-                    <!-- Your Story -->
-                    <div class="ig-story">
-                        <div class="ig-story-ring your-story">
-                            <div class="ig-story-avatar" style="font-size:24px;">A</div>
-                        </div>
-                        <div class="ig-story-add-btn">+</div>
-                        <span class="ig-story-name">Your Story</span>
+                <section class="page-title-row" aria-label="Simulated page identity">
+                    <div></div>
+                    <div class="page-title">
+                        <h1>Marketplace Money Nepal</h1>
+                        <p>Fictional public page · Social ad scam training</p>
                     </div>
-                    <!-- Fake scam stories -->
-                    <div class="ig-story" onclick="showWarning(0)">
-                        <div class="ig-story-ring">
-                            <div class="ig-story-avatar" style="font-size:18px;">🐉</div>
-                        </div>
-                        <span class="ig-story-name">mrbeast</span>
-                    </div>
-                    <div class="ig-story" onclick="showWarning(0)">
-                        <div class="ig-story-ring">
-                            <div class="ig-story-avatar" style="font-size:18px;">💎</div>
-                        </div>
-                        <span class="ig-story-name">elonmusk</span>
-                    </div>
-                    <div class="ig-story" onclick="showWarning(0)">
-                        <div class="ig-story-ring">
-                            <div class="ig-story-avatar" style="font-size:18px;">💰</div>
-                        </div>
-                        <span class="ig-story-name">crypto_guru</span>
-                    </div>
-                    <div class="ig-story" onclick="showWarning(0)">
-                        <div class="ig-story-ring">
-                            <div class="ig-story-avatar" style="font-size:18px;">🎁</div>
-                        </div>
-                        <span class="ig-story-name">giveaway_np</span>
-                    </div>
-                    <div class="ig-story" onclick="showWarning(0)">
-                        <div class="ig-story-ring seen">
-                            <div class="ig-story-avatar" style="font-size:18px;">📱</div>
-                        </div>
-                        <span class="ig-story-name">iphone_deal</span>
-                    </div>
-                    <div class="ig-story" onclick="showWarning(0)">
-                        <div class="ig-story-ring seen">
-                            <div class="ig-story-avatar" style="font-size:18px;">🎰</div>
-                        </div>
-                        <span class="ig-story-name">lucky_draw</span>
-                    </div>
-                </div>
-
-                <div class="composer" aria-hidden="true">
-                    <div class="composer-input">
-                        <div class="mini-avatar">A</div>
-                        <div class="fake-input">Write a post...</div>
-                    </div>
-                    <div class="composer-tools">
-                        <button class="composer-tool">▣ Photo/Video</button>
-                        <button class="composer-tool">☺ Tag Friends</button>
-                        <button class="composer-tool">● Check In</button>
-                    </div>
-                </div>
-
-                <!-- iPhone Marketplace Scam Simulation -->
-                <article class="post-card">
-                    <div class="fake-sticker">SCAM</div>
-                    <div class="post-header">
-                        <div class="post-avatar" style="background: linear-gradient(135deg, #ff6b6b, #ee5a24); color: white;">📱</div>
-                        <div>
-                            <div class="post-name">iPhone Store Nepal 🇳🇵</div>
-                            <div class="post-meta">Sponsored · Marketplace scam simulation · 🌐</div>
-                        </div>
-                        <button class="more-btn" onclick="showWarning(3)" aria-label="Post options">...</button>
-                    </div>
-                    <div class="post-content">
-                        🔥 URGENT SALE! iPhone 15 Pro Max - Only Rs. 25,000! 
-                        <br><br>
-                        ✅ Brand new, sealed box
-                        ✅ 1TB storage 
-                        ✅ All colors available
-                        ✅ Cash on delivery
-                        ✅ Limited time offer!
-                        <br><br>
-                        Contact immediately: 98XXXXXXXX
-                        First come, first served! 📲
-                    </div>
-                    <div class="ad-creative photo red">
-                        <img class="ad-photo" 
-                             src="../assets/images/image.png"
-                             alt="Fake iPhone advertisement showing unrealistic pricing"
-                             onclick="showWarning(3)">
-                        <div class="ad-creative-inner">
-                            <div class="ad-kicker">FLASH SALE</div>
-                            <div class="ad-headline">iPhone 15 Pro Max</div>
-                            <div class="ad-subline">90% OFF - Rs. 25,000 Only!</div>
-                        </div>
-                    </div>
-                    <div class="link-preview" onclick="showWarning(3)">
-                        <div>
-                            <div class="preview-domain">IPHONE-NEPAL-STORE.COM</div>
-                            <div class="preview-title">Brand New iPhone 15 Pro Max - Huge Discount</div>
-                            <div class="preview-copy">Get genuine Apple iPhone with warranty. Limited stock available. Order now!</div>
-                        </div>
-                    </div>
-                    <div class="post-stats">
-                        <div class="reactions">
-                            <div class="reaction-bubbles">
-                                <div class="reaction-bubble like">👍</div>
-                                <div class="reaction-bubble love">❤️</div>
-                            </div>
-                            <span>2.4K people reacted</span>
-                        </div>
-                        <div>847 comments · 1.2K shares</div>
-                    </div>
-                    <div class="post-buttons">
-                        <div class="action-wrap">
-                            <button class="action-btn" onclick="showWarning(3)">👍 Like</button>
-                            <div class="reaction-bar">
-                                <div class="reaction-emoji">👍</div>
-                                <div class="reaction-emoji">❤️</div>
-                                <div class="reaction-emoji">😢</div>
-                                <div class="reaction-emoji">😡</div>
-                            </div>
-                        </div>
-                        <button class="action-btn" onclick="showWarning(3)">💬 Comment</button>
-                        <button class="action-btn" onclick="showWarning(3)">↗ Share</button>
-                    </div>
-                    <div class="comment-row">
-                        <div class="mini-avatar">A</div>
-                        <div class="comment-box">Write a comment...</div>
-                    </div>
-                </article>
-
-                <!-- Original Nepal Wealth Masters Post -->
-                <article class="post-card">
-                    <div class="post-header">
-                        <div class="post-avatar">💰</div>
-                        <div>
-                            <div class="post-name">Nepal Wealth Masters</div>
-                            <div class="post-meta">Sponsored · Paid ad simulation · 🌐</div>
-                        </div>
-                        <button class="more-btn" onclick="showWarning(0)" aria-label="Post options">...</button>
-                    </div>
-                    <div class="post-content">
-                        Stop working hard for money! We found a secret gap in the market. Turn Rs. 5,000 into Rs.
-                        50,000 by TONIGHT. No skills needed. 1500+ Nepalis already earned. Limited slots.
-                    </div>
-                    <div class="ad-creative" role="img"
-                        aria-label="Blue fake investment ad claiming Rs. 5,000 becomes Rs. 50,000 in 24 hours">
-                        <div class="ad-creative-inner">
-                            <div class="ad-kicker">100% SECURE</div>
-                            <div class="ad-headline">Rs. 5,000 → Rs. 50,000</div>
-                            <div class="ad-subline">IN 24 HOURS</div>
-                        </div>
-                    </div>
-                    <div class="link-preview">
-                        <div>
-                            <div class="preview-domain">wealth-master-training.example</div>
-                            <div class="preview-title">Claim Your Secret Market Slot Today</div>
-                            <div class="preview-copy">Training preview: suspicious promises, pressure, and fake proof.</div>
-                        </div>
+                    <div class="page-cta">
                         <button class="fb-button primary" onclick="showWarning(0)">Learn More</button>
-                    </div>
-                    <div class="post-stats">
-                        <div class="reactions">
-                            <span class="reaction-bubbles">
-                                <span class="reaction-bubble like">f</span>
-                                <span class="reaction-bubble love">♥</span>
-                            </span>
-                            <span>1.2K</span>
-                        </div>
-                        <span>450 Comments · 122 Shares</span>
-                    </div>
-                    <div class="post-buttons">
-                        <div class="action-wrap">
-                            <div class="reaction-bar">
-                                <span class="reaction-emoji" onclick="showWarning(0)">👍</span>
-                                <span class="reaction-emoji" onclick="showWarning(0)">❤️</span>
-                                <span class="reaction-emoji" onclick="showWarning(0)">😮</span>
-                                <span class="reaction-emoji" onclick="showWarning(0)">😢</span>
-                                <span class="reaction-emoji" onclick="showWarning(0)">😡</span>
-                            </div>
-                            <button class="action-btn" onclick="showWarning(0)">👍 Like</button>
-                        </div>
-                        <button class="action-btn" onclick="showWarning(0)">💬 Comment</button>
-                        <button class="action-btn" onclick="showWarning(0)">↗ Share</button>
-                    </div>
-                    <div class="comment-row">
-                        <div class="mini-avatar">A</div>
-                        <div class="comment-box">Write a comment...</div>
-                    </div>
-                </article>
-
-                <article class="post-card">
-                    <div class="post-header">
-                        <div class="post-avatar">🏠</div>
-                        <div>
-                            <div class="post-name">Kathmandu Luxury Living</div>
-                            <div class="post-meta">Public · 2h · 🌐</div>
-                        </div>
-                        <button class="more-btn" onclick="showWarning(1)" aria-label="Post options">...</button>
-                    </div>
-                    <div class="post-content">
-                        URGENT! Move-in ready 2BHK in Baluwatar. Fully furnished, 24hr water. Rent only Rs. 8,000!
-                        Owner moving abroad tomorrow. Need tenant today.
-                    </div>
-                    <div class="ad-creative green" role="img"
-                        aria-label="Green fake rental ad claiming luxury apartment only Rs. 8,000">
-                        <div class="ad-creative-inner">
-                            <div class="ad-kicker">MOVE IN TODAY</div>
-                            <div class="ad-headline">Luxury 2BHK</div>
-                            <div class="ad-subline">Only Rs. 8,000</div>
-                        </div>
-                    </div>
-                    <div class="post-stats">
-                        <div class="reactions">
-                            <span class="reaction-bubbles">
-                                <span class="reaction-bubble like">f</span>
-                            </span>
-                            <span>85</span>
-                        </div>
-                        <span>21 Comments · 5 Shares</span>
-                    </div>
-                    <div class="post-buttons">
-                        <div class="action-wrap">
-                            <div class="reaction-bar">
-                                <span class="reaction-emoji" onclick="showWarning(1)">👍</span>
-                                <span class="reaction-emoji" onclick="showWarning(1)">❤️</span>
-                                <span class="reaction-emoji" onclick="showWarning(1)">😮</span>
-                                <span class="reaction-emoji" onclick="showWarning(1)">😡</span>
-                            </div>
-                            <button class="action-btn" onclick="showWarning(1)">👍 Like</button>
-                        </div>
-                        <button class="action-btn" onclick="showWarning(1)">💬 Comment</button>
-                        <button class="action-btn" onclick="showWarning(1)">↗ Share</button>
-                    </div>
-                </article>
-
-                <article class="post-card">
-                    <div class="post-header">
-                        <div class="post-avatar">🎁</div>
-                        <div>
-                            <div class="post-name">Mega Prize Hub Nepal</div>
-                            <div class="post-meta">Sponsored · Paid ad simulation · 🌐</div>
-                        </div>
-                        <button class="more-btn" onclick="showWarning(2)" aria-label="Post options">...</button>
-                    </div>
-                    <div class="post-content">
-                        CONGRATULATIONS! You have been selected as our 50,000th visitor. You won a brand new iPhone 15
-                        Pro Max. Claim now before the timer runs out. Just pay Rs. 199 shipping.
-                    </div>
-                    <div class="ad-creative red" role="img"
-                        aria-label="Red fake giveaway ad claiming free iPhone prize">
-                        <div class="ad-creative-inner">
-                            <div class="ad-kicker">WINNER SELECTED</div>
-                            <div class="ad-headline">iPhone 15 Pro Max</div>
-                            <div class="ad-subline">Pay Rs. 199 Shipping</div>
-                        </div>
-                    </div>
-                    <div class="post-stats">
-                        <div class="reactions">
-                            <span class="reaction-bubbles">
-                                <span class="reaction-bubble like">f</span>
-                                <span class="reaction-bubble love">♥</span>
-                            </span>
-                            <span>3.5K</span>
-                        </div>
-                        <span>2.1K Comments · 850 Shares</span>
-                    </div>
-                    <div class="post-buttons">
-                        <div class="action-wrap">
-                            <div class="reaction-bar">
-                                <span class="reaction-emoji" onclick="showWarning(2)">👍</span>
-                                <span class="reaction-emoji" onclick="showWarning(2)">❤️</span>
-                                <span class="reaction-emoji" onclick="showWarning(2)">😮</span>
-                                <span class="reaction-emoji" onclick="showWarning(2)">😡</span>
-                            </div>
-                            <button class="action-btn" onclick="showWarning(2)">👍 Like</button>
-                        </div>
-                        <button class="action-btn" onclick="showWarning(2)">💬 Comment</button>
-                        <button class="action-btn" onclick="showWarning(2)">↗ Share</button>
-                    </div>
-                </article>
-
-                <!-- iPhone Marketplace Scam -->
-                <article class="post-card">
-                    <div class="fake-sticker">SCAM</div>
-                    <div class="post-header">
-                        <div class="post-avatar" style="background: linear-gradient(135deg, #ff6b6b, #ee5a24); color: white;">📱</div>
-                        <div>
-                            <div class="post-name">iPhone Store Nepal 🇳🇵</div>
-                            <div class="post-meta">Sponsored · Marketplace scam simulation · 🌐</div>
-                        </div>
-                        <button class="more-btn" onclick="showWarning(3)" aria-label="Post options">...</button>
-                    </div>
-                    <div class="post-content">
-                        🔥 URGENT SALE! iPhone 15 Pro Max - Only Rs. 25,000! 
-                        <br><br>
-                        ✅ Brand new, sealed box
-                        ✅ 1TB storage 
-                        ✅ All colors available
-                        ✅ Cash on delivery
-                        ✅ Limited time offer!
-                        <br><br>
-                        Contact immediately: 98XXXXXXXX
-                        First come, first served! 📲
-                    </div>
-                    <div class="ad-creative photo red">
-                        <img class="ad-photo" 
-                             src="../assets/images/image copy.png"
-                             alt="iPhone 15 Pro Max - Used in educational scam detection simulation"
-                             onclick="showWarning(3)"
-                             onerror="this.style.display='none';"
-                             style="object-fit: cover; width: 100%; height: 100%;">
-                        <div class="ad-creative-inner">
-                            <div class="ad-kicker">FLASH SALE</div>
-                            <div class="ad-headline">iPhone 15 Pro Max</div>
-                            <div class="ad-subline">90% OFF - Rs. 25,000 Only!</div>
-                        </div>
-                    </div>
-                    <div class="link-preview" onclick="showWarning(3)">
-                        <div>
-                            <div class="preview-domain">IPHONE-NEPAL-STORE.COM</div>
-                            <div class="preview-title">Brand New iPhone 15 Pro Max - Huge Discount</div>
-                            <div class="preview-copy">Get genuine Apple iPhone with warranty. Limited stock available. Order now!</div>
-                        </div>
-                    </div>
-                    <div class="post-stats">
-                        <div class="reactions">
-                            <span class="reaction-bubbles">
-                                <span class="reaction-bubble like">f</span>
-                                <span class="reaction-bubble love">♥</span>
-                            </span>
-                            <span>2.4K</span>
-                        </div>
-                        <span>847 Comments · 1.2K Shares</span>
-                    </div>
-                    <div class="post-buttons">
-                        <div class="action-wrap">
-                            <div class="reaction-bar">
-                                <span class="reaction-emoji" onclick="showWarning(3)">👍</span>
-                                <span class="reaction-emoji" onclick="showWarning(3)">❤️</span>
-                                <span class="reaction-emoji" onclick="showWarning(3)">😮</span>
-                                <span class="reaction-emoji" onclick="showWarning(3)">😡</span>
-                            </div>
-                            <button class="action-btn" onclick="showWarning(3)">👍 Like</button>
-                        </div>
-                        <button class="action-btn" onclick="showWarning(3)">💬 Comment</button>
-                        <button class="action-btn" onclick="showWarning(3)">↗ Share</button>
-                    </div>
-                </article>
-
-                <!-- Crypto Investment Scam -->
-                <article class="post-card">
-                    <div class="fake-sticker">SCAM</div>
-                    <div class="post-header">
-                        <div class="post-avatar" style="background: linear-gradient(135deg, #f093fb, #f5576c); color: white;">₿</div>
-                        <div>
-                            <div class="post-name">Nepal Crypto Investment</div>
-                            <div class="post-meta">Sponsored · Investment scam simulation · 🌐</div>
-                        </div>
-                        <button class="more-btn" onclick="showWarning(4)" aria-label="Post options">...</button>
-                    </div>
-                    <div class="post-content">
-                        💎 MAKE Rs. 50,000 DAILY WITH CRYPTO! 💎
-                        <br><br>
-                        ✅ Government approved platform
-                        ✅ Minimum investment Rs. 5,000
-                        ✅ 500% returns guaranteed 
-                        ✅ Join 10,000+ Nepali investors
-                        <br><br>
-                        🎯 Special bonus for first 100 members
-                        🎯 Free training included
-                        <br><br>
-                        Register now: crypto-nepal.com
-                        WhatsApp: +977-98XXXXXXXX
-                    </div>
-                    <div class="ad-creative photo" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-                        <img class="ad-photo" 
-                             src="../assets/images/image copy 2.png"
-                             alt="Bitcoin cryptocurrency - Used in educational investment scam detection"
-                             onclick="showWarning(4)"
-                             onerror="this.style.display='none';"
-                             style="object-fit: cover; width: 100%; height: 100%; opacity: 0.8;">
-                        <div class="ad-creative-inner">
-                            <div class="ad-kicker">GOVERNMENT APPROVED</div>
-                            <div class="ad-headline">Crypto Investment</div>
-                            <div class="ad-subline">500% Returns Guaranteed</div>
-                        </div>
-                    </div>
-                    <div class="post-stats">
-                        <div class="reactions">
-                            <span class="reaction-bubbles">
-                                <span class="reaction-bubble like">f</span>
-                                <span class="reaction-bubble love">♥</span>
-                            </span>
-                            <span>3.2K</span>
-                        </div>
-                        <span>1.1K Comments · 2.3K Shares</span>
-                    </div>
-                    <div class="post-buttons">
-                        <div class="action-wrap">
-                            <div class="reaction-bar">
-                                <span class="reaction-emoji" onclick="showWarning(4)">👍</span>
-                                <span class="reaction-emoji" onclick="showWarning(4)">❤️</span>
-                                <span class="reaction-emoji" onclick="showWarning(4)">😮</span>
-                                <span class="reaction-emoji" onclick="showWarning(4)">😡</span>
-                            </div>
-                            <button class="action-btn" onclick="showWarning(4)">👍 Like</button>
-                        </div>
-                        <button class="action-btn" onclick="showWarning(4)">💬 Comment</button>
-                        <button class="action-btn" onclick="showWarning(4)">↗ Share</button>
-                    </div>
-                </article>
-
-                <!-- Work From Home Job Scam -->
-                <article class="post-card">
-                    <div class="fake-sticker">SCAM</div>
-                    <div class="post-header">
-                        <div class="post-avatar" style="background: linear-gradient(135deg, #4facfe, #00f2fe); color: white;">💼</div>
-                        <div>
-                            <div class="post-name">Work From Home Nepal</div>
-                            <div class="post-meta">Sponsored · Employment scam simulation · 🌐</div>
-                        </div>
-                        <button class="more-btn" onclick="showWarning(5)" aria-label="Post options">...</button>
-                    </div>
-                    <div class="post-content">
-                        💼 URGENT HIRING - WORK FROM HOME 💼
-                        <br><br>
-                        📱 Data entry jobs available
-                        💰 Earn Rs. 25,000-50,000/month
-                        ⏰ Work only 2-3 hours daily
-                        🏠 100% work from home
-                        <br><br>
-                        Requirements:
-                        ✅ Basic computer knowledge
-                        ✅ Android/iPhone
-                        ✅ Registration fee: Rs. 2,500 only
-                        <br><br>
-                        Limited positions available!
-                        Apply now: 98XXXXXXXX
-                    </div>
-                    <div class="ad-creative photo" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
-                        <img class="ad-photo" 
-                             src="../assets/images/image copy 3.png"
-                             alt="Work from home setup - Used in educational employment scam detection"
-                             onclick="showWarning(5)"
-                             onerror="this.style.display='none';"
-                             style="object-fit: cover; width: 100%; height: 100%; opacity: 0.7;">
-                        <div class="ad-creative-inner">
-                            <div class="ad-kicker">URGENT HIRING</div>
-                            <div class="ad-headline">Work From Home</div>
-                            <div class="ad-subline">Rs. 50,000/month</div>
-                        </div>
-                    </div>
-                    <div class="post-stats">
-                        <div class="reactions">
-                            <span class="reaction-bubbles">
-                                <span class="reaction-bubble like">f</span>
-                                <span class="reaction-bubble love">♥</span>
-                            </span>
-                            <span>4.1K</span>
-                        </div>
-                        <span>2.8K Comments · 3.5K Shares</span>
-                    </div>
-                    <div class="post-buttons">
-                        <div class="action-wrap">
-                            <div class="reaction-bar">
-                                <span class="reaction-emoji" onclick="showWarning(5)">👍</span>
-                                <span class="reaction-emoji" onclick="showWarning(5)">❤️</span>
-                                <span class="reaction-emoji" onclick="showWarning(5)">😮</span>
-                                <span class="reaction-emoji" onclick="showWarning(5)">😡</span>
-                            </div>
-                            <button class="action-btn" onclick="showWarning(5)">👍 Like</button>
-                        </div>
-                        <button class="action-btn" onclick="showWarning(5)">💬 Comment</button>
-                        <button class="action-btn" onclick="showWarning(5)">↗ Share</button>
-                    </div>
-                </article>
-
-                <!-- Hotel Booking Scam -->
-                <article class="post-card">
-                    <div class="fake-sticker">SCAM</div>
-                    <div class="post-header">
-                        <div class="post-avatar" style="background: linear-gradient(135deg, #43cea2, #185a9d); color: white;">🏨</div>
-                        <div>
-                            <div class="post-name">Nepal Luxury Hotels</div>
-                            <div class="post-meta">Sponsored · Travel scam simulation · 🌐</div>
-                        </div>
-                        <button class="more-btn" onclick="showWarning(6)" aria-label="Post options">...</button>
-                    </div>
-                    <div class="post-content">
-                        🏨 5-STAR HOTEL KATHMANDU - 90% OFF! 🏨
-                        <br><br>
-                        ✅ Luxury suite only Rs. 1,500/night
-                        ✅ Normally Rs. 15,000/night
-                        ✅ All meals included
-                        ✅ Airport pickup free
-                        ✅ Book now - pay later
-                        <br><br>
-                        Limited rooms! Book immediately!
-                        WhatsApp: +977-98XXXXXXXX
-                        Advance booking: Rs. 500 only
-                    </div>
-                    <div class="ad-creative photo" style="background: linear-gradient(135deg, #43cea2 0%, #185a9d 100%);">
-                        <img class="ad-photo" 
-                             src="../assets/images/image copy 4.png"
-                             alt="Luxury hotel - Used in educational booking scam detection simulation"
-                             onclick="showWarning(6)"
-                             onerror="this.style.display='none';"
-                             style="object-fit: cover; width: 100%; height: 100%; opacity: 0.8;">
-                        <div class="ad-creative-inner">
-                            <div class="ad-kicker">FLASH BOOKING</div>
-                            <div class="ad-headline">5-Star Luxury Hotel</div>
-                            <div class="ad-subline">90% OFF - Rs. 1,500/night</div>
-                        </div>
-                    </div>
-                    <div class="link-preview" onclick="showWarning(6)">
-                        <div>
-                            <div class="preview-domain">NEPAL-LUXURY-HOTELS.COM</div>
-                            <div class="preview-title">Book 5-Star Hotels in Kathmandu - Huge Discount</div>
-                            <div class="preview-copy">Luxury accommodations at unbeatable prices. Book now before rooms sell out!</div>
-                        </div>
-                    </div>
-                    <div class="post-stats">
-                        <div class="reactions">
-                            <span class="reaction-bubbles">
-                                <span class="reaction-bubble like">f</span>
-                                <span class="reaction-bubble love">♥</span>
-                            </span>
-                            <span>1.9K</span>
-                        </div>
-                        <span>456 Comments · 892 Shares</span>
-                    </div>
-                    <div class="post-buttons">
-                        <div class="action-wrap">
-                            <div class="reaction-bar">
-                                <span class="reaction-emoji" onclick="showWarning(6)">👍</span>
-                                <span class="reaction-emoji" onclick="showWarning(6)">❤️</span>
-                                <span class="reaction-emoji" onclick="showWarning(6)">😮</span>
-                                <span class="reaction-emoji" onclick="showWarning(6)">😡</span>
-                            </div>
-                            <button class="action-btn" onclick="showWarning(6)">👍 Like</button>
-                        </div>
-                        <button class="action-btn" onclick="showWarning(6)">💬 Comment</button>
-                        <button class="action-btn" onclick="showWarning(6)">↗ Share</button>
-                    </div>
-                </article>
-
-                <!-- MrBeast Instagram Cash Giveaway Scam (Card 9) -->
-                <article class="post-card">
-                    <div class="fake-sticker">SCAM</div>
-                    <div class="post-header">
-                        <div class="post-avatar" style="background: linear-gradient(135deg, #00f2fe, #4facfe); color: white; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: bold; overflow: hidden; border: 2px solid #fff;">
-                            <span style="font-family: sans-serif;">🦁</span>
-                        </div>
-                        <div>
-                            <div class="post-name">mrbeast <span class="verified-badge-inline">✅</span></div>
-                            <div class="post-meta">Sponsored · Celebrity Impersonation · 🌐</div>
-                        </div>
-                        <button class="more-btn" onclick="showWarning(8)" aria-label="Post options">...</button>
-                    </div>
-                    <div class="post-content">
-                        🎁 I'm GIVING AWAY $1,000 CASH 💵 to the first 5,000 followers who register right now!
-                        No catch, just want to give back to the best community ever! ❤️
-                        <br><br>
-                        ✅ Verified MrBeast giveaway portal
-                        ✅ 100% Free to enter (No deposit)
-                        ✅ Instant transfer to your wallet or banking card
-                        <br><br>
-                        👇 Click "Claim Now" below to register and get your cash immediately! 👇
-                    </div>
-                    <div class="ad-creative photo">
-                        <img class="ad-photo" 
-                             src="../assets/images/mrbeast_scam.png"
-                             alt="MrBeast Cash Giveaway Scam - Simulated Ad"
-                             onclick="showWarning(8)"
-                             onerror="this.src='../assets/images/image.png';"
-                             style="object-fit: cover; width: 100%; height: 100%;">
-                        <div class="ad-creative-inner">
-                            <div class="ad-kicker">LIMITED SLOTS</div>
-                            <div class="ad-headline">$1,000 Giveaway</div>
-                            <div class="ad-subline">Claim Your Cash Now</div>
-                        </div>
-                    </div>
-                    <div class="link-preview" onclick="showWarning(8)">
-                        <div>
-                            <div class="preview-domain">MRBEAST-PROMO.COM</div>
-                            <div class="preview-title">MrBeast $1,000 Direct Cash Giveaway - Register Here</div>
-                            <div class="preview-copy">Click here to claim your $1,000 cash. Limited slots left. Verified safe portal.</div>
-                        </div>
-                    </div>
-                    <div class="post-stats">
-                        <div class="reactions">
-                            <div class="reaction-bubbles">
-                                <div class="reaction-bubble like">👍</div>
-                                <div class="reaction-bubble love">❤️</div>
-                            </div>
-                            <span>1.2M people reacted</span>
-                        </div>
-                        <div>256K comments · 128K shares</div>
-                    </div>
-                    <div class="post-buttons">
-                        <div class="action-wrap">
-                            <button class="action-btn" onclick="showWarning(8)">👍 Like</button>
-                        </div>
-                        <button class="action-btn" onclick="showWarning(8)">💬 Comment</button>
-                        <button class="action-btn" onclick="showWarning(8)">↗ Share</button>
-                    </div>
-                    <div class="comment-row">
-                        <div class="mini-avatar">A</div>
-                        <div class="comment-box">Write a comment...</div>
-                    </div>
-                </article>
-
-                <!-- Elon Musk X / Twitter Crypto Giveaway Scam (Card 10) -->
-                <article class="post-card">
-                    <div class="fake-sticker">SCAM</div>
-                    <div class="post-header">
-                        <div class="post-avatar" style="background: #000; color: white; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: bold; border: 1px solid #2f3336;">
-                            <span>🚀</span>
-                        </div>
-                        <div>
-                            <div class="post-name">Elon Musk <span class="verified-badge-inline">✅</span></div>
-                            <div class="post-meta">Sponsored · Crypto Scam · 🌐</div>
-                        </div>
-                        <button class="more-btn" onclick="showWarning(7)" aria-label="Post options">...</button>
-                    </div>
-                    <div class="post-content">
-                        🚀 Double Your Crypto! 
-                        To celebrate SpaceX's successful launch, I am giving away 10,000 BTC and 50,000,000 DOGE.
-                        <br><br>
-                        Send any amount of BTC or DOGE to the official wallet address below, and we will send DOUBLE the amount back instantly!
-                        <br><br>
-                        🔒 Safe & Verified. Act fast - promo ends in 1 hour!
-                    </div>
-                    <div class="ad-creative photo">
-                        <img class="ad-photo" 
-                             src="../assets/images/elon_musk_scam.png"
-                             alt="Elon Musk Crypto Giveaway Scam - Simulated Ad"
-                             onclick="showWarning(7)"
-                             onerror="this.src='../assets/images/image.png';"
-                             style="object-fit: cover; width: 100%; height: 100%;">
-                        <div class="ad-creative-inner">
-                            <div class="ad-kicker">SPACEX & TESLA</div>
-                            <div class="ad-headline">Double Your Crypto</div>
-                            <div class="ad-subline">10,000 BTC & DOGE Giveaway</div>
-                        </div>
-                    </div>
-                    <div class="link-preview" onclick="showWarning(7)">
-                        <div>
-                            <div class="preview-domain">TESLA-DOUBLE-GIFT.ORG</div>
-                            <div class="preview-title">SpaceX & Tesla Official Cryptocurrency Event Portal</div>
-                            <div class="preview-copy">Send crypto and get 2x back. Check real-time transactions. Over $50M distributed.</div>
-                        </div>
-                    </div>
-                    <div class="post-stats">
-                        <div class="reactions">
-                            <div class="reaction-bubbles">
-                                <div class="reaction-bubble like">👍</div>
-                                <div class="reaction-bubble love">❤️</div>
-                            </div>
-                            <span>842K people reacted</span>
-                        </div>
-                        <div>14K comments · 4.2K retweets</div>
-                    </div>
-                    <div class="post-buttons">
-                        <div class="action-wrap">
-                            <button class="action-btn" onclick="showWarning(7)">👍 Like</button>
-                        </div>
-                        <button class="action-btn" onclick="showWarning(7)">💬 Comment</button>
-                        <button class="action-btn" onclick="showWarning(7)">↗ Share</button>
-                    </div>
-                    <div class="comment-row">
-                        <div class="mini-avatar">A</div>
-                        <div class="comment-box">Write a comment...</div>
-                    </div>
-                </article>
-            </section>
-
-            <aside class="right-column" aria-label="Simulated page details">
-                <section class="info-card training-note">
-                    <div class="info-head">Simulation Notice</div>
-                    <p>This screen imitates familiar social media patterns for safety training. Every ad, page, name,
-                        statistic, and link is fictional.</p>
-                </section>
-
-                <section class="info-card">
-                    <div class="info-head">Community <a href="#">See All</a></div>
-                    <div class="info-row">👥 <span class="skeleton long"></span></div>
-                    <div class="info-row">👍 <span class="skeleton mid"></span></div>
-                    <div class="info-row">💬 <span class="skeleton long"></span></div>
-                    <div class="info-row">↗ <span class="skeleton mid"></span></div>
-                </section>
-
-                <section class="info-card">
-                    <div class="info-head">About <a href="#">See All</a></div>
-                    <div class="info-row">ⓘ Fictional awareness page</div>
-                    <div class="info-row">⌂ Kathmandu, Nepal training demo</div>
-                    <div class="info-row">🔒 No login, no storage, no real ads</div>
-                </section>
-
-                <section class="info-card">
-                    <div class="info-head">Pages liked by this page</div>
-                    <div class="page-like-row">
-                        <span class="color-avatar" style="background:#ff9ec4;"></span>
-                        <span class="skeleton long"></span>
-                        <button class="fb-button">Liked ▾</button>
-                    </div>
-                    <div class="page-like-row">
-                        <span class="color-avatar" style="background:#9be7f0;"></span>
-                        <span class="skeleton mid"></span>
-                        <button class="fb-button">Liked ▾</button>
-                    </div>
-                    <div class="page-like-row">
-                        <span class="color-avatar" style="background:#ffe681;"></span>
-                        <span class="skeleton mid"></span>
-                        <button class="fb-button">Liked ▾</button>
+                        <button class="fb-button" onclick="showWarning(0)">Send Message</button>
                     </div>
                 </section>
-            </aside>
-        </div>
-    </main>
+
+                <nav class="page-nav" aria-label="Simulated page sections">
+                    <a href="#" class="active">Home</a>
+                    <a href="#">About</a>
+                    <a href="#">Photos</a>
+                    <a href="#">Reviews</a>
+                    <a href="#">Posts</a>
+                    <a href="#">Community</a>
+                </nav>
+            </div>
+
+            <!-- Instagram Profile Header Section -->
+            <div class="ig-only">
+                <div class="ig-profile-header">
+                    <div class="ig-avatar-container">
+                        <div class="ig-avatar-ring">
+                            <div class="ig-avatar-img">M</div>
+                        </div>
+                    </div>
+                    <div class="ig-profile-info">
+                        <div class="ig-username-row">
+                            <h2>marketplace_money_nepal</h2>
+                            <span class="verified-badge-inline"
+                                style="background: #0095f6; width: 16px; height: 16px; font-size: 9px; vertical-align: middle;">✔</span>
+                            <button class="ig-btn" onclick="showWarning(0)">Follow</button>
+                            <button class="ig-btn" onclick="showWarning(0)">Message</button>
+                        </div>
+                        <div class="ig-stats-row">
+                            <span><strong>10</strong> posts</span>
+                            <span><strong>48.5K</strong> followers</span>
+                            <span><strong>180</strong> following</span>
+                        </div>
+                        <div class="ig-bio">
+                            <div class="ig-fullname">Marketplace Money Nepal</div>
+                            <p>🛡️ Educational Cybersecurity Ad Simulator<br>
+                                🚨 Spot MrBeast, Elon Musk, and other trending giveaway scams!<br>
+                                ⚠️ Learn digital safety for Nepalese citizens.<br>
+                                <a href="#" onclick="showWarning(0)">linkin.bio/suraksha_os</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Instagram Fake Tabs -->
+                <div class="ig-profile-tabs"
+                    style="display: flex; justify-content: center; border-top: 1px solid #262626; gap: 40px; margin-top: 10px;">
+                    <div class="ig-profile-tab active"
+                        style="display: flex; align-items: center; gap: 6px; padding: 12px 0; border-top: 1px solid #fff; font-size: 12px; font-weight: 600; letter-spacing: 1px; color: #fff; cursor: pointer; text-transform: uppercase;">
+                        <span>▦</span> Posts
+                    </div>
+                    <div class="ig-profile-tab"
+                        style="display: flex; align-items: center; gap: 6px; padding: 12px 0; border-top: 1px solid transparent; font-size: 12px; font-weight: 600; letter-spacing: 1px; color: #8e8e8e; cursor: pointer; text-transform: uppercase;">
+                        <span>🎬</span> Reels
+                    </div>
+                    <div class="ig-profile-tab"
+                        style="display: flex; align-items: center; gap: 6px; padding: 12px 0; border-top: 1px solid transparent; font-size: 12px; font-weight: 600; letter-spacing: 1px; color: #8e8e8e; cursor: pointer; text-transform: uppercase;">
+                        <span>🪪</span> Tagged
+                    </div>
+                </div>
+            </div>
+
+            <!-- Twitter/X Profile Header Section -->
+            <div class="tw-only">
+                <div class="tw-cover-banner">
+                    <div class="tw-banner-text">🛡️ SURAKSHA OS AD SIMULATOR 𝕏</div>
+                </div>
+                <div class="tw-profile-details">
+                    <div class="tw-avatar-row">
+                        <div class="tw-profile-avatar">𝕏</div>
+                        <button class="tw-btn" onclick="showWarning(0)">Follow</button>
+                    </div>
+                    <div class="tw-user-info">
+                        <div class="tw-name-row">
+                            <h2>Marketplace Money Nepal</h2>
+                            <span class="verified-badge-inline"
+                                style="background: #1d9bf0; width: 16px; height: 16px; font-size: 9px; vertical-align: middle;">✔</span>
+                        </div>
+                        <div class="tw-handle">@SurakshaAds</div>
+                        <div class="tw-bio">
+                            Simulating trending social media scam ads (Elon Musk cryptocurrency giveaways, MrBeast cash
+                            surveys, fake iPhone deals) to keep Nepalese citizens safe.
+                        </div>
+                        <div class="tw-meta-row">
+                            <span>📍 Kathmandu, Nepal</span>
+                            <span>📅 Joined June 2026</span>
+                        </div>
+                        <div class="tw-stats-row">
+                            <span><strong>124</strong> Following</span>
+                            <span><strong>15.6K</strong> Followers</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layout">
+                <aside class="left-menu" aria-label="Simulated page sidebar">
+                    <!-- Facebook Sidebar links -->
+                    <div class="fb-only">
+                        <a href="#" class="side-link active">⌂ Home</a>
+                        <a href="#" class="side-link">▣ About</a>
+                        <a href="#" class="side-link">▧ Photos</a>
+                        <a href="#" class="side-link">★ Reviews</a>
+                        <a href="#" class="side-link">☷ Events</a>
+                        <a href="#" class="side-link">● Posts</a>
+                        <a href="#" class="side-link">☰ Community</a>
+                        <div class="create-page">Create a Page</div>
+                    </div>
+
+                    <!-- Instagram Sidebar links -->
+                    <div class="ig-only">
+                        <a href="#" class="side-link active">🏠 Home</a>
+                        <a href="#" class="side-link">🔍 Search</a>
+                        <a href="#" class="side-link">🧭 Explore</a>
+                        <a href="#" class="side-link">🎬 Reels</a>
+                        <a href="#" class="side-link">✉️ Messages</a>
+                        <a href="#" class="side-link">🔔 Notifications</a>
+                        <a href="#" class="side-link">➕ Create</a>
+                        <a href="#" class="side-link">👤 Profile</a>
+                    </div>
+
+                    <!-- Twitter/X Sidebar links -->
+                    <div class="tw-only">
+                        <a href="#" class="side-link active">🏠 Home</a>
+                        <a href="#" class="side-link">🔍 Explore</a>
+                        <a href="#" class="side-link">🔔 Notifications</a>
+                        <a href="#" class="side-link">✉️ Messages</a>
+                        <a href="#" class="side-link">𝌆 Bookmarks</a>
+                        <a href="#" class="side-link">👤 Profile</a>
+                        <a href="#" class="side-link">⋯ More</a>
+                        <button class="tw-btn"
+                            style="background: #1d9bf0; color: #fff; width: 100%; font-weight: 700; margin-top: 15px; border-radius: 9999px; padding: 12px;"
+                            onclick="showWarning(7)">Post</button>
+                    </div>
+                </aside>
+
+                <section class="feed-column" aria-label="Simulated feed">
+
+                    <!-- Instagram Stories Row (ig-only) -->
+                    <div class="ig-only-flex ig-stories-bar">
+                        <!-- Your Story -->
+                        <div class="ig-story">
+                            <div class="ig-story-ring your-story">
+                                <div class="ig-story-avatar" style="font-size:24px;">A</div>
+                            </div>
+                            <div class="ig-story-add-btn">+</div>
+                            <span class="ig-story-name">Your Story</span>
+                        </div>
+                        <!-- Fake scam stories -->
+                        <div class="ig-story" onclick="showWarning(0)">
+                            <div class="ig-story-ring">
+                                <div class="ig-story-avatar" style="font-size:18px;">🐉</div>
+                            </div>
+                            <span class="ig-story-name">mrbeast</span>
+                        </div>
+                        <div class="ig-story" onclick="showWarning(0)">
+                            <div class="ig-story-ring">
+                                <div class="ig-story-avatar" style="font-size:18px;">💎</div>
+                            </div>
+                            <span class="ig-story-name">elonmusk</span>
+                        </div>
+                        <div class="ig-story" onclick="showWarning(0)">
+                            <div class="ig-story-ring">
+                                <div class="ig-story-avatar" style="font-size:18px;">💰</div>
+                            </div>
+                            <span class="ig-story-name">crypto_guru</span>
+                        </div>
+                        <div class="ig-story" onclick="showWarning(0)">
+                            <div class="ig-story-ring">
+                                <div class="ig-story-avatar" style="font-size:18px;">🎁</div>
+                            </div>
+                            <span class="ig-story-name">giveaway_np</span>
+                        </div>
+                        <div class="ig-story" onclick="showWarning(0)">
+                            <div class="ig-story-ring seen">
+                                <div class="ig-story-avatar" style="font-size:18px;">📱</div>
+                            </div>
+                            <span class="ig-story-name">iphone_deal</span>
+                        </div>
+                        <div class="ig-story" onclick="showWarning(0)">
+                            <div class="ig-story-ring seen">
+                                <div class="ig-story-avatar" style="font-size:18px;">🎰</div>
+                            </div>
+                            <span class="ig-story-name">lucky_draw</span>
+                        </div>
+                    </div>
+
+                    <div class="composer" aria-hidden="true">
+                        <div class="composer-input">
+                            <div class="mini-avatar">A</div>
+                            <div class="fake-input">Write a post...</div>
+                        </div>
+                        <div class="composer-tools">
+                            <button class="composer-tool">▣ Photo/Video</button>
+                            <button class="composer-tool">☺ Tag Friends</button>
+                            <button class="composer-tool">● Check In</button>
+                        </div>
+                    </div>
+
+                    <!-- iPhone Marketplace Scam Simulation -->
+                    <article class="post-card">
+                        <div class="fake-sticker">SCAM</div>
+                        <div class="post-header">
+                            <div class="post-avatar"
+                                style="background: linear-gradient(135deg, #ff6b6b, #ee5a24); color: white;">📱</div>
+                            <div>
+                                <div class="post-name">iPhone Store Nepal 🇳🇵</div>
+                                <div class="post-meta">Sponsored · Marketplace scam simulation · 🌐</div>
+                            </div>
+                            <button class="more-btn" onclick="showWarning(3)" aria-label="Post options">...</button>
+                        </div>
+                        <div class="post-content">
+                            🔥 URGENT SALE! iPhone 15 Pro Max - Only Rs. 25,000!
+                            <br><br>
+                            ✅ Brand new, sealed box
+                            ✅ 1TB storage
+                            ✅ All colors available
+                            ✅ Cash on delivery
+                            ✅ Limited time offer!
+                            <br><br>
+                            Contact immediately: 98XXXXXXXX
+                            First come, first served! 📲
+                        </div>
+                        <div class="ad-creative photo red">
+                            <img class="ad-photo" src="../assets/images/image.png"
+                                alt="Fake iPhone advertisement showing unrealistic pricing" onclick="showWarning(3)">
+                            <div class="ad-creative-inner">
+                                <div class="ad-kicker">FLASH SALE</div>
+                                <div class="ad-headline">iPhone 15 Pro Max</div>
+                                <div class="ad-subline">90% OFF - Rs. 25,000 Only!</div>
+                            </div>
+                        </div>
+                        <div class="link-preview" onclick="showWarning(3)">
+                            <div>
+                                <div class="preview-domain">IPHONE-NEPAL-STORE.COM</div>
+                                <div class="preview-title">Brand New iPhone 15 Pro Max - Huge Discount</div>
+                                <div class="preview-copy">Get genuine Apple iPhone with warranty. Limited stock
+                                    available. Order now!</div>
+                            </div>
+                        </div>
+                        <div class="post-stats">
+                            <div class="reactions">
+                                <div class="reaction-bubbles">
+                                    <div class="reaction-bubble like">👍</div>
+                                    <div class="reaction-bubble love">❤️</div>
+                                </div>
+                                <span>2.4K people reacted</span>
+                            </div>
+                            <div>847 comments · 1.2K shares</div>
+                        </div>
+                        <div class="post-buttons">
+                            <div class="action-wrap">
+                                <button class="action-btn" onclick="showWarning(3)">👍 Like</button>
+                                <div class="reaction-bar">
+                                    <div class="reaction-emoji">👍</div>
+                                    <div class="reaction-emoji">❤️</div>
+                                    <div class="reaction-emoji">😢</div>
+                                    <div class="reaction-emoji">😡</div>
+                                </div>
+                            </div>
+                            <button class="action-btn" onclick="showWarning(3)">💬 Comment</button>
+                            <button class="action-btn" onclick="showWarning(3)">↗ Share</button>
+                        </div>
+                        <div class="comment-row">
+                            <div class="mini-avatar">A</div>
+                            <div class="comment-box">Write a comment...</div>
+                        </div>
+                    </article>
+
+                    <!-- Original Nepal Wealth Masters Post -->
+                    <article class="post-card">
+                        <div class="post-header">
+                            <div class="post-avatar">💰</div>
+                            <div>
+                                <div class="post-name">Nepal Wealth Masters</div>
+                                <div class="post-meta">Sponsored · Paid ad simulation · 🌐</div>
+                            </div>
+                            <button class="more-btn" onclick="showWarning(0)" aria-label="Post options">...</button>
+                        </div>
+                        <div class="post-content">
+                            Stop working hard for money! We found a secret gap in the market. Turn Rs. 5,000 into Rs.
+                            50,000 by TONIGHT. No skills needed. 1500+ Nepalis already earned. Limited slots.
+                        </div>
+                        <div class="ad-creative" role="img"
+                            aria-label="Blue fake investment ad claiming Rs. 5,000 becomes Rs. 50,000 in 24 hours">
+                            <div class="ad-creative-inner">
+                                <div class="ad-kicker">100% SECURE</div>
+                                <div class="ad-headline">Rs. 5,000 → Rs. 50,000</div>
+                                <div class="ad-subline">IN 24 HOURS</div>
+                            </div>
+                        </div>
+                        <div class="link-preview">
+                            <div>
+                                <div class="preview-domain">wealth-master-training.example</div>
+                                <div class="preview-title">Claim Your Secret Market Slot Today</div>
+                                <div class="preview-copy">Training preview: suspicious promises, pressure, and fake
+                                    proof.</div>
+                            </div>
+                            <button class="fb-button primary" onclick="showWarning(0)">Learn More</button>
+                        </div>
+                        <div class="post-stats">
+                            <div class="reactions">
+                                <span class="reaction-bubbles">
+                                    <span class="reaction-bubble like">f</span>
+                                    <span class="reaction-bubble love">♥</span>
+                                </span>
+                                <span>1.2K</span>
+                            </div>
+                            <span>450 Comments · 122 Shares</span>
+                        </div>
+                        <div class="post-buttons">
+                            <div class="action-wrap">
+                                <div class="reaction-bar">
+                                    <span class="reaction-emoji" onclick="showWarning(0)">👍</span>
+                                    <span class="reaction-emoji" onclick="showWarning(0)">❤️</span>
+                                    <span class="reaction-emoji" onclick="showWarning(0)">😮</span>
+                                    <span class="reaction-emoji" onclick="showWarning(0)">😢</span>
+                                    <span class="reaction-emoji" onclick="showWarning(0)">😡</span>
+                                </div>
+                                <button class="action-btn" onclick="showWarning(0)">👍 Like</button>
+                            </div>
+                            <button class="action-btn" onclick="showWarning(0)">💬 Comment</button>
+                            <button class="action-btn" onclick="showWarning(0)">↗ Share</button>
+                        </div>
+                        <div class="comment-row">
+                            <div class="mini-avatar">A</div>
+                            <div class="comment-box">Write a comment...</div>
+                        </div>
+                    </article>
+
+                    <article class="post-card">
+                        <div class="post-header">
+                            <div class="post-avatar">🏠</div>
+                            <div>
+                                <div class="post-name">Kathmandu Luxury Living</div>
+                                <div class="post-meta">Public · 2h · 🌐</div>
+                            </div>
+                            <button class="more-btn" onclick="showWarning(1)" aria-label="Post options">...</button>
+                        </div>
+                        <div class="post-content">
+                            URGENT! Move-in ready 2BHK in Baluwatar. Fully furnished, 24hr water. Rent only Rs. 8,000!
+                            Owner moving abroad tomorrow. Need tenant today.
+                        </div>
+                        <div class="ad-creative green" role="img"
+                            aria-label="Green fake rental ad claiming luxury apartment only Rs. 8,000">
+                            <div class="ad-creative-inner">
+                                <div class="ad-kicker">MOVE IN TODAY</div>
+                                <div class="ad-headline">Luxury 2BHK</div>
+                                <div class="ad-subline">Only Rs. 8,000</div>
+                            </div>
+                        </div>
+                        <div class="post-stats">
+                            <div class="reactions">
+                                <span class="reaction-bubbles">
+                                    <span class="reaction-bubble like">f</span>
+                                </span>
+                                <span>85</span>
+                            </div>
+                            <span>21 Comments · 5 Shares</span>
+                        </div>
+                        <div class="post-buttons">
+                            <div class="action-wrap">
+                                <div class="reaction-bar">
+                                    <span class="reaction-emoji" onclick="showWarning(1)">👍</span>
+                                    <span class="reaction-emoji" onclick="showWarning(1)">❤️</span>
+                                    <span class="reaction-emoji" onclick="showWarning(1)">😮</span>
+                                    <span class="reaction-emoji" onclick="showWarning(1)">😡</span>
+                                </div>
+                                <button class="action-btn" onclick="showWarning(1)">👍 Like</button>
+                            </div>
+                            <button class="action-btn" onclick="showWarning(1)">💬 Comment</button>
+                            <button class="action-btn" onclick="showWarning(1)">↗ Share</button>
+                        </div>
+                    </article>
+
+                    <article class="post-card">
+                        <div class="post-header">
+                            <div class="post-avatar">🎁</div>
+                            <div>
+                                <div class="post-name">Mega Prize Hub Nepal</div>
+                                <div class="post-meta">Sponsored · Paid ad simulation · 🌐</div>
+                            </div>
+                            <button class="more-btn" onclick="showWarning(2)" aria-label="Post options">...</button>
+                        </div>
+                        <div class="post-content">
+                            CONGRATULATIONS! You have been selected as our 50,000th visitor. You won a brand new iPhone
+                            15
+                            Pro Max. Claim now before the timer runs out. Just pay Rs. 199 shipping.
+                        </div>
+                        <div class="ad-creative red" role="img"
+                            aria-label="Red fake giveaway ad claiming free iPhone prize">
+                            <div class="ad-creative-inner">
+                                <div class="ad-kicker">WINNER SELECTED</div>
+                                <div class="ad-headline">iPhone 15 Pro Max</div>
+                                <div class="ad-subline">Pay Rs. 199 Shipping</div>
+                            </div>
+                        </div>
+                        <div class="post-stats">
+                            <div class="reactions">
+                                <span class="reaction-bubbles">
+                                    <span class="reaction-bubble like">f</span>
+                                    <span class="reaction-bubble love">♥</span>
+                                </span>
+                                <span>3.5K</span>
+                            </div>
+                            <span>2.1K Comments · 850 Shares</span>
+                        </div>
+                        <div class="post-buttons">
+                            <div class="action-wrap">
+                                <div class="reaction-bar">
+                                    <span class="reaction-emoji" onclick="showWarning(2)">👍</span>
+                                    <span class="reaction-emoji" onclick="showWarning(2)">❤️</span>
+                                    <span class="reaction-emoji" onclick="showWarning(2)">😮</span>
+                                    <span class="reaction-emoji" onclick="showWarning(2)">😡</span>
+                                </div>
+                                <button class="action-btn" onclick="showWarning(2)">👍 Like</button>
+                            </div>
+                            <button class="action-btn" onclick="showWarning(2)">💬 Comment</button>
+                            <button class="action-btn" onclick="showWarning(2)">↗ Share</button>
+                        </div>
+                    </article>
+
+                    <!-- iPhone Marketplace Scam -->
+                    <article class="post-card">
+                        <div class="fake-sticker">SCAM</div>
+                        <div class="post-header">
+                            <div class="post-avatar"
+                                style="background: linear-gradient(135deg, #ff6b6b, #ee5a24); color: white;">📱</div>
+                            <div>
+                                <div class="post-name">iPhone Store Nepal 🇳🇵</div>
+                                <div class="post-meta">Sponsored · Marketplace scam simulation · 🌐</div>
+                            </div>
+                            <button class="more-btn" onclick="showWarning(3)" aria-label="Post options">...</button>
+                        </div>
+                        <div class="post-content">
+                            🔥 URGENT SALE! iPhone 15 Pro Max - Only Rs. 25,000!
+                            <br><br>
+                            ✅ Brand new, sealed box
+                            ✅ 1TB storage
+                            ✅ All colors available
+                            ✅ Cash on delivery
+                            ✅ Limited time offer!
+                            <br><br>
+                            Contact immediately: 98XXXXXXXX
+                            First come, first served! 📲
+                        </div>
+                        <div class="ad-creative photo red">
+                            <img class="ad-photo" src="../assets/images/image copy.png"
+                                alt="iPhone 15 Pro Max - Used in educational scam detection simulation"
+                                onclick="showWarning(3)" onerror="this.style.display='none';"
+                                style="object-fit: cover; width: 100%; height: 100%;">
+                            <div class="ad-creative-inner">
+                                <div class="ad-kicker">FLASH SALE</div>
+                                <div class="ad-headline">iPhone 15 Pro Max</div>
+                                <div class="ad-subline">90% OFF - Rs. 25,000 Only!</div>
+                            </div>
+                        </div>
+                        <div class="link-preview" onclick="showWarning(3)">
+                            <div>
+                                <div class="preview-domain">IPHONE-NEPAL-STORE.COM</div>
+                                <div class="preview-title">Brand New iPhone 15 Pro Max - Huge Discount</div>
+                                <div class="preview-copy">Get genuine Apple iPhone with warranty. Limited stock
+                                    available. Order now!</div>
+                            </div>
+                        </div>
+                        <div class="post-stats">
+                            <div class="reactions">
+                                <span class="reaction-bubbles">
+                                    <span class="reaction-bubble like">f</span>
+                                    <span class="reaction-bubble love">♥</span>
+                                </span>
+                                <span>2.4K</span>
+                            </div>
+                            <span>847 Comments · 1.2K Shares</span>
+                        </div>
+                        <div class="post-buttons">
+                            <div class="action-wrap">
+                                <div class="reaction-bar">
+                                    <span class="reaction-emoji" onclick="showWarning(3)">👍</span>
+                                    <span class="reaction-emoji" onclick="showWarning(3)">❤️</span>
+                                    <span class="reaction-emoji" onclick="showWarning(3)">😮</span>
+                                    <span class="reaction-emoji" onclick="showWarning(3)">😡</span>
+                                </div>
+                                <button class="action-btn" onclick="showWarning(3)">👍 Like</button>
+                            </div>
+                            <button class="action-btn" onclick="showWarning(3)">💬 Comment</button>
+                            <button class="action-btn" onclick="showWarning(3)">↗ Share</button>
+                        </div>
+                    </article>
+
+                    <!-- Crypto Investment Scam -->
+                    <article class="post-card">
+                        <div class="fake-sticker">SCAM</div>
+                        <div class="post-header">
+                            <div class="post-avatar"
+                                style="background: linear-gradient(135deg, #f093fb, #f5576c); color: white;">₿</div>
+                            <div>
+                                <div class="post-name">Nepal Crypto Investment</div>
+                                <div class="post-meta">Sponsored · Investment scam simulation · 🌐</div>
+                            </div>
+                            <button class="more-btn" onclick="showWarning(4)" aria-label="Post options">...</button>
+                        </div>
+                        <div class="post-content">
+                            💎 MAKE Rs. 50,000 DAILY WITH CRYPTO! 💎
+                            <br><br>
+                            ✅ Government approved platform
+                            ✅ Minimum investment Rs. 5,000
+                            ✅ 500% returns guaranteed
+                            ✅ Join 10,000+ Nepali investors
+                            <br><br>
+                            🎯 Special bonus for first 100 members
+                            🎯 Free training included
+                            <br><br>
+                            Register now: crypto-nepal.com
+                            WhatsApp: +977-98XXXXXXXX
+                        </div>
+                        <div class="ad-creative photo"
+                            style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                            <img class="ad-photo" src="../assets/images/image copy 2.png"
+                                alt="Bitcoin cryptocurrency - Used in educational investment scam detection"
+                                onclick="showWarning(4)" onerror="this.style.display='none';"
+                                style="object-fit: cover; width: 100%; height: 100%; opacity: 0.8;">
+                            <div class="ad-creative-inner">
+                                <div class="ad-kicker">GOVERNMENT APPROVED</div>
+                                <div class="ad-headline">Crypto Investment</div>
+                                <div class="ad-subline">500% Returns Guaranteed</div>
+                            </div>
+                        </div>
+                        <div class="post-stats">
+                            <div class="reactions">
+                                <span class="reaction-bubbles">
+                                    <span class="reaction-bubble like">f</span>
+                                    <span class="reaction-bubble love">♥</span>
+                                </span>
+                                <span>3.2K</span>
+                            </div>
+                            <span>1.1K Comments · 2.3K Shares</span>
+                        </div>
+                        <div class="post-buttons">
+                            <div class="action-wrap">
+                                <div class="reaction-bar">
+                                    <span class="reaction-emoji" onclick="showWarning(4)">👍</span>
+                                    <span class="reaction-emoji" onclick="showWarning(4)">❤️</span>
+                                    <span class="reaction-emoji" onclick="showWarning(4)">😮</span>
+                                    <span class="reaction-emoji" onclick="showWarning(4)">😡</span>
+                                </div>
+                                <button class="action-btn" onclick="showWarning(4)">👍 Like</button>
+                            </div>
+                            <button class="action-btn" onclick="showWarning(4)">💬 Comment</button>
+                            <button class="action-btn" onclick="showWarning(4)">↗ Share</button>
+                        </div>
+                    </article>
+
+                    <!-- Work From Home Job Scam -->
+                    <article class="post-card">
+                        <div class="fake-sticker">SCAM</div>
+                        <div class="post-header">
+                            <div class="post-avatar"
+                                style="background: linear-gradient(135deg, #4facfe, #00f2fe); color: white;">💼</div>
+                            <div>
+                                <div class="post-name">Work From Home Nepal</div>
+                                <div class="post-meta">Sponsored · Employment scam simulation · 🌐</div>
+                            </div>
+                            <button class="more-btn" onclick="showWarning(5)" aria-label="Post options">...</button>
+                        </div>
+                        <div class="post-content">
+                            💼 URGENT HIRING - WORK FROM HOME 💼
+                            <br><br>
+                            📱 Data entry jobs available
+                            💰 Earn Rs. 25,000-50,000/month
+                            ⏰ Work only 2-3 hours daily
+                            🏠 100% work from home
+                            <br><br>
+                            Requirements:
+                            ✅ Basic computer knowledge
+                            ✅ Android/iPhone
+                            ✅ Registration fee: Rs. 2,500 only
+                            <br><br>
+                            Limited positions available!
+                            Apply now: 98XXXXXXXX
+                        </div>
+                        <div class="ad-creative photo"
+                            style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                            <img class="ad-photo" src="../assets/images/image copy 3.png"
+                                alt="Work from home setup - Used in educational employment scam detection"
+                                onclick="showWarning(5)" onerror="this.style.display='none';"
+                                style="object-fit: cover; width: 100%; height: 100%; opacity: 0.7;">
+                            <div class="ad-creative-inner">
+                                <div class="ad-kicker">URGENT HIRING</div>
+                                <div class="ad-headline">Work From Home</div>
+                                <div class="ad-subline">Rs. 50,000/month</div>
+                            </div>
+                        </div>
+                        <div class="post-stats">
+                            <div class="reactions">
+                                <span class="reaction-bubbles">
+                                    <span class="reaction-bubble like">f</span>
+                                    <span class="reaction-bubble love">♥</span>
+                                </span>
+                                <span>4.1K</span>
+                            </div>
+                            <span>2.8K Comments · 3.5K Shares</span>
+                        </div>
+                        <div class="post-buttons">
+                            <div class="action-wrap">
+                                <div class="reaction-bar">
+                                    <span class="reaction-emoji" onclick="showWarning(5)">👍</span>
+                                    <span class="reaction-emoji" onclick="showWarning(5)">❤️</span>
+                                    <span class="reaction-emoji" onclick="showWarning(5)">😮</span>
+                                    <span class="reaction-emoji" onclick="showWarning(5)">😡</span>
+                                </div>
+                                <button class="action-btn" onclick="showWarning(5)">👍 Like</button>
+                            </div>
+                            <button class="action-btn" onclick="showWarning(5)">💬 Comment</button>
+                            <button class="action-btn" onclick="showWarning(5)">↗ Share</button>
+                        </div>
+                    </article>
+
+                    <!-- Hotel Booking Scam -->
+                    <article class="post-card">
+                        <div class="fake-sticker">SCAM</div>
+                        <div class="post-header">
+                            <div class="post-avatar"
+                                style="background: linear-gradient(135deg, #43cea2, #185a9d); color: white;">🏨</div>
+                            <div>
+                                <div class="post-name">Nepal Luxury Hotels</div>
+                                <div class="post-meta">Sponsored · Travel scam simulation · 🌐</div>
+                            </div>
+                            <button class="more-btn" onclick="showWarning(6)" aria-label="Post options">...</button>
+                        </div>
+                        <div class="post-content">
+                            🏨 5-STAR HOTEL KATHMANDU - 90% OFF! 🏨
+                            <br><br>
+                            ✅ Luxury suite only Rs. 1,500/night
+                            ✅ Normally Rs. 15,000/night
+                            ✅ All meals included
+                            ✅ Airport pickup free
+                            ✅ Book now - pay later
+                            <br><br>
+                            Limited rooms! Book immediately!
+                            WhatsApp: +977-98XXXXXXXX
+                            Advance booking: Rs. 500 only
+                        </div>
+                        <div class="ad-creative photo"
+                            style="background: linear-gradient(135deg, #43cea2 0%, #185a9d 100%);">
+                            <img class="ad-photo" src="../assets/images/image copy 4.png"
+                                alt="Luxury hotel - Used in educational booking scam detection simulation"
+                                onclick="showWarning(6)" onerror="this.style.display='none';"
+                                style="object-fit: cover; width: 100%; height: 100%; opacity: 0.8;">
+                            <div class="ad-creative-inner">
+                                <div class="ad-kicker">FLASH BOOKING</div>
+                                <div class="ad-headline">5-Star Luxury Hotel</div>
+                                <div class="ad-subline">90% OFF - Rs. 1,500/night</div>
+                            </div>
+                        </div>
+                        <div class="link-preview" onclick="showWarning(6)">
+                            <div>
+                                <div class="preview-domain">NEPAL-LUXURY-HOTELS.COM</div>
+                                <div class="preview-title">Book 5-Star Hotels in Kathmandu - Huge Discount</div>
+                                <div class="preview-copy">Luxury accommodations at unbeatable prices. Book now before
+                                    rooms sell out!</div>
+                            </div>
+                        </div>
+                        <div class="post-stats">
+                            <div class="reactions">
+                                <span class="reaction-bubbles">
+                                    <span class="reaction-bubble like">f</span>
+                                    <span class="reaction-bubble love">♥</span>
+                                </span>
+                                <span>1.9K</span>
+                            </div>
+                            <span>456 Comments · 892 Shares</span>
+                        </div>
+                        <div class="post-buttons">
+                            <div class="action-wrap">
+                                <div class="reaction-bar">
+                                    <span class="reaction-emoji" onclick="showWarning(6)">👍</span>
+                                    <span class="reaction-emoji" onclick="showWarning(6)">❤️</span>
+                                    <span class="reaction-emoji" onclick="showWarning(6)">😮</span>
+                                    <span class="reaction-emoji" onclick="showWarning(6)">😡</span>
+                                </div>
+                                <button class="action-btn" onclick="showWarning(6)">👍 Like</button>
+                            </div>
+                            <button class="action-btn" onclick="showWarning(6)">💬 Comment</button>
+                            <button class="action-btn" onclick="showWarning(6)">↗ Share</button>
+                        </div>
+                    </article>
+
+                    <!-- MrBeast Instagram Cash Giveaway Scam (Card 9) -->
+                    <article class="post-card">
+                        <div class="fake-sticker">SCAM</div>
+                        <div class="post-header">
+                            <div class="post-avatar"
+                                style="background: linear-gradient(135deg, #00f2fe, #4facfe); color: white; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: bold; overflow: hidden; border: 2px solid #fff;">
+                                <span style="font-family: sans-serif;">🦁</span>
+                            </div>
+                            <div>
+                                <div class="post-name">mrbeast <span class="verified-badge-inline">✅</span></div>
+                                <div class="post-meta">Sponsored · Celebrity Impersonation · 🌐</div>
+                            </div>
+                            <button class="more-btn" onclick="showWarning(8)" aria-label="Post options">...</button>
+                        </div>
+                        <div class="post-content">
+                            🎁 I'm GIVING AWAY $1,000 CASH 💵 to the first 5,000 followers who register right now!
+                            No catch, just want to give back to the best community ever! ❤️
+                            <br><br>
+                            ✅ Verified MrBeast giveaway portal
+                            ✅ 100% Free to enter (No deposit)
+                            ✅ Instant transfer to your wallet or banking card
+                            <br><br>
+                            👇 Click "Claim Now" below to register and get your cash immediately! 👇
+                        </div>
+                        <div class="ad-creative photo">
+                            <img class="ad-photo" src="../assets/images/mrbeast_scam.png"
+                                alt="MrBeast Cash Giveaway Scam - Simulated Ad" onclick="showWarning(8)"
+                                onerror="this.src='../assets/images/image.png';"
+                                style="object-fit: cover; width: 100%; height: 100%;">
+                            <div class="ad-creative-inner">
+                                <div class="ad-kicker">LIMITED SLOTS</div>
+                                <div class="ad-headline">$1,000 Giveaway</div>
+                                <div class="ad-subline">Claim Your Cash Now</div>
+                            </div>
+                        </div>
+                        <div class="link-preview" onclick="showWarning(8)">
+                            <div>
+                                <div class="preview-domain">MRBEAST-PROMO.COM</div>
+                                <div class="preview-title">MrBeast $1,000 Direct Cash Giveaway - Register Here</div>
+                                <div class="preview-copy">Click here to claim your $1,000 cash. Limited slots left.
+                                    Verified safe portal.</div>
+                            </div>
+                        </div>
+                        <div class="post-stats">
+                            <div class="reactions">
+                                <div class="reaction-bubbles">
+                                    <div class="reaction-bubble like">👍</div>
+                                    <div class="reaction-bubble love">❤️</div>
+                                </div>
+                                <span>1.2M people reacted</span>
+                            </div>
+                            <div>256K comments · 128K shares</div>
+                        </div>
+                        <div class="post-buttons">
+                            <div class="action-wrap">
+                                <button class="action-btn" onclick="showWarning(8)">👍 Like</button>
+                            </div>
+                            <button class="action-btn" onclick="showWarning(8)">💬 Comment</button>
+                            <button class="action-btn" onclick="showWarning(8)">↗ Share</button>
+                        </div>
+                        <div class="comment-row">
+                            <div class="mini-avatar">A</div>
+                            <div class="comment-box">Write a comment...</div>
+                        </div>
+                    </article>
+
+                    <!-- Elon Musk X / Twitter Crypto Giveaway Scam (Card 10) -->
+                    <article class="post-card">
+                        <div class="fake-sticker">SCAM</div>
+                        <div class="post-header">
+                            <div class="post-avatar"
+                                style="background: #000; color: white; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: bold; border: 1px solid #2f3336;">
+                                <span>🚀</span>
+                            </div>
+                            <div>
+                                <div class="post-name">Elon Musk <span class="verified-badge-inline">✅</span></div>
+                                <div class="post-meta">Sponsored · Crypto Scam · 🌐</div>
+                            </div>
+                            <button class="more-btn" onclick="showWarning(7)" aria-label="Post options">...</button>
+                        </div>
+                        <div class="post-content">
+                            🚀 Double Your Crypto!
+                            To celebrate SpaceX's successful launch, I am giving away 10,000 BTC and 50,000,000 DOGE.
+                            <br><br>
+                            Send any amount of BTC or DOGE to the official wallet address below, and we will send DOUBLE
+                            the amount back instantly!
+                            <br><br>
+                            🔒 Safe & Verified. Act fast - promo ends in 1 hour!
+                        </div>
+                        <div class="ad-creative photo">
+                            <img class="ad-photo" src="../assets/images/elon_musk_scam.png"
+                                alt="Elon Musk Crypto Giveaway Scam - Simulated Ad" onclick="showWarning(7)"
+                                onerror="this.src='../assets/images/image.png';"
+                                style="object-fit: cover; width: 100%; height: 100%;">
+                            <div class="ad-creative-inner">
+                                <div class="ad-kicker">SPACEX & TESLA</div>
+                                <div class="ad-headline">Double Your Crypto</div>
+                                <div class="ad-subline">10,000 BTC & DOGE Giveaway</div>
+                            </div>
+                        </div>
+                        <div class="link-preview" onclick="showWarning(7)">
+                            <div>
+                                <div class="preview-domain">TESLA-DOUBLE-GIFT.ORG</div>
+                                <div class="preview-title">SpaceX & Tesla Official Cryptocurrency Event Portal</div>
+                                <div class="preview-copy">Send crypto and get 2x back. Check real-time transactions.
+                                    Over $50M distributed.</div>
+                            </div>
+                        </div>
+                        <div class="post-stats">
+                            <div class="reactions">
+                                <div class="reaction-bubbles">
+                                    <div class="reaction-bubble like">👍</div>
+                                    <div class="reaction-bubble love">❤️</div>
+                                </div>
+                                <span>842K people reacted</span>
+                            </div>
+                            <div>14K comments · 4.2K retweets</div>
+                        </div>
+                        <div class="post-buttons">
+                            <div class="action-wrap">
+                                <button class="action-btn" onclick="showWarning(7)">👍 Like</button>
+                            </div>
+                            <button class="action-btn" onclick="showWarning(7)">💬 Comment</button>
+                            <button class="action-btn" onclick="showWarning(7)">↗ Share</button>
+                        </div>
+                        <div class="comment-row">
+                            <div class="mini-avatar">A</div>
+                            <div class="comment-box">Write a comment...</div>
+                        </div>
+                    </article>
+                </section>
+
+                <aside class="right-column" aria-label="Simulated page details">
+                    <section class="info-card training-note">
+                        <div class="info-head">Simulation Notice</div>
+                        <p>This screen imitates familiar social media patterns for safety training. Every ad, page,
+                            name,
+                            statistic, and link is fictional.</p>
+                    </section>
+
+                    <section class="info-card">
+                        <div class="info-head">Community <a href="#">See All</a></div>
+                        <div class="info-row">👥 <span class="skeleton long"></span></div>
+                        <div class="info-row">👍 <span class="skeleton mid"></span></div>
+                        <div class="info-row">💬 <span class="skeleton long"></span></div>
+                        <div class="info-row">↗ <span class="skeleton mid"></span></div>
+                    </section>
+
+                    <section class="info-card">
+                        <div class="info-head">About <a href="#">See All</a></div>
+                        <div class="info-row">ⓘ Fictional awareness page</div>
+                        <div class="info-row">⌂ Kathmandu, Nepal training demo</div>
+                        <div class="info-row">🔒 No login, no storage, no real ads</div>
+                    </section>
+
+                    <section class="info-card">
+                        <div class="info-head">Pages liked by this page</div>
+                        <div class="page-like-row">
+                            <span class="color-avatar" style="background:#ff9ec4;"></span>
+                            <span class="skeleton long"></span>
+                            <button class="fb-button">Liked ▾</button>
+                        </div>
+                        <div class="page-like-row">
+                            <span class="color-avatar" style="background:#9be7f0;"></span>
+                            <span class="skeleton mid"></span>
+                            <button class="fb-button">Liked ▾</button>
+                        </div>
+                        <div class="page-like-row">
+                            <span class="color-avatar" style="background:#ffe681;"></span>
+                            <span class="skeleton mid"></span>
+                            <button class="fb-button">Liked ▾</button>
+                        </div>
+                    </section>
+                </aside>
+            </div>
+        </main>
 
         <!-- Instagram Authentic Bottom Nav -->
         <div class="plat-mobile-nav ig-nav">
             <button class="plat-nav-btn active">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                    <polyline points="9 22 9 12 15 12 15 22" />
+                </svg>
             </button>
             <button class="plat-nav-btn">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8" />
+                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                </svg>
             </button>
             <button class="plat-nav-btn">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <polygon points="23 7 16 12 23 17 23 7" />
+                    <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
+                </svg>
             </button>
             <button class="plat-nav-btn">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
+                    <line x1="3" y1="6" x2="21" y2="6" />
+                    <path d="M16 10a4 4 0 01-8 0" />
+                </svg>
             </button>
             <button class="plat-nav-btn">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
+                </svg>
             </button>
         </div>
 
         <!-- Facebook Authentic Bottom Nav -->
         <div class="plat-mobile-nav fb-nav">
             <button class="plat-nav-btn active">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                    <polyline points="9 22 9 12 15 12 15 22" />
+                </svg>
             </button>
             <button class="plat-nav-btn">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M23 21v-2a4 4 0 00-3-3.87" />
+                    <path d="M16 3.13a4 4 0 010 7.75" />
+                </svg>
             </button>
             <button class="plat-nav-btn">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                </svg>
             </button>
             <button class="plat-nav-btn">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                    <path d="M13.73 21a2 2 0 01-3.46 0" />
+                </svg>
             </button>
             <button class="plat-nav-btn">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
+                </svg>
             </button>
         </div>
 
         <!-- Twitter/X Authentic Bottom Nav -->
         <div class="plat-mobile-nav tw-nav">
             <button class="plat-nav-btn active">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                    <polyline points="9 22 9 12 15 12 15 22" />
+                </svg>
             </button>
             <button class="plat-nav-btn">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8" />
+                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                </svg>
             </button>
             <button class="plat-nav-btn">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                    <path d="M13.73 21a2 2 0 01-3.46 0" />
+                </svg>
             </button>
             <button class="plat-nav-btn">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                    <polyline points="22,6 12,13 2,6" />
+                </svg>
             </button>
             <button class="plat-nav-btn">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
+                </svg>
             </button>
         </div>
 
@@ -3119,7 +3389,7 @@
             document.body.classList.remove('platform-facebook', 'platform-instagram', 'platform-twitter');
             // Add selected platform class
             document.body.classList.add('platform-' + platform);
-            
+
             // Update platform selector buttons active state
             document.querySelectorAll('.platform-btn').forEach(btn => {
                 btn.classList.remove('active');
@@ -3127,7 +3397,7 @@
                     btn.classList.add('active');
                 }
             });
-            
+
             // Update mobile tab bar buttons active state
             document.querySelectorAll('.mobile-tab-btn').forEach(btn => {
                 btn.classList.remove('active');
@@ -3135,10 +3405,10 @@
                     btn.classList.add('active');
                 }
             });
-            
+
             // Update the buttons text/icons inside post cards
             updatePostButtons(platform);
-            
+
             // Set localStorage so it persists
             localStorage.setItem('sim_platform', platform);
         }
@@ -3151,7 +3421,7 @@
                 const match = moreBtn.getAttribute('onclick').match(/\d+/);
                 if (!match) return;
                 const warningId = match[0];
-                
+
                 const buttonsContainer = card.querySelector('.post-buttons');
                 if (!buttonsContainer) return;
 
@@ -3211,17 +3481,17 @@
                             }
                         }
                     }
-                    
+
                     likeBtn.removeAttribute('onclick');
-                    
+
                     // Replace to strip existing listeners
                     const newLikeBtn = likeBtn.cloneNode(true);
                     likeBtn.parentNode.replaceChild(newLikeBtn, likeBtn);
-                    
+
                     newLikeBtn.addEventListener('click', (e) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        
+
                         const reactionBar = wrap.querySelector('.reaction-bar');
                         if (reactionBar) {
                             document.querySelectorAll('.reaction-bar.active').forEach(bar => {
@@ -3230,32 +3500,32 @@
                             reactionBar.classList.toggle('active');
                         }
                     });
-                    
+
                     const emojis = wrap.querySelectorAll('.reaction-emoji, .reaction-bar div');
                     emojis.forEach(emoji => {
                         emoji.style.cursor = 'pointer';
-                        
+
                         const newEmoji = emoji.cloneNode(true);
                         emoji.parentNode.replaceChild(newEmoji, emoji);
-                        
+
                         newEmoji.addEventListener('click', (e) => {
                             e.preventDefault();
                             e.stopPropagation();
-                            
+
                             const selectedEmoji = newEmoji.textContent.trim();
                             let label = 'Liked';
                             if (selectedEmoji === '❤️') label = 'Love';
                             if (selectedEmoji === '😮') label = 'Wow';
                             if (selectedEmoji === '😢') label = 'Sad';
                             if (selectedEmoji === '😡') label = 'Angry';
-                            
+
                             newLikeBtn.innerHTML = `<span style="transform: scale(1.2); display: inline-block; margin-right: 4px;">${selectedEmoji}</span> ${label}`;
                             newLikeBtn.style.color = '#1877f2';
                             newLikeBtn.style.fontWeight = 'bold';
-                            
+
                             const bar = wrap.querySelector('.reaction-bar');
                             if (bar) bar.classList.remove('active');
-                            
+
                             setTimeout(() => {
                                 showWarning(warningId);
                             }, 700);
@@ -3268,35 +3538,35 @@
         function setupInstagramLikes() {
             document.querySelectorAll('.ig-like-btn').forEach(btn => {
                 const warningId = btn.getAttribute('data-warning-id');
-                
+
                 const newBtn = btn.cloneNode(true);
                 btn.parentNode.replaceChild(newBtn, btn);
-                
+
                 newBtn.addEventListener('click', (e) => {
                     e.preventDefault();
                     e.stopPropagation();
-                    
+
                     newBtn.textContent = '❤️';
                     newBtn.style.transform = 'scale(1.3)';
                     newBtn.style.transition = 'transform 0.15s ease';
                     newBtn.style.color = '#ff3040';
-                    
+
                     setTimeout(() => {
                         newBtn.style.transform = 'scale(1.0)';
                     }, 150);
-                    
+
                     setTimeout(() => {
                         showWarning(warningId);
                     }, 700);
                 });
             });
         }
-        
+
         function setViewMode(mode) {
             const body = document.body;
             const desktopBtn = document.getElementById('view-desktop-btn');
             const mobileBtn = document.getElementById('view-mobile-btn');
-            
+
             if (mode === 'mobile') {
                 body.classList.add('mobile-view');
                 if (desktopBtn) desktopBtn.classList.remove('active');
@@ -3309,15 +3579,15 @@
                 localStorage.setItem('sim_view_mode', 'desktop');
             }
         }
-        
+
         // Load stored platform or default to facebook
         document.addEventListener('DOMContentLoaded', () => {
             const stored = localStorage.getItem('sim_platform') || 'facebook';
             switchPlatform(stored);
-            
+
             const storedView = localStorage.getItem('sim_view_mode') || 'desktop';
             setViewMode(storedView);
-            
+
             // Close reaction bars if clicked outside
             document.addEventListener('click', (e) => {
                 if (!e.target.closest('.action-wrap')) {
